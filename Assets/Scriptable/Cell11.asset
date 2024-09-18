@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8a9107080b9c2b49a4f62e105e89098, type: 3}
+  m_Name: Cell11
+  m_EditorClassIdentifier: 
+  cellType: 10
+  wall_UP: 1
+  wall_DOWN: 1
+  wall_LEFT: 1
+  wall_RIGHT: 1
+  SpriteObject: {fileID: 5103615227575510435, guid: badea0961b5190d41a65394881f22826, type: 3}
