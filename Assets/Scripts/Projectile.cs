@@ -28,6 +28,10 @@ public class Projectile : MonoBehaviour
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
+        print(collision.gameObject.name);
+        if (collision.gameObject.GetComponent<EnemyManager>() != null) {
+            collision.gameObject.GetComponent<EnemyManager>().Kill();
+        }
         Destroy(gameObject);
     }
 }
