@@ -103,6 +103,7 @@ MonoBehaviour:
   direction: {x: 0, y: 0}
   projectileSpeed: 20
   lifeTime: 5
+  damage: 3
 --- !u!50 &-1321582765427477887
 Rigidbody2D:
   serializedVersion: 4

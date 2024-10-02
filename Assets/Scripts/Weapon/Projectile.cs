@@ -14,6 +14,9 @@ public class Projectile : MonoBehaviour
     [SerializeField]
     private float lifeTime;
 
+    [SerializeField]
+    private int damage;
+
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
@@ -30,7 +33,7 @@ public class Projectile : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision) {
         //print(collision.gameObject.name);
         if (collision.gameObject.GetComponent<EnemyManager>() != null) {
-            collision.gameObject.GetComponent<EnemyManager>().Kill();
+            collision.gameObject.GetComponent<EnemyManager>().gainDamage(damage);
         }
         Destroy(gameObject);
     }

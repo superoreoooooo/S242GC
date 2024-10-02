@@ -22,6 +22,13 @@ public class PlayerMovement : MonoBehaviour
     }
 
     [SerializeField]
+    private int dashDamage;
+
+    public int DashDamage {
+        get => dashDamage;
+    }
+
+    [SerializeField]
     private float dashForce;
 
     [SerializeField]

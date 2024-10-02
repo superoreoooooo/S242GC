@@ -10,6 +10,12 @@ public class EnemyManager : MonoBehaviour
 
     NavMeshAgent agent;
 
+    [SerializeField]
+    private int health;
+
+    [SerializeField]
+    private int damage;
+
     void Awake() {
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
@@ -24,5 +30,12 @@ public class EnemyManager : MonoBehaviour
 
     public void Kill() {
         Destroy(gameObject);
+    }
+
+    public void gainDamage(int amount) {
+        health -= amount;
+        if (health <= 0) {
+            Kill();
+        }
     }
 }
