@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -9,11 +10,34 @@ public class PlayerManager : MonoBehaviour
     private float lrLen = 3f;
     */
 
+    public UnityEvent onPlayerDead;
+
     [SerializeField]
     private GameObject projectile;
 
+    private int health;
+
+    private void initPlayer() {
+        health = 0;
+    }
+
+    private void updatePlayer() {
+        if (health <= 0) {
+            dead();
+        }
+    }
+
+    private void dead() {
+        onPlayerDead.Invoke();
+    }
+
+    public void gainDamage(int amount) {
+        health -= amount;
+    }
+
     void Start()
     {
+        initPlayer();
         /*
         lr = GetComponent<LineRenderer>();
         lr.startWidth = 0.1f;
@@ -27,6 +51,7 @@ public class PlayerManager : MonoBehaviour
 
     void Update()
     {
+        updatePlayer();
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = 0f;
 
