@@ -28,6 +28,17 @@ public class Projectile : MonoBehaviour
 
     void Update()
     {
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.gameObject.GetComponent<EnemyManager>() != null)
+        {
+            collider.gameObject.GetComponent<EnemyManager>().gainDamage(damage);
+        }
+
+        Destroy(gameObject);
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
@@ -35,6 +46,5 @@ public class Projectile : MonoBehaviour
         if (collision.gameObject.GetComponent<EnemyManager>() != null) {
             collision.gameObject.GetComponent<EnemyManager>().gainDamage(damage);
         }
-        Destroy(gameObject);
     }
 }

@@ -71,5 +71,5 @@ MonoBehaviour:
       rightSocket: 0
       topSocket: 1
       lowSocket: 0
-  Width: 30
-  Height: 30
+  Width: 10
+  Height: 10

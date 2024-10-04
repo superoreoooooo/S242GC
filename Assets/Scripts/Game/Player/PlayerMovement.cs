@@ -34,6 +34,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float dashDuration;
 
+    [SerializeField]
+    private float dashThickness;
+
     private bool isDashAble = true;
     
     private float coolDownDash = 0f;
@@ -84,16 +87,41 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator SkillDash() {
         if (movement.magnitude != 0) {
             isDashing = true;
-            //Vector2 origin = transform.position;
+            Vector2 startPoint = transform.position;
             speed = dashForce;
             Dash(movement.normalized);
+            GetComponent<PlayerManager>().Invincible = true;
 
             yield return new WaitForSeconds(dashDuration);
 
             speed = originalSpeed;
             Dash(movement.normalized);
-            isDashing = false;
             isDashAble = false;
+
+            Vector2 endPoint = transform.position;
+
+            Vector2 dir = endPoint - startPoint;
+            float dt = dir.magnitude;
+
+            Collider2D[] hitColliders = Physics2D.OverlapCapsuleAll(dir / 2,
+                new Vector2(dt, dashThickness),
+                CapsuleDirection2D.Horizontal,
+                0f); //, LayerMask.NameToLayer("Enemy"));
+
+            foreach (Collider2D collider in hitColliders)
+            {
+                if (collider.tag == "Enemy")
+                {
+                    collider.gameObject.GetComponent<EnemyManager>().gainDamage(5);
+                }
+                //print(collider.name);
+            }
+
+            GetComponent<PlayerManager>().Invincible = false;
+
+            yield return new WaitForSeconds(0.2f);
+
+            isDashing = false;
         }
     }
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -31,6 +32,12 @@ public class PlayerManager : MonoBehaviour
 
     private bool isInvincible;
 
+    public bool Invincible
+    {
+        get => isInvincible;
+        set { isInvincible = value; }
+    }
+
     [SerializeField]
     private int knifeDamage;
 
@@ -40,6 +47,12 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private float knifeAngle;
 
+    [SerializeField]
+    private GameObject interacionUI;
+
+    [SerializeField]
+    private float interactionDistance;
+
     private void initPlayer()
     {
         //health = 0;
@@ -48,11 +61,60 @@ public class PlayerManager : MonoBehaviour
 
     private SpriteRenderer sr;
 
+    private bool isInteractable;
+
     private void updatePlayer()
     {
+        isInteractable = false;
+            
         if (health <= 0)
         {
             dead();
+        }
+
+        GameObject iobj = null;
+
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Interactable"))
+        {
+            if ((obj.transform.position - transform.position).magnitude <= interactionDistance)
+            {
+                isInteractable = true;
+
+                if (iobj != null)
+                {
+                    if ((iobj.transform.position - transform.position).magnitude > (obj.transform.position - transform.position).magnitude)
+                    {
+                        iobj = obj;
+                    }
+                } else
+                {
+                    iobj = obj;
+                }
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.E) && isInteractable)
+        {
+            if (iobj != null)
+            {
+                interact(iobj);
+            }
+        }
+
+
+        interacionUI.SetActive(isInteractable);
+    }
+
+    private void interact(GameObject obj)
+    {
+        switch (obj.GetComponent<Interactable>().iType)
+        {
+            case "Door":
+                print("MOVE!");
+                break;
+            default:
+                print("null");
+                break;
         }
     }
 
@@ -172,7 +234,7 @@ public class PlayerManager : MonoBehaviour
                 }
                 else
                 {
-                    collision.gameObject.GetComponent<EnemyManager>().gainDamage(movement.DashDamage);
+                    //collision.gameObject.GetComponent<EnemyManager>().gainDamage(movement.DashDamage);
                 }
             }
         }
@@ -208,6 +270,19 @@ public class PlayerManager : MonoBehaviour
 
             Sharp();
             yield return new WaitForSeconds(0.2f);
+        }
+    }
+
+
+    //TEST ZONE
+
+    public GameObject nav;
+
+    void FixedUpdate()
+    {
+        if (Input.GetKey(KeyCode.F))
+        {
+            nav.GetComponent<Nav>().buildNavMesh();
         }
     }
 }
