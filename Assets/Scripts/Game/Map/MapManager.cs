@@ -38,7 +38,7 @@ public class MapManager : MonoBehaviour
 
     public int[] getCellDir(GameObject obj)
     {
-        return new int[] {0, 0};
+        return new int[] {(int) obj.transform.position.x / 22, (int) obj.transform.position.y / 24};
     }
 
     public CellDirection getOppositeDir(CellDirection dir)
@@ -63,7 +63,7 @@ public class MapManager : MonoBehaviour
         {
             if (tryGenCellPos.x > tPos.x && tryGenCellPos.y == tPos.y) //check LEFT -> RIGHT
             {
-                if (grid[tPos.x, tPos.y].GetComponent<Cell>().RIGHT != tryGenCell.LEFT)
+                if (grid[tPos.x, tPos.y].GetComponent<Cell>().RIGHT != tryGenCell.RIGHT)
                 {
                     return false;
                 }
@@ -90,7 +90,7 @@ public class MapManager : MonoBehaviour
         {
             if (tryGenCellPos.x < tPos.x && tryGenCellPos.y == tPos.y) //check LEFT -> RIGHT
             {
-                if (grid[tPos.x, tPos.y].GetComponent<Cell>().LEFT != tryGenCell.RIGHT)
+                if (grid[tPos.x, tPos.y].GetComponent<Cell>().LEFT != tryGenCell.LEFT)
                 {
                     return false;
                 }
@@ -113,10 +113,18 @@ public class MapManager : MonoBehaviour
         return true;
     }
 
-    private void Gen(List<GameObject> ableCells, Vector2 pos)
+    private void Gen(List<GameObject> ableCells, Vector2Int pos)
     {
         GameObject pick = ableCells[Random.Range(0, ableCells.Count)];
-        Instantiate(pick, new Vector2(40 * pos.x, 40 * pos.y), Quaternion.identity);
+        grid[pos.x, pos.y] = pick;
+        print($"Picked : {pick.name} || X : {pos.x} / Y : {pos.y}");
+
+        foreach (GameObject obj in ableCells)
+        {
+            //print($"{obj.name}");
+        }
+
+        Instantiate(pick, new Vector2(22 * pos.x, 24 * pos.y), Quaternion.identity);
     }
 
     public void genCell(int xNow, int yNow, CellDirection dir)
@@ -126,7 +134,7 @@ public class MapManager : MonoBehaviour
         switch (dir)
         {
             case CellDirection.UP:
-                if (grid[xNow, yNow + 1] == null) {
+                if (yNow + 1 < size && grid[xNow, yNow + 1] == null) {
                     List<GameObject> ableCells = new List<GameObject>();
                     foreach (GameObject obj in cellPrefabs)
                     {
@@ -146,12 +154,7 @@ public class MapManager : MonoBehaviour
 
                     if (ableCells.Count > 0)
                     {
-                        foreach (GameObject obj in ableCells)
-                        {
-                            print($"{obj.name}");
-                        }
-
-                        Gen(ableCells, new Vector2(xNow, yNow + 1));
+                        Gen(ableCells, new Vector2Int(xNow, yNow + 1));
                     }
 
                     else
@@ -161,7 +164,7 @@ public class MapManager : MonoBehaviour
                 }
                 break;
             case CellDirection.DOWN:
-                if (grid[xNow, yNow - 1] == null)
+                if (yNow - 1 >= 0 && grid[xNow, yNow - 1] == null)
                 {
                     List<GameObject> ableCells = new List<GameObject>();
                     foreach (GameObject obj in cellPrefabs)
@@ -182,12 +185,7 @@ public class MapManager : MonoBehaviour
 
                     if (ableCells.Count > 0)
                     {
-                        foreach (GameObject obj in ableCells)
-                        {
-                            print($"{obj.name}");
-                        }
-
-                        Gen(ableCells, new Vector2(xNow, yNow - 1));
+                        Gen(ableCells, new Vector2Int(xNow, yNow - 1));
                     }
 
                     else
@@ -197,7 +195,7 @@ public class MapManager : MonoBehaviour
                 }
                 break;
             case CellDirection.LEFT:
-                if (grid[xNow - 1, yNow] == null)
+                if (xNow - 1 >= 0 && grid[xNow - 1, yNow] == null)
                 {
                     List<GameObject> ableCells = new List<GameObject>();
                     foreach (GameObject obj in cellPrefabs)
@@ -218,12 +216,7 @@ public class MapManager : MonoBehaviour
 
                     if (ableCells.Count > 0)
                     {
-                        foreach (GameObject obj in ableCells)
-                        {
-                            print($"{obj.name}");
-                        }
-
-                        Gen(ableCells, new Vector2(xNow - 1, yNow));
+                        Gen(ableCells, new Vector2Int(xNow - 1, yNow));
                     }
 
                     else
@@ -233,7 +226,7 @@ public class MapManager : MonoBehaviour
                 }
                 break;
             case CellDirection.RIGHT:
-                if (grid[xNow + 1, yNow] == null)
+                if (xNow + 1 <= size && grid[xNow + 1, yNow] == null)
                 {
                     List<GameObject> ableCells = new List<GameObject>();
                     foreach (GameObject obj in cellPrefabs)
@@ -254,12 +247,7 @@ public class MapManager : MonoBehaviour
 
                     if (ableCells.Count > 0)
                     {
-                        foreach (GameObject obj in ableCells)
-                        {
-                            print($"{obj.name}");
-                        }
-
-                        Gen(ableCells, new Vector2(xNow + 1, yNow));
+                        Gen(ableCells, new Vector2Int(xNow + 1, yNow));
                     }
 
                     else

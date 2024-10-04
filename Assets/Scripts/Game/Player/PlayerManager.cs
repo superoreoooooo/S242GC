@@ -120,6 +120,18 @@ public class PlayerManager : MonoBehaviour
                     case "UP":
                         CD = CellDirection.UP;
                         break;
+                    case "DOWN":
+                        CD = CellDirection.DOWN;
+                        break;
+                    case "LEFT":
+                        CD = CellDirection.LEFT;
+                        break;
+                    case "RIGHT":
+                        CD = CellDirection.RIGHT;
+                        break;
+                    default:
+                        Debug.Log("qudtls");
+                        break;
                 }
                 MAPMGR.GetComponent<MapManager>().genCell(posC[0], posC[1], CD);
                 break;
