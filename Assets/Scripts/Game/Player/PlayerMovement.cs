@@ -102,6 +102,7 @@ public class PlayerMovement : MonoBehaviour
 
             Vector2 dir = endPoint - startPoint;
             float dt = dir.magnitude;
+            /*
 
             Collider2D[] hitColliders = Physics2D.OverlapCapsuleAll(dir / 2,
                 new Vector2(dt, dashThickness),
@@ -115,7 +116,7 @@ public class PlayerMovement : MonoBehaviour
                     collider.gameObject.GetComponent<EnemyManager>().gainDamage(5);
                 }
                 //print(collider.name);
-            }
+            } */ 
 
             GetComponent<PlayerManager>().Invincible = false;
 

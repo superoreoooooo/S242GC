@@ -23,7 +23,7 @@ public class EnemyManager : MonoBehaviour
     }
 
     void Update() {
-        if (target != null) {
+        if (target != null && agent.isOnNavMesh) {
             agent.SetDestination(target.position);
         }
     }

@@ -76,7 +76,7 @@ public class PlayerManager : MonoBehaviour
 
         foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Interactable"))
         {
-            if ((obj.transform.position - transform.position).magnitude <= interactionDistance)
+            if (((Vector2) obj.transform.position - (Vector2) transform.position).magnitude <= interactionDistance)
             {
                 isInteractable = true;
 
@@ -105,12 +105,23 @@ public class PlayerManager : MonoBehaviour
         interacionUI.SetActive(isInteractable);
     }
 
+    public GameObject MAPMGR;
+
     private void interact(GameObject obj)
     {
         switch (obj.GetComponent<Interactable>().iType)
         {
             case "Door":
-                print("MOVE!");
+                int[] posC = MAPMGR.GetComponent<MapManager>().getCellDir(gameObject);
+                CellDirection CD = CellDirection.VOID;
+
+                switch (obj.GetComponent<Interactable>().iData[0])
+                {
+                    case "UP":
+                        CD = CellDirection.UP;
+                        break;
+                }
+                MAPMGR.GetComponent<MapManager>().genCell(posC[0], posC[1], CD);
                 break;
             default:
                 print("null");
@@ -284,5 +295,11 @@ public class PlayerManager : MonoBehaviour
         {
             nav.GetComponent<Nav>().buildNavMesh();
         }
+        if (Input.GetKey(KeyCode.J))
+        {
+            //MAPMGR.GetComponent<MapManager>().genCell(get, 0, CellDirection.LEFT);
+        }
     }
+
+
 }
