@@ -18,22 +18,15 @@ public class MapManager : MonoBehaviour
 
     void Start()
     {
+        Vector2Int pos = new Vector2Int(Random.Range(0, size), Random.Range(0, size));
+        Gen(cellPrefabs, pos);
+
         //grid[Random.Range(0, size), Random.Range(0, size)] = Instantiate(cellPrefabs[Random.Range(0, cellPrefabs.Count)]);
-        grid[0, 0] = Instantiate(cellPrefabs[0]);
+        //grid[0, 0] = Instantiate(cellPrefabs[0]);
     }
 
     void Update()
     {
-        for (int i = 0; i < 10; i++)
-        {
-            for (int j = 0; j < 10; j++)
-            {
-                if (grid[i, j] != null)
-                {
-                    //print($"x:{i} y:{j} {grid[i, j].GetComponent<Cell>().UP}");
-                }
-            }
-        }
     }
 
     public int[] getCellDir(GameObject obj)
@@ -130,7 +123,7 @@ public class MapManager : MonoBehaviour
     public void genCell(int xNow, int yNow, CellDirection dir)
     {
         float t = Time.deltaTime;
-        print($"START TIME : {t}");
+        //print($"START TIME : {t}");
         switch (dir)
         {
             case CellDirection.UP:
