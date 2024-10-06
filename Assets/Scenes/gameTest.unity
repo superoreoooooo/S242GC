@@ -4337,64 +4337,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1416335084}
   m_CullTransparentMesh: 1
---- !u!1 &1458888403
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1458888405}
-  - component: {fileID: 1458888404}
-  m_Layer: 0
-  m_Name: WFCManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1458888404
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1458888403}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b9b4abec6321bc4797686018cd3a60d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  datas:
-  - {fileID: 11400000, guid: 6a7404df229f57b468eb672c270fd7aa, type: 2}
-  - {fileID: 11400000, guid: 5ba2c841590c40a4fbb4a8d395dd67ac, type: 2}
-  - {fileID: 11400000, guid: 59b03ad351a117e4286e17cd8cd3ed07, type: 2}
-  - {fileID: 11400000, guid: 0b49ba52a003f3c4ea28e8b9bac7b7a6, type: 2}
-  - {fileID: 11400000, guid: 06ff2b85755faca46ab678bf2620b184, type: 2}
-  - {fileID: 11400000, guid: f25ef9f6d67614c4389c873256ab210c, type: 2}
-  - {fileID: 11400000, guid: eb668980c4510fa48b6eadbf78dec860, type: 2}
-  - {fileID: 11400000, guid: 198891128531f6645b01decf9fd543d6, type: 2}
-  - {fileID: 11400000, guid: 2164ff9cc9d7f834eb3df5c75e59854e, type: 2}
-  - {fileID: 11400000, guid: 05f95d0a6a582f7459eae68ae4029160, type: 2}
-  - {fileID: 11400000, guid: b5197d2615a67f84d9b9983dbc9953ea, type: 2}
-  - {fileID: 11400000, guid: 1fe1fc2c3de11ff4e9edcdc35ff5af11, type: 2}
-  GRID_SIZE: 10
---- !u!4 &1458888405
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1458888403}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1477586484
 GameObject:
   m_ObjectHideFlags: 0
@@ -4413,7 +4355,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1477586485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13039,7 +12981,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 519420032}
-  - {fileID: 1458888405}
   - {fileID: 1667751146}
   - {fileID: 154103537}
   - {fileID: 1951808580}
