@@ -31,7 +31,7 @@ public class MapManager : MonoBehaviour
 
     public int[] getCellDir(GameObject obj)
     {
-        return new int[] {(int) obj.transform.position.x / 22, (int) obj.transform.position.y / 24};
+        return new int[] { (int)obj.transform.position.x / 22, (int)obj.transform.position.y / 24 };
     }
 
     public CellDirection getOppositeDir(CellDirection dir)
@@ -54,12 +54,9 @@ public class MapManager : MonoBehaviour
         tPos = new Vector2Int(tryGenCellPos.x - 1, tryGenCellPos.y);
         if (tPos.x >= 0 && grid[tPos.x, tPos.y] != null)
         {
-            if (tryGenCellPos.x > tPos.x && tryGenCellPos.y == tPos.y) //check LEFT -> RIGHT
+            if (grid[tPos.x, tPos.y].GetComponent<Cell>().RIGHT != tryGenCell.LEFT)
             {
-                if (grid[tPos.x, tPos.y].GetComponent<Cell>().RIGHT != tryGenCell.RIGHT)
-                {
-                    return false;
-                }
+                return false;
             }
         }
 
@@ -68,12 +65,9 @@ public class MapManager : MonoBehaviour
         tPos = new Vector2Int(tryGenCellPos.x, tryGenCellPos.y - 1);
         if (tPos.y >= 0 && grid[tPos.x, tPos.y] != null)
         {
-            if (tryGenCellPos.x == tPos.x && tryGenCellPos.y < tPos.y)
+            if (grid[tPos.x, tPos.y].GetComponent<Cell>().UP != tryGenCell.DOWN)
             {
-                if (grid[tPos.x, tPos.y].GetComponent<Cell>().DOWN != tryGenCell.UP)
-                {
-                    return false;
-                }
+                return false;
             }
         }
 
@@ -81,12 +75,9 @@ public class MapManager : MonoBehaviour
         tPos = new Vector2Int(tryGenCellPos.x + 1, tryGenCellPos.y);
         if (tPos.x < size && grid[tPos.x, tPos.y] != null)
         {
-            if (tryGenCellPos.x < tPos.x && tryGenCellPos.y == tPos.y) //check LEFT -> RIGHT
+            if (grid[tPos.x, tPos.y].GetComponent<Cell>().LEFT != tryGenCell.RIGHT)
             {
-                if (grid[tPos.x, tPos.y].GetComponent<Cell>().LEFT != tryGenCell.LEFT)
-                {
-                    return false;
-                }
+                return false;
             }
         }
 
@@ -94,12 +85,9 @@ public class MapManager : MonoBehaviour
         tPos = new Vector2Int(tryGenCellPos.x, tryGenCellPos.y + 1);
         if (tPos.y < size && grid[tPos.x, tPos.y] != null)
         {
-            if (tryGenCellPos.x == tPos.x && tryGenCellPos.y > tPos.y)
+            if (grid[tPos.x, tPos.y].GetComponent<Cell>().DOWN != tryGenCell.UP)
             {
-                if (grid[tPos.x, tPos.y].GetComponent<Cell>().UP != tryGenCell.DOWN)
-                {
-                    return false;
-                }
+                return false;
             }
         }
 
@@ -127,7 +115,8 @@ public class MapManager : MonoBehaviour
         switch (dir)
         {
             case CellDirection.UP:
-                if (yNow + 1 < size && grid[xNow, yNow + 1] == null) {
+                if (yNow + 1 < size && grid[xNow, yNow + 1] == null)
+                {
                     List<GameObject> ableCells = new List<GameObject>();
                     foreach (GameObject obj in cellPrefabs)
                     {
@@ -219,7 +208,7 @@ public class MapManager : MonoBehaviour
                 }
                 break;
             case CellDirection.RIGHT:
-                if (xNow + 1 <= size && grid[xNow + 1, yNow] == null)
+                if (xNow + 1 < size && grid[xNow + 1, yNow] == null)
                 {
                     List<GameObject> ableCells = new List<GameObject>();
                     foreach (GameObject obj in cellPrefabs)

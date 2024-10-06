@@ -377,7 +377,7 @@ MonoBehaviour:
   dashForce: 10
   dashDuration: 0.01
   dashThickness: 2
-  CoolDown_DASH: 3
+  CoolDown_DASH: 0.3
 --- !u!50 &154103539
 Rigidbody2D:
   serializedVersion: 4
@@ -1372,7 +1372,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -4413,7 +4413,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1477586485
 MonoBehaviour:
   m_ObjectHideFlags: 0
