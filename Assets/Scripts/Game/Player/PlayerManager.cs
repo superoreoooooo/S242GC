@@ -14,6 +14,9 @@ public class PlayerManager : MonoBehaviour
     */
 
     public UnityEvent onPlayerDead;
+    public UnityEvent onPlayerInteract; // -> 안쓸듯?
+
+
     private PlayerMovement movement;
 
     [SerializeField]

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MapManager : MonoBehaviour
@@ -27,6 +28,7 @@ public class MapManager : MonoBehaviour
 
     void Update()
     {
+        drawRoomConnection();
     }
 
     public int[] getCellDir(GameObject obj)
@@ -98,6 +100,8 @@ public class MapManager : MonoBehaviour
     {
         GameObject pick = ableCells[Random.Range(0, ableCells.Count)];
         grid[pos.x, pos.y] = pick;
+        Cell cell = pick.GetComponent<Cell>();
+
         print($"Picked : {pick.name} || X : {pos.x} / Y : {pos.y}");
 
         foreach (GameObject obj in ableCells)
@@ -129,7 +133,11 @@ public class MapManager : MonoBehaviour
                         {
                             if (checkIsAvailableCell(new Vector2Int(xNow, yNow + 1), c))
                             {
-                                ableCells.Add(obj);
+                                if (yNow + 2 == size) {
+                                    if (!c.UP) ableCells.Add(obj);
+                                } else {
+                                    ableCells.Add(obj);
+                                }
                             }
                         }
                     }
@@ -160,7 +168,11 @@ public class MapManager : MonoBehaviour
                         {
                             if (checkIsAvailableCell(new Vector2Int(xNow, yNow - 1), c))
                             {
-                                ableCells.Add(obj);
+                                if (yNow - 1 == 0) {
+                                    if (!c.DOWN) ableCells.Add(obj);
+                                } else {
+                                    ableCells.Add(obj);
+                                }
                             }
                         }
                     }
@@ -191,7 +203,11 @@ public class MapManager : MonoBehaviour
                         {
                             if (checkIsAvailableCell(new Vector2Int(xNow - 1, yNow), c))
                             {
-                                ableCells.Add(obj);
+                                if (xNow - 1 == 0) {
+                                    if (!c.LEFT) ableCells.Add(obj);
+                                } else {
+                                    ableCells.Add(obj);
+                                }
                             }
                         }
                     }
@@ -222,7 +238,11 @@ public class MapManager : MonoBehaviour
                         {
                             if (checkIsAvailableCell(new Vector2Int(xNow + 1, yNow), c))
                             {
-                                ableCells.Add(obj);
+                                if (xNow + 2 == size) {
+                                    if (!c.RIGHT) ableCells.Add(obj);
+                                } else {
+                                    ableCells.Add(obj);
+                                }
                             }
                         }
                     }
@@ -243,5 +263,107 @@ public class MapManager : MonoBehaviour
                 break;
         }
         print($"ETA :: {Time.deltaTime - t}");
+    }
+
+    public void checkRoomDone() { //0 : done | 1 : left 1 room | 2+ : not done
+        for (int x = 0; x < size; x++) {
+            for (int y = 0; y < size; y++) {
+                if (grid[x, y] != null) {
+                    GameObject obj = grid[x, y];
+                    Cell cell = obj.GetComponent<Cell>();
+                }
+            }
+        }
+    }
+
+    public void drawRoomConnection()
+    {
+        //추후에 고치기
+        //List<Dictionary<Vector2Int, Vector2Int>> roomConnections = new List<Dictionary<Vector2Int, Vector2Int>>();\
+        Dictionary<Vector2Int, List<Vector2Int>> connections = new Dictionary<Vector2Int, List<Vector2Int>>();
+
+        for (int x = 0; x < size; x++)
+        {
+            for (int y = 0; y < size; y++)
+            {
+                if (grid[x, y] == null) continue;
+                Cell cell = grid[x, y].GetComponent<Cell>();
+                Vector2Int pos = new Vector2Int(x, y);
+
+                Vector2Int tPos;
+
+                //Check LEFT-SIDED Cell
+                tPos = new Vector2Int(x - 1, y);
+                if (tPos.x >= 0 && grid[tPos.x, tPos.y] != null)
+                {
+                    if (grid[tPos.x, tPos.y].GetComponent<Cell>().RIGHT == cell.LEFT && cell.LEFT)
+                    {
+                        if (connections.ContainsKey(pos)) {
+                            connections[pos].Add(tPos);
+                        } else {
+                            connections.Add(pos, new List<Vector2Int>(){tPos});
+                        }
+                    }
+                }
+
+
+                //Check DOWN-SIDED Cell
+                tPos = new Vector2Int(x, y - 1);
+                if (tPos.y >= 0 && grid[tPos.x, tPos.y] != null)
+                {
+                    if (grid[tPos.x, tPos.y].GetComponent<Cell>().UP == cell.DOWN && cell.DOWN)
+                    {
+                        if (connections.ContainsKey(pos)) {
+                            connections[pos].Add(tPos);
+                        } else {
+                            connections.Add(pos, new List<Vector2Int>(){tPos});
+                        }
+                    }
+                }
+
+                //Check RIGHT-SIDED Cell
+                tPos = new Vector2Int(x + 1, y);
+                if (tPos.x < size && grid[tPos.x, tPos.y] != null)
+                {
+                    if (grid[tPos.x, tPos.y].GetComponent<Cell>().LEFT == cell.RIGHT && cell.RIGHT)
+                    {
+                        if (connections.ContainsKey(pos)) {
+                            connections[pos].Add(tPos);
+                        } else {
+                            connections.Add(pos, new List<Vector2Int>(){tPos});
+                        }
+                    }
+                }
+
+                //Check UP-SIDED Cell
+                tPos = new Vector2Int(x, y + 1);
+                if (tPos.y < size && grid[tPos.x, tPos.y] != null)
+                {
+                    if (grid[tPos.x, tPos.y].GetComponent<Cell>().DOWN == cell.UP && cell.UP)
+                    {
+                        if (connections.ContainsKey(pos)) {
+                            connections[pos].Add(tPos);
+                        } else {
+                            connections.Add(pos, new List<Vector2Int>(){tPos});
+                        }
+                    }
+                }
+            }
+        }
+
+        foreach (Vector2Int k in connections.Keys) {
+            foreach (Vector2Int vv in connections[k]) {
+                //print($"K:{k} || vv:{vv}");
+                //22 * pos.x, 24 * pos.y
+                int x = 22;
+                int y = 24;
+                Debug.DrawLine(new Vector3(x * k.x + (x / 2), y * k.y + (y / 2), -3), new Vector3(x * vv.x + (x / 2), y * vv.y + (y / 2), -3), Color.red, 0.3f);
+            }
+        }
+    }
+
+    public bool isRoomEnd()
+    {
+        return false;
     }
 }
