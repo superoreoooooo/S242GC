@@ -47,3 +47,9 @@ TagManager:
   - name: Game
     uniqueID: 1706307589
     locked: 0
+  - name: Entity
+    uniqueID: 2094698395
+    locked: 0
+  - name: Lighting
+    uniqueID: 4199438057
+    locked: 0
