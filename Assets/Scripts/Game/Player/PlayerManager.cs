@@ -255,7 +255,7 @@ public class PlayerManager : MonoBehaviour
         {
             if (iobj != null)
             {
-                //onPlayerMoveRoom.Invoke(); 
+                print(iobj.name);
             }
         }
 

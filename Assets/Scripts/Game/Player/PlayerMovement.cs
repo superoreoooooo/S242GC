@@ -56,6 +56,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        isFlipped = false;
         originalSpeed = speed;
         isDashing = false;
         movement = new Vector2();
@@ -77,6 +78,15 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         UpdateSkill();
+
+        if (movement.x < 0 && !isFlipped)
+        {
+            flip();
+        }
+        else if (movement.x > 0 && isFlipped)
+        {
+            flip();
+        }
     }
 
     private void FixedUpdate() {
@@ -142,4 +152,21 @@ public class PlayerMovement : MonoBehaviour
     public void Dash(Vector2 dir) {
         movement = new Vector2(dir.x * speed, dir.y * speed);
     }
+
+    private bool isFlipped;
+
+    public bool Flip
+    {
+        get => isFlipped;
+    }
+
+    private void flip()
+    {
+        isFlipped = !isFlipped;
+        Vector3 localScale = transform.localScale;
+        localScale.x *= -1;
+        transform.localScale = localScale;
+    }
+
+
 }
