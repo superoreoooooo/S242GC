@@ -68,17 +68,11 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private float exitDistance;
 
-    private void initPlayer()
+    private void initPlayerMoveRoom()
     {
         isInvincible = false;
         transform.position = new Vector2((gameData.SpawnX) * gameData.RoomSizeX + 18, (gameData.SpawnY) * gameData.RoomSizeY + 19);
-
         mapManager = FindObjectOfType<MapManager>();
-
-        if (cellNow != null)
-        {
-            print("LOAD");
-        }
     }
 
     private SpriteRenderer sr;
@@ -103,9 +97,9 @@ public class PlayerManager : MonoBehaviour
         StartCoroutine(fadeIn());
     }
 
-    private void updatePlayer()
+    private void updatePlayerMoveRoom()
     {
-        isInteractable = false;
+        if (mapManager == null) return;
 
         cellNow = mapManager.getCell((Vector2) transform.position);
         Vector2Int posNow = mapManager.getCellPos((Vector2) transform.position);
@@ -180,37 +174,6 @@ public class PlayerManager : MonoBehaviour
                 StartCoroutine(teleport(position));
             }
         }
-
-        GameObject iobj = null;
-
-        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Interactable"))
-        {
-            if (((Vector2) obj.transform.position - (Vector2) transform.position).magnitude <= interactionDistance)
-            {
-                isInteractable = true;
-
-                if (iobj != null)
-                {
-                    if ((iobj.transform.position - transform.position).magnitude > (obj.transform.position - transform.position).magnitude)
-                    {
-                        iobj = obj;
-                    }
-                } else
-                {
-                    iobj = obj;
-                }
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.E) && isInteractable)
-        {
-            if (iobj != null)
-            {
-                //onPlayerMoveRoom.Invoke(); 
-            }
-        }
-
-        interacionUI.SetActive(isInteractable);
     }
 
 
@@ -262,12 +225,50 @@ public class PlayerManager : MonoBehaviour
         health -= amount;
     }
 
+    private void updateInteraction()
+    {
+        isInteractable = false;
+
+        GameObject iobj = null;
+
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Interactable"))
+        {
+            if (((Vector2)obj.transform.position - (Vector2)transform.position).magnitude <= interactionDistance)
+            {
+                isInteractable = true;
+
+                if (iobj != null)
+                {
+                    if ((iobj.transform.position - transform.position).magnitude > (obj.transform.position - transform.position).magnitude)
+                    {
+                        iobj = obj;
+                    }
+                }
+                else
+                {
+                    iobj = obj;
+                }
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.E) && isInteractable)
+        {
+            if (iobj != null)
+            {
+                //onPlayerMoveRoom.Invoke(); 
+            }
+        }
+
+        interacionUI.SetActive(isInteractable);
+    }
+
     void Start()
     {
-        initPlayer();
+        //initPlayerMoveRoom();
 
         movement = GetComponent<PlayerMovement>();
         sr = GetComponent<SpriteRenderer>();
+
         /*
         lr = GetComponent<LineRenderer>();
         lr.startWidth = 0.1f;
@@ -288,7 +289,8 @@ public class PlayerManager : MonoBehaviour
 
         if (!movement.isMoveable) return;
 
-        updatePlayer();
+        updateInteraction();
+        updatePlayerMoveRoom();
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = 0f;
 
