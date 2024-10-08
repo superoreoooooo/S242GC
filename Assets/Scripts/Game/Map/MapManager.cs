@@ -17,20 +17,19 @@ public class MapManager : MonoBehaviour
 
     private void Awake()
     {
+        size = data.grid_size;
+        CELL_SIZE_X = data.RoomSizeX;
+        CELL_SIZE_Y = data.RoomSizeY;
+
         grid = new GameObject[size, size];
     }
 
     void Start()
     {
-        size = data.grid_size;
-        CELL_SIZE_X = data.RoomSizeX;
-        CELL_SIZE_Y = data.RoomSizeY;
-
         Gen(new List<GameObject>() { data.SpawnRoomPrefab }, new Vector2Int(data.SpawnX, data.SpawnY));
 
         //Vector2Int pos = new Vector2Int(Random.Range(0, size), Random.Range(0, size));
         //Gen(cellPrefabs, pos);
-        //TODO ENEMYCNT
 
         //grid[Random.Range(0, size), Random.Range(0, size)] = Instantiate(cellPrefabs[Random.Range(0, cellPrefabs.Count)]);
         //grid[0, 0] = Instantiate(cellPrefabs[0]);
@@ -47,7 +46,7 @@ public class MapManager : MonoBehaviour
 
     void Update()
     {
-        drawRoomConnection();
+        //drawRoomConnection();
     }
 
 
