@@ -354,7 +354,7 @@ Transform:
   m_GameObject: {fileID: 154103535}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.44, y: 3.57, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -453,6 +453,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43181b36e95d5a144a4c642b6b1e2066, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameData: {fileID: 11400000, guid: 8294836940674fa40b1483d62e8d8bda, type: 2}
   onPlayerDead:
     m_PersistentCalls:
       m_Calls: []
@@ -474,6 +475,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  playerRoomPos: {x: 0, y: 0}
+  cellNow: {fileID: 0}
   projectile: {fileID: 5268173867473543075, guid: db0cf613e0dd0944ea4e20744480554b, type: 3}
   health: 10
   invincibleTime: 2
@@ -482,7 +485,6 @@ MonoBehaviour:
   knifeAngle: 75
   interacionUI: {fileID: 1416335084}
   interactionDistance: 2
-  MAPMGR: {fileID: 211350618}
   nav: {fileID: 1688702639}
 --- !u!120 &154103543
 LineRenderer:
@@ -873,7 +875,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d5ab32daff584059a9d85af65d32425, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: 10
+  data: {fileID: 11400000, guid: 8294836940674fa40b1483d62e8d8bda, type: 2}
   cellPrefabs:
   - {fileID: 3460213387183342078, guid: a1052d0455ef048f1af617f3bff6ae2c, type: 3}
   - {fileID: 7246996974012568098, guid: 45d683bf9ec6249218030177c6d2fa50, type: 3}
@@ -1690,12 +1692,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 392835863}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -960, y: -540, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1477586488}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &465729073
 PrefabInstance:
@@ -5229,7 +5231,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1444684993
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5398,6 +5400,7 @@ RectTransform:
   - {fileID: 106951151}
   - {fileID: 1416335085}
   - {fileID: 1444684993}
+  - {fileID: 392835866}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -11926,7 +11929,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!156049354 &1667751145
 Grid:
   m_ObjectHideFlags: 0
@@ -20102,45 +20105,7 @@ CompositeCollider2D:
   m_GeometryType: 0
   m_GenerationType: 0
   m_EdgeRadius: 0.07
-  m_ColliderPaths:
-  - m_Collider: {fileID: 1909140781}
-    m_ColliderPaths:
-    - - X: 150000000
-        Y: 180000000
-      - X: -130000000
-        Y: 180000000
-      - X: -130000000
-        Y: -80000000
-      - X: 150000000
-        Y: -80000000
-    - - X: -70000000
-        Y: -40000000
-      - X: -70000000
-        Y: 80000000
-      - X: 80000000
-        Y: 80000000
-      - X: 80000000
-        Y: -40000000
-    - - X: 50000000
-        Y: 50000000
-      - X: 20000000
-        Y: 50000000
-      - X: 20000000
-        Y: -10000000
-      - X: 50000000
-        Y: -10000000
-    - - X: -30000000
-        Y: -10000000
-      - X: -10000000
-        Y: -10000000
-      - X: -10000000
-        Y: 50000000
-      - X: -40000000
-        Y: 50000000
-      - X: -40000000
-        Y: -14687500
-      - X: -30000000
-        Y: -14687500
+  m_ColliderPaths: []
   m_CompositePaths:
     m_Paths:
     - - {x: 15, y: 18}
@@ -20659,7 +20624,6 @@ SceneRoots:
   - {fileID: 2112974344}
   - {fileID: 1914107795}
   - {fileID: 1477586488}
-  - {fileID: 392835866}
   - {fileID: 1688702642}
   - {fileID: 211350619}
   - {fileID: 1069696407}

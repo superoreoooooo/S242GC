@@ -5,8 +5,11 @@ using UnityEngine;
 
 public class MapManager : MonoBehaviour
 {
-    [SerializeField]
+    private int CELL_SIZE_X;
+    private int CELL_SIZE_Y;
     private int size;
+
+    public GameData data;
 
     public GameObject[,] grid;
 
@@ -19,11 +22,27 @@ public class MapManager : MonoBehaviour
 
     void Start()
     {
-        Vector2Int pos = new Vector2Int(Random.Range(0, size), Random.Range(0, size));
-        Gen(cellPrefabs, pos);
+        size = data.grid_size;
+        CELL_SIZE_X = data.RoomSizeX;
+        CELL_SIZE_Y = data.RoomSizeY;
+
+        Gen(new List<GameObject>() { data.SpawnRoomPrefab }, new Vector2Int(data.SpawnX, data.SpawnY));
+
+        //Vector2Int pos = new Vector2Int(Random.Range(0, size), Random.Range(0, size));
+        //Gen(cellPrefabs, pos);
+        //TODO ENEMYCNT
 
         //grid[Random.Range(0, size), Random.Range(0, size)] = Instantiate(cellPrefabs[Random.Range(0, cellPrefabs.Count)]);
         //grid[0, 0] = Instantiate(cellPrefabs[0]);
+    }
+
+    private int enemyCnt = 0;
+
+    public int EnemyCnt { get { return enemyCnt; } }
+
+    public GameObject getCell(Vector2Int cellPos)
+    {
+        return grid[cellPos.x, cellPos.y];
     }
 
     void Update()
@@ -31,10 +50,6 @@ public class MapManager : MonoBehaviour
         drawRoomConnection();
     }
 
-    public int[] getCellDir(GameObject obj)
-    {
-        return new int[] { (int)obj.transform.position.x / 22, (int)obj.transform.position.y / 24 };
-    }
 
     public CellDirection getOppositeDir(CellDirection dir)
     {
@@ -99,8 +114,9 @@ public class MapManager : MonoBehaviour
     private void Gen(List<GameObject> ableCells, Vector2Int pos)
     {
         GameObject pick = ableCells[Random.Range(0, ableCells.Count)];
+        print(pick.name);
         grid[pos.x, pos.y] = pick;
-        Cell cell = pick.GetComponent<Cell>();
+        //Cell cell = pick.GetComponent<Cell>();
 
         print($"Picked : {pick.name} || X : {pos.x} / Y : {pos.y}");
 
@@ -109,8 +125,10 @@ public class MapManager : MonoBehaviour
             //print($"{obj.name}");
         }
 
-        Instantiate(pick, new Vector2(22 * pos.x, 24 * pos.y), Quaternion.identity);
-    }
+        GameObject c = Instantiate(pick, new Vector2(CELL_SIZE_X * pos.x, CELL_SIZE_Y * pos.y), Quaternion.identity);
+        c.GetComponent<Cell>().PosX = pos.x;
+        c.GetComponent<Cell>().PosY = pos.y;
+   }
 
     public void genCell(int xNow, int yNow, CellDirection dir)
     {
@@ -355,15 +373,10 @@ public class MapManager : MonoBehaviour
             foreach (Vector2Int vv in connections[k]) {
                 //print($"K:{k} || vv:{vv}");
                 //22 * pos.x, 24 * pos.y
-                int x = 22;
-                int y = 24;
+                int x = CELL_SIZE_X;
+                int y = CELL_SIZE_Y;
                 Debug.DrawLine(new Vector3(x * k.x + (x / 2), y * k.y + (y / 2), -3), new Vector3(x * vv.x + (x / 2), y * vv.y + (y / 2), -3), Color.red, 0.3f);
             }
         }
-    }
-
-    public bool isRoomEnd()
-    {
-        return false;
     }
 }

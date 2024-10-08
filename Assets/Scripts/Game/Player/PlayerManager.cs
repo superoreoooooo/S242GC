@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,11 +13,14 @@ public class PlayerManager : MonoBehaviour
     private LineRenderer lr;
     private float lrLen = 3f;
     */
+    public GameData gameData;
 
     public UnityEvent onPlayerDead;
     public UnityEvent onPlayerInteract; // -> 안쓸듯?
     public UnityEvent onPlayerMoveRoom;
 
+    public Vector2Int playerRoomPos;
+    public GameObject cellNow;
 
     private PlayerMovement movement;
 
@@ -59,8 +63,8 @@ public class PlayerManager : MonoBehaviour
 
     private void initPlayer()
     {
-        //health = 0;
         isInvincible = false;
+        transform.position = new Vector2((gameData.SpawnX + 0.5f) * gameData.RoomSizeX, (gameData.SpawnY + 0.5f) * gameData.RoomSizeY);
     }
 
     private SpriteRenderer sr;
@@ -101,15 +105,15 @@ public class PlayerManager : MonoBehaviour
         {
             if (iobj != null)
             {
-                interact(iobj);
-                onPlayerMoveRoom.Invoke(); 
+                //onPlayerMoveRoom.Invoke(); 
             }
         }
-
 
         interacionUI.SetActive(isInteractable);
     }
 
+
+    /**
     public GameObject MAPMGR;
 
     private void interact(GameObject obj)
@@ -143,7 +147,7 @@ public class PlayerManager : MonoBehaviour
                 print("null");
                 break;
         }
-    }
+    } */
 
     private void dead()
     {

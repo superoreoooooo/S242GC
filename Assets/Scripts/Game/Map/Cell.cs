@@ -10,11 +10,11 @@ public class Cell : MonoBehaviour
     public bool LEFT;
     public bool RIGHT;
 
-    public Cell(bool up, bool down, bool left, bool right)
-    {
-        this.UP = up;
-        this.DOWN = down;
-        this.LEFT = left;
-        this.RIGHT = right;
-    }
+    public GameObject DOOR_UP;
+    public GameObject DOOR_DOWN;
+    public GameObject DOOR_LEFT;
+    public GameObject DOOR_RIGHT;
+
+    public int PosX = -1;
+    public int PosY = -1;
 }
