@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,10 +13,14 @@ public class PlayerManager : MonoBehaviour
     private LineRenderer lr;
     private float lrLen = 3f;
     */
+    public GameData gameData;
 
     public UnityEvent onPlayerDead;
     public UnityEvent onPlayerInteract; // -> 안쓸듯?
+    public UnityEvent onPlayerMoveRoom;
 
+    public Vector2Int playerRoomPos;
+    public GameObject cellNow;
 
     private PlayerMovement movement;
 
@@ -58,8 +63,8 @@ public class PlayerManager : MonoBehaviour
 
     private void initPlayer()
     {
-        //health = 0;
         isInvincible = false;
+        transform.position = new Vector2((gameData.SpawnX + 0.5f) * gameData.RoomSizeX, (gameData.SpawnY + 0.5f) * gameData.RoomSizeY);
     }
 
     private SpriteRenderer sr;
@@ -100,14 +105,15 @@ public class PlayerManager : MonoBehaviour
         {
             if (iobj != null)
             {
-                interact(iobj);
+                //onPlayerMoveRoom.Invoke(); 
             }
         }
-
 
         interacionUI.SetActive(isInteractable);
     }
 
+
+    /**
     public GameObject MAPMGR;
 
     private void interact(GameObject obj)
@@ -133,7 +139,6 @@ public class PlayerManager : MonoBehaviour
                         CD = CellDirection.RIGHT;
                         break;
                     default:
-                        Debug.Log("qudtls");
                         break;
                 }
                 MAPMGR.GetComponent<MapManager>().genCell(posC[0], posC[1], CD);
@@ -142,7 +147,7 @@ public class PlayerManager : MonoBehaviour
                 print("null");
                 break;
         }
-    }
+    } */
 
     private void dead()
     {
@@ -192,12 +197,20 @@ public class PlayerManager : MonoBehaviour
             Projectile pj = obj.GetComponent<Projectile>();
             pj.direction = direction;
         }
+        /**
         else if (Input.GetMouseButtonDown(1))
         {
-            Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, knifeDistance);
-            foreach (var collider in hitColliders)
+            ContactFilter2D contactFilter = new ContactFilter2D();
+            contactFilter.useTriggers = false;
+            contactFilter.SetLayerMask(LayerMask.GetMask("Enemy"));
+
+            Collider2D[] hitColliders = new Collider2D[10];
+            int numHits = Physics2D.OverlapCollider(GetComponent<Collider2D>(), contactFilter, hitColliders);
+
+            for (int i = 0; i < numHits; i++)
             {
-                if (collider.tag == "Enemy")
+                Collider2D collider = hitColliders[i];
+                if (collider != null && collider.CompareTag("Enemy"))
                 {
                     Vector3 dir = (collider.transform.position - transform.position).normalized;
 
@@ -240,6 +253,7 @@ public class PlayerManager : MonoBehaviour
             lineRenderer.SetPosition(1, startPosition);  // 시작점 (플레이어 위치)
             lineRenderer.SetPosition(2, rightEndPoint);  // 우측 끝점
         }
+        */
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
