@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public bool isMoveable = true;
+
     [SerializeField]
     private float speed = 5f;
 
@@ -12,6 +14,12 @@ public class PlayerMovement : MonoBehaviour
     private float runSpeed = 8f;
 
     private Vector2 movement;
+
+    public Vector2 Movement
+    {
+        get { return movement; }
+        set { movement = value; }
+    }
 
     private Rigidbody2D rb;
 
@@ -56,12 +64,17 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (isDashing) return;
-        if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0) {
-            movement.Set(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        }
-        if (Input.GetKey(KeyCode.LeftShift) && isDashAble) {
-            StartCoroutine(SkillDash());
+        if (isMoveable)
+        {
+            if (isDashing) return;
+            if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
+            {
+                movement.Set(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            }
+            if (Input.GetKey(KeyCode.LeftShift) && isDashAble)
+            {
+                StartCoroutine(SkillDash());
+            }
         }
         UpdateSkill();
     }

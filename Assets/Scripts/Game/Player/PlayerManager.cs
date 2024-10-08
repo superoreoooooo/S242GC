@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UIElements;
 
 [RequireComponent(typeof(PlayerMovement))]
 public class PlayerManager : MonoBehaviour
@@ -18,6 +19,7 @@ public class PlayerManager : MonoBehaviour
     public UnityEvent onPlayerDead;
     public UnityEvent onPlayerInteract; // -> 안쓸듯?
     public UnityEvent onPlayerMoveRoom;
+    public UnityEvent onPlayerTeleportComplete;
 
     public Vector2Int playerRoomPos;
     public GameObject cellNow;
@@ -61,23 +63,122 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private float interactionDistance;
 
+    private MapManager mapManager;
+
+    [SerializeField]
+    private float exitDistance;
+
     private void initPlayer()
     {
         isInvincible = false;
-        transform.position = new Vector2((gameData.SpawnX + 0.5f) * gameData.RoomSizeX, (gameData.SpawnY + 0.5f) * gameData.RoomSizeY);
+        transform.position = new Vector2((gameData.SpawnX) * gameData.RoomSizeX + 18, (gameData.SpawnY) * gameData.RoomSizeY + 19);
+
+        mapManager = FindObjectOfType<MapManager>();
+
+        if (cellNow != null)
+        {
+            print("LOAD");
+        }
     }
 
     private SpriteRenderer sr;
 
     private bool isInteractable;
 
+    private IEnumerator fadeIn()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        onPlayerTeleportComplete.Invoke();
+    }
+
+    private IEnumerator teleport(Vector3 pos)
+    {
+        yield return new WaitForSeconds(1f);
+
+        transform.position = pos;
+
+        movement.isMoveable = true;
+
+        StartCoroutine(fadeIn());
+    }
+
     private void updatePlayer()
     {
         isInteractable = false;
-            
-        if (health <= 0)
+
+        cellNow = mapManager.getCell((Vector2) transform.position);
+        Vector2Int posNow = mapManager.getCellPos((Vector2) transform.position);
+
+        if (cellNow != null)
         {
-            dead();
+            CellDirection CD = CellDirection.VOID;
+            bool a = false;
+            Vector2Int roomDir = new Vector2Int();
+
+            if (cellNow.GetComponent<Cell>().DOOR_UP != null && Vector2.Distance(transform.position, cellNow.GetComponent<Cell>().DOOR_UP.transform.position) <= exitDistance && (Input.GetKey(KeyCode.W) || Input.GetKeyDown(KeyCode.W)))
+            {
+                CD = CellDirection.UP;
+                a = true;
+                roomDir = Vector2Int.up;
+            } 
+            if (cellNow.GetComponent<Cell>().DOOR_DOWN != null && Vector2.Distance(transform.position, cellNow.GetComponent<Cell>().DOOR_DOWN.transform.position) <= exitDistance && (Input.GetKey(KeyCode.S) || Input.GetKeyDown(KeyCode.S)))
+            {
+                CD = CellDirection.DOWN;
+                a = true;
+                roomDir = Vector2Int.down;
+            }
+            if (cellNow.GetComponent<Cell>().DOOR_LEFT != null && Vector2.Distance(transform.position, cellNow.GetComponent<Cell>().DOOR_LEFT.transform.position) <= exitDistance && (Input.GetKey(KeyCode.A) || Input.GetKeyDown(KeyCode.A)))
+            {
+                CD = CellDirection.LEFT;
+                a = true;
+                roomDir = Vector2Int.left;
+            }
+            if (cellNow.GetComponent<Cell>().DOOR_RIGHT != null && Vector2.Distance(transform.position, cellNow.GetComponent<Cell>().DOOR_RIGHT.transform.position) <= exitDistance && (Input.GetKey(KeyCode.D) || Input.GetKeyDown(KeyCode.D)))
+            {
+                CD = CellDirection.RIGHT;
+                a = true;
+                roomDir = Vector2Int.right;
+            }
+
+            if (a)
+            {
+                onPlayerMoveRoom.Invoke();
+                Vector3 position = new Vector3();
+                GameObject cell;
+
+                if (mapManager.getCell(mapManager.getCellPos(transform.position) + roomDir) != null)
+                {
+                    cell = mapManager.getCell(mapManager.getCellPos(transform.position) + roomDir);
+                } 
+                else
+                {
+                    cell = mapManager.genCell(posNow.x, posNow.y, CD);
+                }
+
+                if (cell != null)
+                {
+                    switch (mapManager.getOppositeDir(CD))
+                    {
+                        case CellDirection.UP: //DOWN
+                            position = cell.GetComponent<Cell>().DOOR_UP.transform.position;
+                            break;
+                        case CellDirection.DOWN: //UP
+                            position = cell.GetComponent<Cell>().DOOR_DOWN.transform.position;
+                            break;
+                        case CellDirection.LEFT: //DOWN
+                            position = cell.GetComponent<Cell>().DOOR_LEFT.transform.position;
+                            break;
+                        case CellDirection.RIGHT: //DOWN
+                            position = cell.GetComponent<Cell>().DOOR_RIGHT.transform.position;
+                            break;
+                    }
+                }
+
+                movement.isMoveable = false;
+                movement.Movement = Vector2.zero;
+                StartCoroutine(teleport(position));
+            }
         }
 
         GameObject iobj = null;
@@ -180,6 +281,13 @@ public class PlayerManager : MonoBehaviour
 
     void Update()
     {
+        if (health <= 0)
+        {
+            dead();
+        }
+
+        if (!movement.isMoveable) return;
+
         updatePlayer();
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = 0f;

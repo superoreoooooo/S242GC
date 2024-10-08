@@ -35,18 +35,25 @@ public class MapManager : MonoBehaviour
         //grid[0, 0] = Instantiate(cellPrefabs[0]);
     }
 
-    private int enemyCnt = 0;
-
-    public int EnemyCnt { get { return enemyCnt; } }
+    public GameObject getCell(Vector2 pos)
+    {
+        //print(grid[(int)pos.x / CELL_SIZE_X, (int)pos.y / CELL_SIZE_Y].transform.position);
+        return grid[(int) pos.x / CELL_SIZE_X, (int) pos.y / CELL_SIZE_Y];
+    }
 
     public GameObject getCell(Vector2Int cellPos)
     {
         return grid[cellPos.x, cellPos.y];
     }
 
+    public Vector2Int getCellPos(Vector2 pos)
+    {
+        return new Vector2Int((int)pos.x / CELL_SIZE_X, (int)pos.y / CELL_SIZE_Y);
+    }
+
     void Update()
     {
-        //drawRoomConnection();
+        drawRoomConnection();
     }
 
 
@@ -110,26 +117,24 @@ public class MapManager : MonoBehaviour
         return true;
     }
 
-    private void Gen(List<GameObject> ableCells, Vector2Int pos)
+    private GameObject Gen(List<GameObject> ableCells, Vector2Int pos)
     {
         GameObject pick = ableCells[Random.Range(0, ableCells.Count)];
         print(pick.name);
-        grid[pos.x, pos.y] = pick;
-        //Cell cell = pick.GetComponent<Cell>();
 
         print($"Picked : {pick.name} || X : {pos.x} / Y : {pos.y}");
 
-        foreach (GameObject obj in ableCells)
-        {
-            //print($"{obj.name}");
-        }
-
-        GameObject c = Instantiate(pick, new Vector2(CELL_SIZE_X * pos.x, CELL_SIZE_Y * pos.y), Quaternion.identity);
+        GameObject c = Instantiate(pick, Vector2.zero, Quaternion.identity);
         c.GetComponent<Cell>().PosX = pos.x;
         c.GetComponent<Cell>().PosY = pos.y;
+        c.transform.position = new Vector2((CELL_SIZE_X + 0.0f) * pos.x, (CELL_SIZE_Y + 0.0f) * pos.y + 8);
+
+        grid[pos.x, pos.y] = c;
+
+        return c;
    }
 
-    public void genCell(int xNow, int yNow, CellDirection dir)
+    public GameObject genCell(int xNow, int yNow, CellDirection dir)
     {
         float t = Time.deltaTime;
         //print($"START TIME : {t}");
@@ -144,13 +149,13 @@ public class MapManager : MonoBehaviour
                         Cell c = obj.GetComponent<Cell>();
                         if (c == null)
                         {
-                            return;
+                            return null;
                         }
                         if (c.DOWN)
                         {
                             if (checkIsAvailableCell(new Vector2Int(xNow, yNow + 1), c))
                             {
-                                if (yNow + 2 == size) {
+                                if (yNow + 1 == size) {
                                     if (!c.UP) ableCells.Add(obj);
                                 } else {
                                     ableCells.Add(obj);
@@ -161,12 +166,7 @@ public class MapManager : MonoBehaviour
 
                     if (ableCells.Count > 0)
                     {
-                        Gen(ableCells, new Vector2Int(xNow, yNow + 1));
-                    }
-
-                    else
-                    {
-                        print("FUCKYOU");
+                        return Gen(ableCells, new Vector2Int(xNow, yNow + 1));
                     }
                 }
                 break;
@@ -179,7 +179,7 @@ public class MapManager : MonoBehaviour
                         Cell c = obj.GetComponent<Cell>();
                         if (c == null)
                         {
-                            return;
+                            return null;
                         }
                         if (c.UP)
                         {
@@ -196,12 +196,7 @@ public class MapManager : MonoBehaviour
 
                     if (ableCells.Count > 0)
                     {
-                        Gen(ableCells, new Vector2Int(xNow, yNow - 1));
-                    }
-
-                    else
-                    {
-                        print("FUCKYOU");
+                        return Gen(ableCells, new Vector2Int(xNow, yNow - 1));
                     }
                 }
                 break;
@@ -214,7 +209,7 @@ public class MapManager : MonoBehaviour
                         Cell c = obj.GetComponent<Cell>();
                         if (c == null)
                         {
-                            return;
+                            return null;
                         }
                         if (c.RIGHT)
                         {
@@ -231,12 +226,7 @@ public class MapManager : MonoBehaviour
 
                     if (ableCells.Count > 0)
                     {
-                        Gen(ableCells, new Vector2Int(xNow - 1, yNow));
-                    }
-
-                    else
-                    {
-                        print("FUCKYOU");
+                        return Gen(ableCells, new Vector2Int(xNow - 1, yNow));
                     }
                 }
                 break;
@@ -249,13 +239,13 @@ public class MapManager : MonoBehaviour
                         Cell c = obj.GetComponent<Cell>();
                         if (c == null)
                         {
-                            return;
+                            return null;
                         }
                         if (c.LEFT)
                         {
                             if (checkIsAvailableCell(new Vector2Int(xNow + 1, yNow), c))
                             {
-                                if (xNow + 2 == size) {
+                                if (xNow + 1 == size) {
                                     if (!c.RIGHT) ableCells.Add(obj);
                                 } else {
                                     ableCells.Add(obj);
@@ -266,20 +256,15 @@ public class MapManager : MonoBehaviour
 
                     if (ableCells.Count > 0)
                     {
-                        Gen(ableCells, new Vector2Int(xNow + 1, yNow));
-                    }
-
-                    else
-                    {
-                        print("FUCKYOU");
+                        return Gen(ableCells, new Vector2Int(xNow + 1, yNow));
                     }
                 }
                 break;
             default:
-                print("니 뭐하니");
-                break;
+                return null;
         }
         print($"ETA :: {Time.deltaTime - t}");
+        return null;
     }
 
     public void checkRoomDone() { //0 : done | 1 : left 1 room | 2+ : not done
@@ -374,7 +359,7 @@ public class MapManager : MonoBehaviour
                 //22 * pos.x, 24 * pos.y
                 int x = CELL_SIZE_X;
                 int y = CELL_SIZE_Y;
-                Debug.DrawLine(new Vector3(x * k.x + (x / 2), y * k.y + (y / 2), -3), new Vector3(x * vv.x + (x / 2), y * vv.y + (y / 2), -3), Color.red, 0.3f);
+                Debug.DrawLine(new Vector3(x * k.x, y * k.y, -3), new Vector3(x * vv.x, y * vv.y, -3), Color.red, 0.3f);
             }
         }
     }
