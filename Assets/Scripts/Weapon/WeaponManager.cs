@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Rendering.Universal;
 
 public class WeaponManager : MonoBehaviour
@@ -51,6 +52,20 @@ public class WeaponManager : MonoBehaviour
 
         */
     }
+    void DetectEnemiesInSoundRange()
+    {
+        // 사운드 범위 내에 있는 모든 적 탐지
+        Collider2D[] enemiesInRange = Physics2D.OverlapCircleAll(transform.position, currentWeapon.gunSoundDistance, LayerMask.GetMask("Enemy"));
+
+        foreach (Collider2D enemyCollider in enemiesInRange)
+        {
+            EnemyManager enemy = enemyCollider.GetComponent<EnemyManager>();
+            if (enemy != null)
+            {
+                enemy.reactToSound(transform.position, currentWeapon.gunSoundDistance - Vector2.Distance((Vector2) transform.position, (Vector2) enemy.transform.position));
+            }
+        }
+    }
 
     void LookAtDirection2D(Vector2 direction)
     {
@@ -97,6 +112,7 @@ public class WeaponManager : MonoBehaviour
         // Debug Ray to visualize the shooting
         Debug.DrawRay(transform.position, direction * 100, Color.red, 1f);
 
+        DetectEnemiesInSoundRange();
 
         if (hit)
         {

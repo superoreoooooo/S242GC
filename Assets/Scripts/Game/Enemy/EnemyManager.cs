@@ -19,27 +19,86 @@ public class EnemyManager : MonoBehaviour
 
     public EnemyState state;
 
-    private Vector2 headDir;
-
     private bool isFlipped;
+
+    private Vector2 destination;
+
+    [SerializeField]
+    private SpriteRenderer sign;
+
+    [SerializeField]
+    private Sprite idleSprite;
+    [SerializeField]
+    private Sprite searchSprite;
+    [SerializeField]
+    private Sprite attackSprite;
+
+    [SerializeField]
+    private LayerMask hitLayers;
+
 
     public bool Flip
     {
         get => isFlipped;
     }
 
-    public Vector2 HeadDir
-    {
-        get => headDir;
-    }
-
     void Awake()
     {
         isFlipped = false;
-        headDir = new Vector2();
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
+    }
+
+    public void reactToSound(Vector2 soundPos, float soundLevel)
+    {
+        if (soundLevel > 0 && soundLevel <= 8)
+        {
+            state = EnemyState.SEARCH;
+            destination = soundPos;
+            isStressed = true;
+        } 
+        else if (soundLevel > 8)
+        {
+            state = EnemyState.ATTACK;
+            isStressed = true;
+        }
+    }
+
+    private bool isStressed = false;
+
+    private void checkEnemy()
+    {
+        if (target != null)
+        {
+            Vector2 direction = (target.transform.position - transform.position).normalized;
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 8, hitLayers);
+            Debug.DrawRay(transform.position, direction * 8, Color.cyan);
+
+            if (hit)
+            {
+                if (hit.collider.tag == "Player")
+                {
+                    state = EnemyState.ATTACK;
+                    isStressed = true;
+                } else
+                {
+                    StartCoroutine(swapState());
+                }
+            }
+            else
+            {
+                StartCoroutine(swapState());
+            }
+        }
+    }
+
+    private IEnumerator swapState()
+    {
+        yield return new WaitForSeconds(2f);
+
+        if (isStressed) state = EnemyState.SEARCH;
+        else state = EnemyState.IDLE;
     }
 
     void Update()
@@ -47,26 +106,29 @@ public class EnemyManager : MonoBehaviour
         switch (state)
         {
             case EnemyState.IDLE:
-                headDir = target.transform.position - transform.position;
-                //행동 구현
+                checkEnemy();
+                sign.sprite = idleSprite;
                 break;
             case EnemyState.SEARCH:
+                checkEnemy();
+                if (agent.isOnNavMesh)
+                {
+                    agent.SetDestination(destination);
+                }
+                sign.sprite = searchSprite;
                 break;
             case EnemyState.ATTACK:
                 if (target != null && agent.isOnNavMesh)
                 {
                     agent.SetDestination(target.position);
+                    isStressed = true;
                 }
+                sign.sprite = attackSprite;
                 break;
-        }
-
-        if (headDir.x < 0 && !isFlipped)
-        {
-            flip();
-        }
-        else if (headDir.x > 0 && isFlipped)
-        {
-            flip();
+            case EnemyState.DEAD:
+                Kill();
+                sign.sprite = null;
+                break;
         }
     }
 

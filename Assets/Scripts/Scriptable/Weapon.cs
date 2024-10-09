@@ -10,4 +10,5 @@ public class Weapon : ScriptableObject
     public Sprite idleSprite;
     public Sprite shootSprite;
     public Vector2 muzzleOffset;
+    public float gunSoundDistance;
 }
