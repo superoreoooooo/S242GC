@@ -9,4 +9,5 @@ public class Weapon : ScriptableObject
     public float fireRate;
     public Sprite idleSprite;
     public Sprite shootSprite;
+    public Vector2 muzzleOffset;
 }
