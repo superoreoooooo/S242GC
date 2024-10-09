@@ -31,6 +31,112 @@ Transform:
   m_Children: []
   m_Father: {fileID: 9167639353777565442}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1219388766813676962
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 416608950329750013}
+  - component: {fileID: 9162040647723699166}
+  m_Layer: 8
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &416608950329750013
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1219388766813676962}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4063545238227220071}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9162040647723699166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1219388766813676962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 0
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 1
+  m_ApplyToSortingLayers: 000000000530b4659b8fda7ce9564efa
+  m_ShapePath:
+  - {x: 0.00711298, y: -0.01462698, z: 0}
+  - {x: 0.023069859, y: 8.989554, z: 0}
+  - {x: -5.99922, y: 8.987516, z: 0}
+  - {x: -6.0001774, y: 15.00198, z: 0}
+  - {x: 0.005077362, y: 14.999798, z: 0}
+  - {x: 0.0031490326, y: 24.01309, z: 0}
+  - {x: 9.001669, y: 23.977764, z: 0}
+  - {x: 9.006164, y: 30.005898, z: 0}
+  - {x: 9.93039, y: 29.997677, z: 0}
+  - {x: 9.927145, y: 23.514702, z: 0}
+  - {x: 6.935561, y: 23.510208, z: 0}
+  - {x: 6.9317074, y: 17.555939, z: 0}
+  - {x: 0.92798376, y: 17.570066, z: 0}
+  - {x: 0.9164262, y: 14.543161, z: 0}
+  - {x: -5.964222, y: 14.568377, z: 0}
+  - {x: -5.964313, y: 9.960327, z: 0}
+  - {x: 0.9354787, y: 9.960268, z: 0}
+  - {x: 0.93569994, y: 6.95934, z: 0}
+  - {x: 6.8955936, y: 7.055398, z: 0}
+  - {x: 6.932432, y: 0.96650314, z: 0}
+  - {x: 9.93602, y: 0.9699507, z: 0}
+  - {x: 9.938715, y: -5.9736595, z: 0}
+  - {x: 12.066084, y: -5.9592113, z: 0}
+  - {x: 12.064728, y: 0.95625114, z: 0}
+  - {x: 15.0617485, y: 0.97126436, z: 0}
+  - {x: 15.064533, y: 6.966548, z: 0}
+  - {x: 21.062315, y: 6.9525127, z: 0}
+  - {x: 21.076174, y: 9.968715, z: 0}
+  - {x: 27.955654, y: 9.960072, z: 0}
+  - {x: 27.97068, y: 14.570871, z: 0}
+  - {x: 21.066286, y: 14.547958, z: 0}
+  - {x: 21.057922, y: 17.561787, z: 0}
+  - {x: 15.076952, y: 17.560207, z: 0}
+  - {x: 15.066067, y: 23.567215, z: 0}
+  - {x: 12.0595, y: 23.56219, z: 0}
+  - {x: 12.076744, y: 29.99382, z: 0}
+  - {x: 13.00736, y: 29.99892, z: 0}
+  - {x: 13.00415, y: 23.996387, z: 0}
+  - {x: 22.004595, y: 24.006966, z: 0}
+  - {x: 22.003693, y: 14.989527, z: 0}
+  - {x: 27.998623, y: 14.990541, z: 0}
+  - {x: 27.993237, y: 9.001386, z: 0}
+  - {x: 22.00193, y: 9.010295, z: 0}
+  - {x: 21.999222, y: 0.003581047, z: 0}
+  - {x: 13.006248, y: 0.00548172, z: 0}
+  - {x: 13.003164, y: -5.9917665, z: 0}
+  - {x: 9.004828, y: -6.0070815, z: 0}
+  - {x: 8.996576, y: -0.0033283234, z: 0}
+  m_ShapePathHash: 853059981
+  m_Mesh: {fileID: 0}
+  m_InstanceId: -189050
+  m_LocalBounds:
+    m_Center: {x: 10.999224, y: 11.999407, z: 0}
+    m_Extent: {x: 16.999401, y: 18.006489, z: 0}
 --- !u!1 &2138400842226212489
 GameObject:
   m_ObjectHideFlags: 0
@@ -6799,7 +6905,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 416608950329750013}
   m_Father: {fileID: 6483964915663404876}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1839735485 &8317847737906494522
