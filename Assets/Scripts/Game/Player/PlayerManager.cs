@@ -291,6 +291,7 @@ public class PlayerManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
+        }
     }
 
     void Update()
@@ -435,7 +436,6 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-
     //TEST ZONE
 
     public GameObject nav;
@@ -451,6 +451,4 @@ public class PlayerManager : MonoBehaviour
             //MAPMGR.GetComponent<MapManager>().genCell(get, 0, CellDirection.LEFT);
         }
     }
-
-
 }
