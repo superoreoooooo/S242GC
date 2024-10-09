@@ -21,8 +21,6 @@ public class EnemyManager : MonoBehaviour
 
     private bool isFlipped;
 
-    private Vector2 destination;
-
     [SerializeField]
     private SpriteRenderer sign;
 
@@ -55,7 +53,7 @@ public class EnemyManager : MonoBehaviour
         if (soundLevel > 0 && soundLevel <= 8)
         {
             state = EnemyState.SEARCH;
-            destination = soundPos;
+            lastSeenPos = soundPos;
             isStressed = true;
         } 
         else if (soundLevel > 8)
@@ -81,6 +79,7 @@ public class EnemyManager : MonoBehaviour
                 {
                     state = EnemyState.ATTACK;
                     isStressed = true;
+                    lastSeenPos = target.transform.position;
                 } else
                 {
                     StartCoroutine(swapState());
@@ -101,6 +100,8 @@ public class EnemyManager : MonoBehaviour
         else state = EnemyState.IDLE;
     }
 
+    private Vector2 lastSeenPos;
+
     void Update()
     {
         switch (state)
@@ -113,7 +114,7 @@ public class EnemyManager : MonoBehaviour
                 checkEnemy();
                 if (agent.isOnNavMesh)
                 {
-                    agent.SetDestination(destination);
+                    agent.SetDestination(lastSeenPos);
                 }
                 sign.sprite = searchSprite;
                 break;
