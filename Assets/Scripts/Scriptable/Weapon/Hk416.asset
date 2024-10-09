@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3d67b980fe4758746b5718e001465cbe, type: 3}
-  m_Name: Pistol
-  m_EditorClassIdentifier: Assembly-CSharp::Weapon
-  weaponName: Pistol
-  damage: 3
-  maxAmmo: 10
-  fireRate: 3
-  idleSprite: {fileID: 21300000, guid: c2672d36e25eb4745bbd9470e0dce092, type: 3}
-  shootSprite: {fileID: 21300000, guid: cf7de84eb8e5d7b40a49e44c19142134, type: 3}
+  m_Name: Hk416
+  m_EditorClassIdentifier: 
+  weaponName: Hk416
+  damage: 6
+  maxAmmo: 30
+  fireRate: 10
+  idleSprite: {fileID: 21300000, guid: 7624943fd302f1f47a032f55576c073a, type: 3}
+  shootSprite: {fileID: 21300000, guid: 6ffe7227c8705fd4bbffd4879a3542a8, type: 3}
   muzzleOffset: {x: 0, y: 0}
