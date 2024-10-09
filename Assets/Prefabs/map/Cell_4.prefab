@@ -71,6 +71,7 @@ GameObject:
   - component: {fileID: 8581170066274667491}
   - component: {fileID: 4566199255396909861}
   - component: {fileID: 7728561489466738786}
+  - component: {fileID: 2527331452559226886}
   m_Layer: 8
   m_Name: wall
   m_TagString: Untagged
@@ -2488,6 +2489,36 @@ MonoBehaviour:
   m_Area: 1
   m_IgnoreFromBuild: 0
   m_AffectedAgents: ffffffff
+--- !u!114 &2527331452559226886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4320134160427883174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 0
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: 000000000530b4659b8fda7ce9564efa
+  m_ShapePath:
+  - {x: -5, y: -17, z: 0}
+  - {x: -5, y: 24, z: 0}
+  - {x: 22, y: 24, z: 0}
+  - {x: 22, y: -17, z: 0}
+  m_ShapePathHash: 0
+  m_Mesh: {fileID: 0}
+  m_InstanceId: -214092
+  m_LocalBounds:
+    m_Center: {x: 8.5, y: 3.5, z: 0}
+    m_Extent: {x: 13.5, y: 20.5, z: 0}
 --- !u!1 &4511287796528441740
 GameObject:
   m_ObjectHideFlags: 0
@@ -2513,7 +2544,7 @@ Transform:
   m_GameObject: {fileID: 4511287796528441740}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3, y: 11, z: 0}
+  m_LocalPosition: {x: 3, y: 11, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3058,7 +3089,7 @@ Transform:
   m_GameObject: {fileID: 6161741973775643584}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 6, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

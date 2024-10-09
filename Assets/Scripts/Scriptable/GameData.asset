@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpawnX: 5
   SpawnY: 5
-  RoomSizeX: 64
-  RoomSizeY: 64
+  RoomSizeX: 128
+  RoomSizeY: 128
   grid_size: 10
-  SpawnRoomPrefab: {fileID: 2764718450710928815, guid: ac67be366b0f54d6aa1e14d427d2fb94, type: 3}
+  SpawnRoomPrefab: {fileID: 2138400842226212489, guid: c8ed8db108daca44dadb5ec898ded88f, type: 3}
   playerHealth: 10

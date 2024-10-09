@@ -11,7 +11,7 @@ public class FadeUI : MonoBehaviour
     [SerializeField]
     private float fadeDuration;
 
-    private bool isFaded = false;
+    private bool isDarkened = false;
 
     public void startFadeIn()
     {
@@ -20,7 +20,7 @@ public class FadeUI : MonoBehaviour
 
     public void startFadeOut()
     {
-        if (isFaded) StartCoroutine(FadeOut());
+        StartCoroutine(FadeOut());
     }
 
     private void Start()
@@ -43,7 +43,7 @@ public class FadeUI : MonoBehaviour
 
         color.a = 0f;
         fadeImage.color = color;
-        isFaded = true;
+        isDarkened = false;
     }
 
     public IEnumerator FadeOut()
@@ -62,5 +62,6 @@ public class FadeUI : MonoBehaviour
 
         color.a = 1f;
         fadeImage.color = color;
+        isDarkened = true;
     }
 }

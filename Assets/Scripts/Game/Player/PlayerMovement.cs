@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public bool isMoveable = true;
+
     [SerializeField]
     private float speed = 5f;
 
@@ -12,6 +14,12 @@ public class PlayerMovement : MonoBehaviour
     private float runSpeed = 8f;
 
     private Vector2 movement;
+
+    public Vector2 Movement
+    {
+        get { return movement; }
+        set { movement = value; }
+    }
 
     private Rigidbody2D rb;
 
@@ -48,6 +56,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        isFlipped = false;
         originalSpeed = speed;
         isDashing = false;
         movement = new Vector2();
@@ -56,14 +65,28 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (isDashing) return;
-        if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0) {
-            movement.Set(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        }
-        if (Input.GetKey(KeyCode.LeftShift) && isDashAble) {
-            StartCoroutine(SkillDash());
+        if (isMoveable)
+        {
+            if (isDashing) return;
+            if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
+            {
+                movement.Set(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            }
+            if (Input.GetKey(KeyCode.LeftShift) && isDashAble)
+            {
+                StartCoroutine(SkillDash());
+            }
         }
         UpdateSkill();
+
+        if (movement.x < 0 && !isFlipped)
+        {
+            flip();
+        }
+        else if (movement.x > 0 && isFlipped)
+        {
+            flip();
+        }
     }
 
     private void FixedUpdate() {
@@ -129,4 +152,21 @@ public class PlayerMovement : MonoBehaviour
     public void Dash(Vector2 dir) {
         movement = new Vector2(dir.x * speed, dir.y * speed);
     }
+
+    private bool isFlipped;
+
+    public bool Flip
+    {
+        get => isFlipped;
+    }
+
+    private void flip()
+    {
+        isFlipped = !isFlipped;
+        Vector3 localScale = transform.localScale;
+        localScale.x *= -1;
+        transform.localScale = localScale;
+    }
+
+
 }
