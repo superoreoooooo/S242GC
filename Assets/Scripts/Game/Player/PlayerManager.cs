@@ -264,7 +264,7 @@ public class PlayerManager : MonoBehaviour
 
     void Start()
     {
-        //initPlayerMoveRoom();
+        initPlayerMoveRoom();
 
         movement = GetComponent<PlayerMovement>();
         sr = GetComponent<SpriteRenderer>();
@@ -280,6 +280,14 @@ public class PlayerManager : MonoBehaviour
         */
     }
 
+    private void updateWeapon()
+    {
+        if (Input.GetMouseButton(0))
+        {
+
+        }
+    }
+
     void Update()
     {
         if (health <= 0)
@@ -291,6 +299,7 @@ public class PlayerManager : MonoBehaviour
 
         updateInteraction();
         updatePlayerMoveRoom();
+        updateWeapon();
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = 0f;
 
@@ -301,12 +310,14 @@ public class PlayerManager : MonoBehaviour
         lr.SetPosition(1, transform.position + new Vector3(direction.x, direction.y, transform.position.z) * lrLen);
         */
 
+        /**
         if (Input.GetMouseButtonDown(0))
         {
             GameObject obj = Instantiate(projectile, transform.position, Quaternion.identity);
             Projectile pj = obj.GetComponent<Projectile>();
             pj.direction = direction;
         }
+        */
         /**
         else if (Input.GetMouseButtonDown(1))
         {
