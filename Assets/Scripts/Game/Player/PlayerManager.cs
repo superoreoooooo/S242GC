@@ -264,10 +264,11 @@ public class PlayerManager : MonoBehaviour
 
     void Start()
     {
-        initPlayerMoveRoom();
+        //initPlayerMoveRoom();
 
         movement = GetComponent<PlayerMovement>();
         sr = GetComponent<SpriteRenderer>();
+        weaponMgr = GetComponentInChildren<WeaponManager>();
 
         /*
         lr = GetComponent<LineRenderer>();
@@ -280,12 +281,16 @@ public class PlayerManager : MonoBehaviour
         */
     }
 
+    private WeaponManager weaponMgr;
+
     private void updateWeapon()
     {
         if (Input.GetMouseButton(0))
         {
-
         }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
     }
 
     void Update()
@@ -300,10 +305,6 @@ public class PlayerManager : MonoBehaviour
         updateInteraction();
         updatePlayerMoveRoom();
         updateWeapon();
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePos.z = 0f;
-
-        Vector2 direction = (mousePos - transform.position).normalized;
 
         /*
         lr.SetPosition(0, transform.position);
