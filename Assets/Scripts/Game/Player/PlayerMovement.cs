@@ -54,6 +54,9 @@ public class PlayerMovement : MonoBehaviour
 
     private float originalSpeed;
 
+    [SerializeField]    
+    private WeaponManager weaponManager;
+
     void Start()
     {
         isFlipped = false;
@@ -61,6 +64,13 @@ public class PlayerMovement : MonoBehaviour
         isDashing = false;
         movement = new Vector2();
         rb = GetComponent<Rigidbody2D>();
+
+        try { 
+            weaponManager = GetComponentInChildren<WeaponManager>(); 
+        } finally {
+            print("weaponManager not loaded!");
+            weaponManager = null; 
+        }
     }
 
     void Update()
@@ -166,7 +176,12 @@ public class PlayerMovement : MonoBehaviour
         Vector3 localScale = transform.localScale;
         localScale.x *= -1;
         transform.localScale = localScale;
+
+
+
+        if (weaponManager != null)
+        {
+            weaponManager.flipFirePointPosition();
+        }
     }
-
-
 }

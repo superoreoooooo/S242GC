@@ -15,14 +15,16 @@ public class MapManager : MonoBehaviour
 
     public List<GameObject> cellPrefabs;
 
+    public int roomCnt = 0;
+
     private void Awake()
     {
+        size = data.grid_size;
         grid = new GameObject[size, size];
     }
 
     void Start()
     {
-        size = data.grid_size;
         CELL_SIZE_X = data.RoomSizeX;
         CELL_SIZE_Y = data.RoomSizeY;
 
@@ -52,11 +54,19 @@ public class MapManager : MonoBehaviour
         return new Vector2Int((int)pos.x / CELL_SIZE_X, (int)pos.y / CELL_SIZE_Y);
     }
 
-    void Update()
+    public void updateMapSystem()
     {
-        drawRoomConnection();
+        if (roomCnt == 19)
+        {
+            //todo 보스방?
+        }
     }
 
+    void Update()
+    {
+        updateMapSystem();
+        drawRoomConnection();
+    }
 
     public CellDirection getOppositeDir(CellDirection dir)
     {
@@ -131,6 +141,8 @@ public class MapManager : MonoBehaviour
         c.transform.position = new Vector2((CELL_SIZE_X + 0.0f) * pos.x, (CELL_SIZE_Y + 0.0f) * pos.y + 8);
 
         grid[pos.x, pos.y] = c;
+
+        roomCnt += 1;
 
         return c;
    }

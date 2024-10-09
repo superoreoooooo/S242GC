@@ -1,5 +1,8 @@
 using System.Collections;
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Rendering.Universal;
 
 public class WeaponManager : MonoBehaviour
@@ -7,20 +10,26 @@ public class WeaponManager : MonoBehaviour
     public Weapon currentWeapon;   // Reference to the current weapon ScriptableObject
     public LayerMask hitLayers;    // Layers that the ray can hit
 
-    private int currentAmmo;
+    public int currentAmmo;
     private float nextTimeToFire = 0f;
 
-    public Light2D muzzleFlash;
+    [SerializeField]
+    private GameObject bullet;
+
+    [SerializeField]
+    private GameObject muzzle;
+
+    [SerializeField]
+    private TMP_Text ammoTxt;
 
     private void Start()
     {
         currentAmmo = currentWeapon.maxAmmo;
-        muzzleFlash.enabled = false;
+        muzzle.SetActive(false);
     }
 
     private void Update()
     {
-        UpdateFirePointPosition();
         if (Input.GetButton("Fire1") && Time.time >= nextTimeToFire)
         {
             Shoot();
@@ -31,27 +40,60 @@ public class WeaponManager : MonoBehaviour
             Reload();
         }
 
+        ammoTxt.text = $"Ammo : {currentAmmo} / {currentWeapon.maxAmmo}";
+
+        /*
 
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = 0f;
         Vector2 direction = (mousePos - transform.position).normalized;
 
-        LookAtDirection2D(direction);
+        //LookAtDirection2D(direction);
+
+        */
     }
+    void DetectEnemiesInSoundRange()
+    {
+        // 사운드 범위 내에 있는 모든 적 탐지
+        Collider2D[] enemiesInRange = Physics2D.OverlapCircleAll(transform.position, currentWeapon.gunSoundDistance, LayerMask.GetMask("Enemy"));
+
+        foreach (Collider2D enemyCollider in enemiesInRange)
+        {
+            EnemyManager enemy = enemyCollider.GetComponent<EnemyManager>();
+            if (enemy != null)
+            {
+                enemy.reactToSound(transform.position, currentWeapon.gunSoundDistance - Vector2.Distance((Vector2) transform.position, (Vector2) enemy.transform.position));
+            }
+        }
+    }
+
     void LookAtDirection2D(Vector2 direction)
     {
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-        transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+        //transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+
+        //transform.rotation = Quaternion.Euler(0, 0, mp ? angle += 180f : angle);
+
+        //Vector2 lookingDirection = GetComponentInParent<EnemyManager>().Flip ? -transform.right : transform.right;
+
+        //Debug.DrawLine(transform.position, transform.position + (Vector3)lookingDirection * 5f, Color.red);
     }
 
     void Shoot()
     {
+        if (isReloading) {
+            print("reloading!");
+            return;
+        }
         if (currentAmmo <= 0)
         {
+            Reload();
             Debug.Log("Out of ammo, reload!");
             return;
         }
+
+        //muzzle.SetActive(true);
 
         nextTimeToFire = Time.time + 1f / currentWeapon.fireRate;
         currentAmmo--;
@@ -60,13 +102,17 @@ public class WeaponManager : MonoBehaviour
         mousePos.z = 0f;
         Vector2 direction = (mousePos - transform.position).normalized;
 
+        GameObject obj = Instantiate(bullet, muzzle.transform.position, Quaternion.identity);
+        Projectile pj = obj.GetComponent<Projectile>();
+        pj.direction = direction;
+
         // Raycast for shooting
         RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, Mathf.Infinity, hitLayers);
 
         // Debug Ray to visualize the shooting
         Debug.DrawRay(transform.position, direction * 100, Color.red, 1f);
 
-        muzzleFlash.enabled = true;
+        DetectEnemiesInSoundRange();
 
         if (hit)
         {
@@ -85,28 +131,54 @@ public class WeaponManager : MonoBehaviour
         // Reset to idle sprite after shooting
         Invoke(nameof(ResetSprite), 0.1f);
 
-        StartCoroutine(DisableMuzzleFlash());
+        //StartCoroutine(DisableMuzzleFlash());
     }
 
     private IEnumerator DisableMuzzleFlash()
     {
         yield return new WaitForSeconds(0.2f);
-        muzzleFlash.enabled = false;
+        //muzzle.SetActive(false);
     }
+
+    private bool isReloading = false;
 
 
     void Reload()
     {
+        if (isReloading) return;
+
         Debug.Log("Reloading...");
-        currentAmmo = currentWeapon.maxAmmo;
+
+        isReloading = true;
+
+        StartCoroutine(addAmmo(currentWeapon.maxAmmo));
+    }
+
+    private IEnumerator addAmmo(int ammo)
+    {
+        yield return new WaitForSeconds(2f);
+
+        isReloading = false;
+
+        currentAmmo = ammo;
+
+        Debug.Log("Reloaded!");
     }
 
     void ResetSprite()
     {
         GetComponent<SpriteRenderer>().sprite = currentWeapon.idleSprite;
     }
-    void UpdateFirePointPosition()
+
+    public List<Transform> particles;
+
+    public void flipFirePointPosition()
     {
-        muzzleFlash.transform.localPosition = currentWeapon.muzzleOffset;
+        foreach (Transform p in particles)
+        {
+            Vector3 localScale = p.localScale;
+            localScale.x *= -1;
+            p.localScale = localScale;
+        }
     }
 }
