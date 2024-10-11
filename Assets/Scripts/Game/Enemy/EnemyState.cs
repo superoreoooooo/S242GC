@@ -4,5 +4,6 @@ public enum EnemyState
     SEARCH,
     ATTACK,
     STUNNED,
-    DEAD
+    DEAD,
+    VOID
 }
