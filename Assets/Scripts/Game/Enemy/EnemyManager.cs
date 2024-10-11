@@ -37,6 +37,7 @@ public class EnemyManager : MonoBehaviour
     private float lastStateChangedTime;
     private Vector3 originPos;
     public Vector2 viewDirection;
+    private Vector2 originDir;
 
     public bool Flip
     {
@@ -51,11 +52,13 @@ public class EnemyManager : MonoBehaviour
         agent.updateUpAxis = false;
 
         originPos = transform.position;
+        originDir = Vector2.right;
 
-        viewDirection = Vector2.right;
+        viewDirection = originDir; //for test
     }
 
     public Transform fovLight;
+    private Vector2 lastViewPos;
 
     void Update()
     {
@@ -95,6 +98,7 @@ public class EnemyManager : MonoBehaviour
             switch (checkEnemy())
             {
                 case EnemyState.IDLE:
+                    LookAt(originDir);
                     if (Vector2.Distance(originPos, transform.position) >= 0.2f)
                     {
                         agent.SetDestination(originPos);
@@ -102,11 +106,14 @@ public class EnemyManager : MonoBehaviour
                     sign.sprite = idleSprite;
                     break;
                 case EnemyState.SEARCH:
-                    LookAt(lastSeenPos);
+                    if (Vector2.Distance(lastSeenPos, transform.position) >= 0.2f) {
+                        LookAt(lastSeenPos);
+                    }
                     agent.SetDestination(lastSeenPos);
                     sign.sprite = searchSprite;
                     break;
                 case EnemyState.ATTACK:
+                    LookAt(target.transform.position);
                     isStressed = true;
                     if (target != null)
                     {
@@ -144,7 +151,7 @@ public class EnemyManager : MonoBehaviour
 
     void LookAt(Vector2 targetPosition)
     {
-        viewDirection = (targetPosition - (Vector2) transform.position).normalized;
+        viewDirection = (targetPosition - (Vector2)transform.position).normalized;
     }
 
     private EnemyState checkEnemy()
@@ -197,9 +204,8 @@ public class EnemyManager : MonoBehaviour
             Debug.DrawRay(transform.position, viewDirection * 8, Color.green);
             Debug.DrawRay(transform.position, direction * 8, state == EnemyState.ATTACK ? Color.red : Color.cyan);
 
-            if (hit && hit.collider.CompareTag("Player") && Vector2.Angle(viewDirection, (target.transform.position - transform.position).normalized) <= detectionAngle / 2)
+            if (hit && hit.collider.CompareTag("Player") && Vector2.Angle(viewDirection, direction) <= (detectionAngle / 2))
             {
-                LookAt(target.transform.position);
                 state = EnemyState.ATTACK;
                 return EnemyState.ATTACK;
             }
