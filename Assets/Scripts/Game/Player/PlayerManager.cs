@@ -35,6 +35,7 @@ public class PlayerManager : MonoBehaviour
     public int Health
     {
         get => health;
+        set => health = Math.Clamp(value, 0, health);
     }
 
     [SerializeField]
@@ -67,6 +68,23 @@ public class PlayerManager : MonoBehaviour
 
     [SerializeField]
     private float exitDistance;
+
+    [SerializeField]
+    private Transform fovLight;
+
+    [SerializeField]
+    private UnityEngine.UI.Slider hpBar;
+
+    private void Awake()
+    {
+        setMaxHealth(health);
+    }
+
+    private void setMaxHealth(int health)
+    {
+        hpBar.maxValue = health;
+        hpBar.value = health;
+    }
 
     private void initPlayerMoveRoom()
     {
@@ -349,28 +367,32 @@ public class PlayerManager : MonoBehaviour
 
             Vector2 startPosition = transform.position;
 
-            // 좌우로 60도 각도의 벡터 계산 (2D 기준으로)
             float halfAngle = knifeAngle / 2f;
 
-            // 좌측 방향 (direction에서 -60도 회전)
             Vector2 leftDirection = Quaternion.Euler(0, 0, -halfAngle) * direction;
-            // 우측 방향 (direction에서 +60도 회전)
             Vector2 rightDirection = Quaternion.Euler(0, 0, halfAngle) * direction;
 
-            // 각 방향으로의 끝점 계산 (길이 5)
             Vector2 leftEndPoint = startPosition + leftDirection.normalized * knifeDistance;
             Vector2 rightEndPoint = startPosition + rightDirection.normalized * knifeDistance;
 
-            // LineRenderer로 원뿔의 양쪽 끝과 시작점을 그리기
             lineRenderer.SetPosition(0, leftEndPoint);   // 좌측 끝점
             lineRenderer.SetPosition(1, startPosition);  // 시작점 (플레이어 위치)
             lineRenderer.SetPosition(2, rightEndPoint);  // 우측 끝점
         }
         */
+
+
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePos.z = 0f;
+        Vector2 direction = (mousePos - transform.position).normalized;
+
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        fovLight.rotation = Quaternion.Euler(0, 0, angle - 90);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        /*
         if (!isInvincible)
         {
             if (collision.gameObject.tag == "Enemy")
@@ -382,6 +404,7 @@ public class PlayerManager : MonoBehaviour
                     LayerMask lm = collision.gameObject.layer;
                     Physics2D.IgnoreLayerCollision(gameObject.layer, lm, ignore: true);
                     //Physics2D.IgnoreCollision(coll, GetComponent<Collider2D>(), true);
+                    hpBar.value = health;
                     StartCoroutine(updateInvincible(lm));
                     StartCoroutine(updateSpriteBlur());
                 }
@@ -389,6 +412,24 @@ public class PlayerManager : MonoBehaviour
                 {
                     //collision.gameObject.GetComponent<EnemyManager>().gainDamage(movement.DashDamage);
                 }
+            }
+        } */
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!isInvincible)
+        {
+            if (collision.gameObject.tag == "Enemy")
+            {
+                health -= 1;
+                isInvincible = true;
+                LayerMask lm = collision.gameObject.layer;
+                Physics2D.IgnoreLayerCollision(gameObject.layer, lm, ignore: true);
+                //Physics2D.IgnoreCollision(coll, GetComponent<Collider2D>(), true);
+                hpBar.value = health;
+                StartCoroutine(updateInvincible(lm));
+                StartCoroutine(updateSpriteBlur());
             }
         }
     }

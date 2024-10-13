@@ -44,12 +44,23 @@ public class EnemyManager : MonoBehaviour
         get => isFlipped;
     }
 
+    [SerializeField]
+    private UnityEngine.UI.Slider hpBar;
+
+    private void setMaxHealth(int health)
+    {
+        hpBar.maxValue = health;
+        hpBar.value = health;
+    }
+
     void Awake()
     {
         isFlipped = false;
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
+
+        setMaxHealth(health);
 
         originPos = transform.position;
         originDir = Vector2.right;
@@ -347,6 +358,7 @@ public class EnemyManager : MonoBehaviour
     public void gainDamage(int amount)
     {
         health -= amount;
+        hpBar.value = health;
         if (health <= 0)
         {
             Kill();

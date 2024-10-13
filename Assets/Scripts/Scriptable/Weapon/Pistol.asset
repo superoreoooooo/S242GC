@@ -19,4 +19,4 @@ MonoBehaviour:
   idleSprite: {fileID: 21300000, guid: c2672d36e25eb4745bbd9470e0dce092, type: 3}
   shootSprite: {fileID: 21300000, guid: cf7de84eb8e5d7b40a49e44c19142134, type: 3}
   muzzleOffset: {x: 0, y: 0}
-  gunSoundDistance: 8
+  gunSoundDistance: 12

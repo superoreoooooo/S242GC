@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -43,17 +43,17 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteBorder: {x: 25, y: 121, z: 120, w: 73}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
-  spriteTessellationDetail: -1
+  spriteTessellationDetail: 0
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
@@ -106,20 +106,620 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
-    outline: []
+    sprites:
+    - serializedVersion: 2
+      name: UI healthBars and Icons(32x32)_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 169
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6791b50716a502d438f473fe66f5dc68
+      internalID: -1212822602
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI healthBars and Icons(32x32)_1
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 172
+        width: 72
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 331df124992b72f419693dbe98d0e3bd
+      internalID: 538192754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI healthBars and Icons(32x32)_2
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 172
+        width: 72
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dbe1faacbb8c909469e8f9616864a1a6
+      internalID: -1369710534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI healthBars and Icons(32x32)_3
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 169
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f03768b43e252b4eba24c1d330a8533
+      internalID: 363739007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI healthBars and Icons(32x32)_4
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 145
+        width: 71
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a97afb5a29c4ecc419cfc55fe4161b6d
+      internalID: 899939667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI healthBars and Icons(32x32)_5
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 145
+        width: 71
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9ac839c5ef69f447a0cd39926cf1bfe
+      internalID: -305276856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI healthBars and Icons(32x32)_6
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 145
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e36a5bdf9818f8d45bd896e7e293db2c
+      internalID: -55089168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI healthBars and Icons(32x32)_7
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 121
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af2bff79a28520e4f895e71981beb689
+      internalID: -1059578541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI healthBars and Icons(32x32)_8
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 121
+        width: 71
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74a7077e60389d243861921009d209fe
+      internalID: 577008546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI healthBars and Icons(32x32)_9
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 126
+        width: 68
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b0c7b8848516da4bbb02592fbc00d36
+      internalID: 455337108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI healthBars and Icons(32x32)_10
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 121
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 655cd124843e39f48a54b683896c45f4
+      internalID: 13545126
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI healthBars and Icons(32x32)_11
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 97
+        width: 71
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac8d421554e0c084d931c1212fe4eab0
+      internalID: 533793916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI healthBars and Icons(32x32)_12
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 100
+        width: 18
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1887d70daded81b49ad8c4ad85dadd8b
+      internalID: 197836674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI healthBars and Icons(32x32)_13
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 102
+        width: 48
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0388ccfab146fda4c824625e23c45a06
+      internalID: 370158261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI healthBars and Icons(32x32)_14
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 97
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 163a790579157594fb30e8886bd65d8d
+      internalID: 930475423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI healthBars and Icons(32x32)_15
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 73
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21a1d45373248fa439fb469a1454dcfb
+      internalID: 1547848291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI healthBars and Icons(32x32)_16
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 73
+        width: 71
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31ac9448f53f20147b426f3dc1de73ff
+      internalID: 1614709551
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI healthBars and Icons(32x32)_17
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 73
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 64afaea2dd764d146b9fb0c90050b7d7
+      internalID: -1287313267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI healthBars and Icons(32x32)_18
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 73
+        width: 71
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 113c66fdd5c96304bbac72ffbdd08697
+      internalID: 1510815012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI healthBars and Icons(32x32)_19
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 49
+        width: 71
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3cd5d36e54d34f4db8a89f1cf5cf3dd
+      internalID: 1660157100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI healthBars and Icons(32x32)_20
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 49
+        width: 71
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5bc9b3c9e87ef244cbef7f39ccf49dce
+      internalID: -1113064817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI healthBars and Icons(32x32)_21
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 25
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 211edf7d992c4034faa1fb5e5d3bfe2c
+      internalID: -1949227699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI healthBars and Icons(32x32)_22
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 25
+        width: 71
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32010273241305a429d6cf3f2b37828b
+      internalID: -236437499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI healthBars and Icons(32x32)_23
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 1
+        width: 71
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c05d52ea585b72041adbb233177932e5
+      internalID: -1339746459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline:
+    - - {x: -15, y: -38}
+      - {x: -15, y: -34}
+      - {x: 6, y: -62}
+      - {x: 86, y: -90}
+      - {x: 86, y: 30}
+      - {x: 19, y: 61}
+      - {x: -108, y: 61}
+      - {x: -108, y: -108}
+      - {x: -13, y: -108}
+      - {x: 0, y: -89}
+      - {x: -7, y: -65}
+      - {x: -10, y: -43}
+    - - {x: -59, y: -93}
+      - {x: -17, y: -93}
+      - {x: -17, y: -99}
+      - {x: -59, y: -99}
+    - - {x: -59, y: -45}
+      - {x: -17, y: -45}
+      - {x: -17, y: -51}
+      - {x: -59, y: -51}
+    - - {x: 37, y: -45}
+      - {x: 79, y: -45}
+      - {x: 79, y: -51}
+      - {x: 37, y: -51}
+    - - {x: 32, y: 85}
+      - {x: 14, y: 84}
+      - {x: 10, y: 77}
+      - {x: 10, y: 67}
+      - {x: 15, y: 62}
+      - {x: 11, y: 57}
+      - {x: 10, y: 54}
+      - {x: 10, y: -13}
+      - {x: 108, y: -13}
+      - {x: 108, y: 85}
+    - - {x: -58, y: 3}
+      - {x: -17, y: 3}
+      - {x: -17, y: -3}
+      - {x: -58, y: -3}
+    - - {x: 18, y: 53}
+      - {x: 30, y: 53}
+      - {x: 30, y: 43}
+      - {x: 18, y: 43}
+    - - {x: 37, y: 51}
+      - {x: 79, y: 51}
+      - {x: 79, y: 45}
+      - {x: 37, y: 45}
+    - - {x: -107, y: 85}
+      - {x: -108, y: 83}
+      - {x: -108, y: 60}
+      - {x: -107, y: 59}
+      - {x: -33, y: 59}
+      - {x: -14, y: 60}
+      - {x: -10, y: 67}
+      - {x: -10, y: 77}
+      - {x: -12, y: 85}
+    - - {x: 17, y: 75}
+      - {x: 79, y: 75}
+      - {x: 79, y: 69}
+      - {x: 17, y: 69}
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 0
+    internalID: 1537655665
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      UI healthBars and Icons(32x32)_0: -1212822602
+      UI healthBars and Icons(32x32)_1: 538192754
+      UI healthBars and Icons(32x32)_10: 13545126
+      UI healthBars and Icons(32x32)_11: 533793916
+      UI healthBars and Icons(32x32)_12: 197836674
+      UI healthBars and Icons(32x32)_13: 370158261
+      UI healthBars and Icons(32x32)_14: 930475423
+      UI healthBars and Icons(32x32)_15: 1547848291
+      UI healthBars and Icons(32x32)_16: 1614709551
+      UI healthBars and Icons(32x32)_17: -1287313267
+      UI healthBars and Icons(32x32)_18: 1510815012
+      UI healthBars and Icons(32x32)_19: 1660157100
+      UI healthBars and Icons(32x32)_2: -1369710534
+      UI healthBars and Icons(32x32)_20: -1113064817
+      UI healthBars and Icons(32x32)_21: -1949227699
+      UI healthBars and Icons(32x32)_22: -236437499
+      UI healthBars and Icons(32x32)_23: -1339746459
+      UI healthBars and Icons(32x32)_3: 363739007
+      UI healthBars and Icons(32x32)_4: 899939667
+      UI healthBars and Icons(32x32)_5: -305276856
+      UI healthBars and Icons(32x32)_6: -55089168
+      UI healthBars and Icons(32x32)_7: -1059578541
+      UI healthBars and Icons(32x32)_8: 577008546
+      UI healthBars and Icons(32x32)_9: 455337108
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
