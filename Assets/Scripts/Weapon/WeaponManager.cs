@@ -26,6 +26,13 @@ public class WeaponManager : MonoBehaviour
     {
         currentAmmo = currentWeapon.maxAmmo;
         muzzle.SetActive(false);
+        ResetSprite();
+    }
+
+    public void swapWeapon()
+    {
+        currentAmmo = currentWeapon.maxAmmo;
+        ResetSprite();
     }
 
     private void Update()

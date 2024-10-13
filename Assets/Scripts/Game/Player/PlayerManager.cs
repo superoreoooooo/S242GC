@@ -256,6 +256,11 @@ public class PlayerManager : MonoBehaviour
             if (iobj != null)
             {
                 print(iobj.name);
+                if (iobj.GetComponent<WeaponData>() != null)
+                {
+                    GetComponentInChildren<WeaponManager>().currentWeapon = iobj.GetComponent<WeaponData>().weapon;
+                    GetComponentInChildren<WeaponManager>().swapWeapon();
+                }
             }
         }
 
@@ -268,7 +273,6 @@ public class PlayerManager : MonoBehaviour
 
         movement = GetComponent<PlayerMovement>();
         sr = GetComponent<SpriteRenderer>();
-        weaponMgr = GetComponentInChildren<WeaponManager>();
 
         /*
         lr = GetComponent<LineRenderer>();
@@ -279,19 +283,6 @@ public class PlayerManager : MonoBehaviour
         lr.endColor = Color.blue;
         lr.positionCount = 2; 
         */
-    }
-
-    private WeaponManager weaponMgr;
-
-    private void updateWeapon()
-    {
-        if (Input.GetMouseButton(0))
-        {
-        }
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-        }
     }
 
     void Update()
@@ -305,7 +296,6 @@ public class PlayerManager : MonoBehaviour
 
         updateInteraction();
         updatePlayerMoveRoom();
-        updateWeapon();
 
         /*
         lr.SetPosition(0, transform.position);

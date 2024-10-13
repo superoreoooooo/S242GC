@@ -17,6 +17,8 @@ public class MapManager : MonoBehaviour
 
     public int roomCnt = 0;
 
+    public GameObject nav;
+
     private void Awake()
     {
         size = data.grid_size;
@@ -143,6 +145,8 @@ public class MapManager : MonoBehaviour
         grid[pos.x, pos.y] = c;
 
         roomCnt += 1;
+
+        nav.GetComponent<Nav>().buildNavMesh();
 
         return c;
    }
