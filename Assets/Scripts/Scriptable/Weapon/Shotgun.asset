@@ -21,3 +21,4 @@ MonoBehaviour:
   muzzleOffset: {x: 0, y: 0}
   gunSoundDistance: 40
   weaponSound: {fileID: 8300000, guid: e55d73b8e1034c84c8e75386c71bfe66, type: 3}
+  prefab: {fileID: 3996644326531227402, guid: f7b12068ded1c1241abbc741d5703bda, type: 3}

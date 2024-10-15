@@ -120,11 +120,40 @@ public class PlayerManager : MonoBehaviour
         StartCoroutine(fadeIn());
     }
 
+    public UnityEvent onBossClear;
+
+    private bool isInBoss = false;
+
+    public void moveToBossRoom()
+    {
+        isInBoss = true;
+        StartCoroutine(teleport(new Vector2(mapManager.data.bossRoomX * mapManager.data.RoomSizeX + 2.78f, mapManager.data.bossRoomY * mapManager.data.RoomSizeY + 25.21f)));
+    }
+
     private void updatePlayerMoveRoom()
     {
+        if (isInBoss) return;
         if (mapManager == null) return;
 
         cellNow = mapManager.getCell((Vector2) transform.position);
+
+        bool isRoomCleared = true;
+
+        for (int i = 0; i < cellNow.transform.childCount; i++)
+        {
+            if (cellNow.transform.GetChild(i).name == "enemy")
+            {
+                for (int j = 0; j < cellNow.transform.GetChild(i).childCount; j++)
+                {
+                    if (cellNow.transform.GetChild(i).GetChild(j).gameObject.layer == LayerMask.NameToLayer("Enemy"))
+                    {
+                        isRoomCleared = false;
+                        break;
+                    }
+                }
+            }
+        }
+
         Vector2Int posNow = mapManager.getCellPos((Vector2) transform.position);
 
         if (cellNow != null)
@@ -160,6 +189,29 @@ public class PlayerManager : MonoBehaviour
 
             if (a)
             {
+                if (!isRoomCleared)
+                {
+                    switch (CD)
+                    {
+                        case CellDirection.UP:
+                            transform.position = transform.position - new Vector3(0, 6);
+                            break;
+                        case CellDirection.DOWN:
+                            transform.position = transform.position + new Vector3(0, 6);
+                            break;
+                        case CellDirection.LEFT:
+                            transform.position = transform.position + new Vector3(6, 0);
+                            break;
+                        case CellDirection.RIGHT:
+                            transform.position = transform.position - new Vector3(6, 0);
+                            break;
+                    }
+
+                    print("room not cleared!");
+
+                    return;
+                }
+
                 onPlayerMoveRoom.Invoke();
                 Vector3 position = new Vector3();
                 GameObject cell;
@@ -183,10 +235,10 @@ public class PlayerManager : MonoBehaviour
                         case CellDirection.DOWN: //UP
                             position = cell.GetComponent<Cell>().DOOR_DOWN.transform.position;
                             break;
-                        case CellDirection.LEFT: //DOWN
+                        case CellDirection.LEFT: //RIGHT
                             position = cell.GetComponent<Cell>().DOOR_LEFT.transform.position;
                             break;
-                        case CellDirection.RIGHT: //DOWN
+                        case CellDirection.RIGHT: //LEFT
                             position = cell.GetComponent<Cell>().DOOR_RIGHT.transform.position;
                             break;
                     }
@@ -282,8 +334,12 @@ public class PlayerManager : MonoBehaviour
                 print(iobj.name);
                 if (iobj.GetComponent<WeaponData>() != null)
                 {
+                    GameObject inst = Instantiate(GetComponentInChildren<WeaponManager>().currentWeapon.prefab);
+                    inst.transform.position = transform.position;
                     GetComponentInChildren<WeaponManager>().currentWeapon = iobj.GetComponent<WeaponData>().weapon;
                     GetComponentInChildren<WeaponManager>().swapWeapon();
+
+                    Destroy(iobj);
                 }
             }
         }
@@ -291,9 +347,9 @@ public class PlayerManager : MonoBehaviour
         interacionUI.SetActive(isInteractable);
     }
 
-    void Start()
+    void Start()  
     {
-        //initPlayerMoveRoom();
+        initPlayerMoveRoom();
 
         movement = GetComponent<PlayerMovement>();
         sr = GetComponent<SpriteRenderer>();

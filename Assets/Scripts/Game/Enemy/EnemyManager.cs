@@ -104,7 +104,7 @@ public class EnemyManager : MonoBehaviour
             float interval = Random.Range(minInterval, maxInterval);
             yield return new WaitForSeconds(interval);
 
-            print("asdf");
+            print($"{gameObject.name}");
             audioSource.clip = idleAudioClip;
             audioSource.Play();
         }
