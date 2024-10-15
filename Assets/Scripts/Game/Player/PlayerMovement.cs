@@ -23,6 +23,8 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody2D rb;
 
+    private bool isRunning;
+
     private bool isDashing;
 
     public bool IsDashing {
@@ -57,6 +59,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]    
     private WeaponManager weaponManager;
 
+    [SerializeField]
+    private float walkSoundLevel;
+
+    [SerializeField]
+    private float runSoundLevel;
+
     void Start()
     {
         isFlipped = false;
@@ -65,29 +73,66 @@ public class PlayerMovement : MonoBehaviour
         movement = new Vector2();
         rb = GetComponent<Rigidbody2D>();
 
+        isRunning = false;
+
         try { 
             weaponManager = GetComponentInChildren<WeaponManager>(); 
         } finally {
             print("weaponManager not loaded!");
             weaponManager = null; 
         }
+        animator = GetComponent<Animator>();
+        playerManager = GetComponent<PlayerManager>();
     }
+
+    public void die()
+    {
+        if (playerManager.isDead)
+        {
+            movement = Vector2.zero;
+            rb.velocity = Vector2.zero;
+        }
+    }
+
+    private Animator animator;
 
     void Update()
     {
+        if (playerManager.isDead)
+        {
+            return;
+        }
         if (isMoveable)
         {
             if (isDashing) return;
             if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
             {
                 movement.Set(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+                DetectEnemiesInSoundRange();
             }
+            /**
             if (Input.GetKey(KeyCode.LeftShift) && isDashAble)
             {
                 StartCoroutine(SkillDash());
+            } */
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                isRunning = true;
+            } else
+            {
+                isRunning = false;
             }
         }
-        UpdateSkill();
+
+        if (isRunning)
+        {
+            animator.SetBool("isRunning", true);
+        } else
+        {
+            animator.SetBool("isRunning", false);
+        }
+
+        //UpdateSkill();
 
         if (movement.x < 0 && !isFlipped)
         {
@@ -96,11 +141,30 @@ public class PlayerMovement : MonoBehaviour
         else if (movement.x > 0 && isFlipped)
         {
             flip();
+        } 
+    }
+
+    void DetectEnemiesInSoundRange()
+    {
+        // 사운드 범위 내에 있는 모든 적 탐지
+        Collider2D[] enemiesInRange = Physics2D.OverlapCircleAll(transform.position, isRunning ? runSoundLevel : walkSoundLevel, LayerMask.GetMask("Enemy"));
+
+        foreach (Collider2D enemyCollider in enemiesInRange)
+        {
+            EnemyManager enemy = enemyCollider.GetComponent<EnemyManager>();
+            if (enemy != null)
+            {
+                enemy.reactToSound(transform.position, isRunning ? runSoundLevel : walkSoundLevel - Vector2.Distance((Vector2)transform.position, (Vector2)enemy.transform.position));
+            }
         }
     }
 
+    private PlayerManager playerManager;
+
     private void FixedUpdate() {
-        rb.velocity = movement * speed;
+        if (playerManager.isDead) return;
+        if (isRunning) rb.velocity = movement * runSpeed;
+        else rb.velocity = movement * speed;
     }
 
     private void UpdateSkill() {

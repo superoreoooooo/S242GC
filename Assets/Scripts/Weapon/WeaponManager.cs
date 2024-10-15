@@ -25,7 +25,7 @@ public class WeaponManager : MonoBehaviour
     private void Start()
     {
         currentAmmo = currentWeapon.maxAmmo;
-        muzzle.SetActive(false);
+        muzzle.SetActive(false);    
         ResetSprite();
     }
 

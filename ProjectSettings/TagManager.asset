@@ -53,3 +53,6 @@ TagManager:
   - name: Lighting
     uniqueID: 4199438057
     locked: 0
+  - name: Enemy
+    uniqueID: 3655858869
+    locked: 0

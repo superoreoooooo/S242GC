@@ -75,6 +75,11 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private UnityEngine.UI.Slider hpBar;
 
+    [SerializeField]
+    private Animator animator;
+
+    public bool isDead = false;
+
     private void Awake()
     {
         setMaxHealth(health);
@@ -234,7 +239,8 @@ public class PlayerManager : MonoBehaviour
     private void dead()
     {
         onPlayerDead.Invoke();
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
+        isDead = true;
         print("DIE!");
     }
 
@@ -305,11 +311,14 @@ public class PlayerManager : MonoBehaviour
 
     void Update()
     {
+
         if (health <= 0)
         {
+            animator.Play("player_die");
             dead();
         }
 
+        if (isDead) return;
         if (!movement.isMoveable) return;
 
         updateInteraction();
@@ -422,12 +431,34 @@ public class PlayerManager : MonoBehaviour
         {
             if (collision.gameObject.tag == "Enemy")
             {
+                if (collision.gameObject.GetComponent<EnemyManager>().isDead) return;
                 health -= 1;
                 isInvincible = true;
                 LayerMask lm = collision.gameObject.layer;
                 Physics2D.IgnoreLayerCollision(gameObject.layer, lm, ignore: true);
                 //Physics2D.IgnoreCollision(coll, GetComponent<Collider2D>(), true);
                 hpBar.value = health;
+                animator.SetTrigger("isHit");
+                StartCoroutine(updateInvincible(lm));
+                StartCoroutine(updateSpriteBlur());
+            }
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (!isInvincible)
+        {
+            if (collision.gameObject.tag == "Enemy")
+            {
+                if (collision.gameObject.GetComponent<EnemyManager>().isDead) return;
+                health -= 1;
+                isInvincible = true;
+                LayerMask lm = collision.gameObject.layer;
+                Physics2D.IgnoreLayerCollision(gameObject.layer, lm, ignore: true);
+                //Physics2D.IgnoreCollision(coll, GetComponent<Collider2D>(), true);
+                hpBar.value = health;
+                animator.SetTrigger("isHit");
                 StartCoroutine(updateInvincible(lm));
                 StartCoroutine(updateSpriteBlur());
             }

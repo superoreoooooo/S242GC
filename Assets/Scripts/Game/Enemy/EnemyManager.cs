@@ -38,6 +38,12 @@ public class EnemyManager : MonoBehaviour
     private Vector3 originPos;
     public Vector2 viewDirection;
     private Vector2 originDir;
+    public bool isDead = false;
+
+    [SerializeField]
+    private CellDirection viewingDir;
+
+    private Animator animator;
 
     public bool Flip
     {
@@ -63,7 +69,16 @@ public class EnemyManager : MonoBehaviour
         setMaxHealth(health);
 
         originPos = transform.position;
-        originDir = Vector2.right;
+
+        if (viewingDir == CellDirection.UP) originDir = Vector2.up;
+        else if (viewingDir == CellDirection.DOWN) originDir = Vector2.down;
+        else if (viewingDir == CellDirection.LEFT) originDir = Vector2.left;
+        else if (viewingDir == CellDirection.RIGHT) originDir = Vector2.right;
+        else originDir = Vector2.right;
+
+        //originDir = Vector2.right;
+
+        animator = GetComponent<Animator>();
 
         viewDirection = originDir; //for test
     }
@@ -73,6 +88,10 @@ public class EnemyManager : MonoBehaviour
 
     void Update()
     {
+        if (isDead)
+        {
+            return;
+        }
         /*
         switch (state)
         {
@@ -109,7 +128,8 @@ public class EnemyManager : MonoBehaviour
             switch (checkEnemy())
             {
                 case EnemyState.IDLE:
-                    LookAt(originDir);
+                    animator.SetBool("isRunning", false);
+                    viewDirection = originDir;
                     if (Vector2.Distance(originPos, transform.position) >= 0.2f)
                     {
                         agent.SetDestination(originPos);
@@ -117,6 +137,7 @@ public class EnemyManager : MonoBehaviour
                     sign.sprite = idleSprite;
                     break;
                 case EnemyState.SEARCH:
+                    animator.SetBool("isRunning", true);
                     if (Vector2.Distance(lastSeenPos, transform.position) >= 0.2f) {
                         LookAt(lastSeenPos);
                     }
@@ -124,6 +145,7 @@ public class EnemyManager : MonoBehaviour
                     sign.sprite = searchSprite;
                     break;
                 case EnemyState.ATTACK:
+                    animator.SetBool("isRunning", true);
                     LookAt(target.transform.position);
                     isStressed = true;
                     if (target != null)
@@ -148,6 +170,7 @@ public class EnemyManager : MonoBehaviour
 
     public void reactToSound(Vector2 soundPos, float soundLevel)
     {
+        if (!agent.isOnNavMesh) return;
         if (soundLevel > 0 && soundLevel <= 8)
         {
             if (state != EnemyState.ATTACK) state = EnemyState.SEARCH;
@@ -352,7 +375,14 @@ public class EnemyManager : MonoBehaviour
 
     public void Kill()
     {
-        Destroy(gameObject);
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Destroy(transform.GetChild(i).gameObject);
+        }
+        animator.Play("Die");
+        agent.isStopped = true;
+        isDead = true;
+        //Destroy(gameObject);
     }
 
     public void gainDamage(int amount)
@@ -362,6 +392,9 @@ public class EnemyManager : MonoBehaviour
         if (health <= 0)
         {
             Kill();
+        } else
+        {
+            animator.Play("Hit");
         }
     }
 }

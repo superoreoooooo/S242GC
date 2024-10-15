@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: {x: 0, y: 0}
-  projectileSpeed: 200
+  projectileSpeed: 1000
   lifeTime: 1
   damage: 3
 --- !u!50 &-1321582765427477887
