@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -1321582765427477887}
   - component: {fileID: -5262529007650803615}
   - component: {fileID: 6362760111838202380}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,7 +127,7 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 4224
+    m_Bits: 28800
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -290,7 +290,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1574237845976105610}
   - component: {fileID: 5155344450993640854}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: spot
   m_TagString: Untagged
   m_Icon: {fileID: 0}

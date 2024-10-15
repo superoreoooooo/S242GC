@@ -21,8 +21,8 @@ TagManager:
   - Enemy
   - 
   - Item
-  - 
-  - 
+  - Bullet
+  - DeadEnemy
   - 
   - 
   - 
@@ -55,4 +55,7 @@ TagManager:
     locked: 0
   - name: Enemy
     uniqueID: 3655858869
+    locked: 0
+  - name: Guns
+    uniqueID: 2050733165
     locked: 0

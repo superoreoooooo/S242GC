@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d67b980fe4758746b5718e001465cbe, type: 3}
+  m_Name: Shotgun
+  m_EditorClassIdentifier: 
+  weaponName: Shotgun
+  damage: 5
+  maxAmmo: 3
+  fireRate: 1
+  weaponAnimator: {fileID: 9100000, guid: 8689e12f0f9722743b964043a521982f, type: 2}
+  idleSprite: {fileID: -1184394650, guid: 7aee005fb7cf68c46a5c3dae42b0a94c, type: 3}
+  muzzleOffset: {x: 0, y: 0}
+  gunSoundDistance: 40
+  weaponSound: {fileID: 8300000, guid: e55d73b8e1034c84c8e75386c71bfe66, type: 3}

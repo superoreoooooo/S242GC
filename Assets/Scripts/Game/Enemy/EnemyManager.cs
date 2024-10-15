@@ -380,8 +380,9 @@ public class EnemyManager : MonoBehaviour
             Destroy(transform.GetChild(i).gameObject);
         }
         animator.Play("Die");
-        agent.isStopped = true;
+        if (agent.isOnNavMesh) agent.isStopped = true;
         isDead = true;
+        gameObject.layer = LayerMask.NameToLayer("DeadEnemy");
         //Destroy(gameObject);
     }
 
