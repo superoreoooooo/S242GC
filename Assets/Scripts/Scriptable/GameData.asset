@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a86e4f7df30a03042afb162f7a9823a7, type: 3}
   m_Name: GameData
   m_EditorClassIdentifier: 
-  SpawnX: 5
-  SpawnY: 5
+  SpawnX: 50
+  SpawnY: 50
   RoomSizeX: 128
   RoomSizeY: 128
-  grid_size: 10
+  grid_size: 100
   SpawnRoomPrefab: {fileID: 2138400842226212489, guid: c8ed8db108daca44dadb5ec898ded88f, type: 3}
   playerHealth: 10
