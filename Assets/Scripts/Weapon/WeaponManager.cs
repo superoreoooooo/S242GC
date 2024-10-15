@@ -43,10 +43,11 @@ public class WeaponManager : MonoBehaviour
 
     public void swapWeapon()
     {
+        ResetSprite();
+
         currentAmmo = currentWeapon.maxAmmo;
         animator.runtimeAnimatorController = currentWeapon.weaponAnimator;
         audioSource.clip = currentWeapon.weaponSound;
-        ResetSprite();
     }
 
     private void Update()
