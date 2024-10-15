@@ -300,6 +300,7 @@ public class PlayerManager : MonoBehaviour
         }*/
 
         //StopAllCoroutines();
+        
         GetComponent<FootstepManager>().enabled = false;
         GetComponent<AudioSource>().enabled = false;
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
