@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody2D rb;
 
-    private bool isRunning;
+    public bool isRunning;
 
     private bool isDashing;
 
