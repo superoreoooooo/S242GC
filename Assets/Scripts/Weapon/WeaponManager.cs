@@ -54,6 +54,8 @@ public class WeaponManager : MonoBehaviour
     {
         ResetSprite();
 
+        StopAllCoroutines();
+
         currentAmmo = currentWeapon.maxAmmo;
         animator.runtimeAnimatorController = currentWeapon.weaponAnimator;
         audioSource.clip = currentWeapon.weaponSound;
