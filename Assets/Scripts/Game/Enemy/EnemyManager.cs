@@ -28,6 +28,14 @@ public class EnemyManager : MonoBehaviour
     [SerializeField]
     private float detectionAngle;
 
+    [SerializeField]
+    private AudioClip hitAudioClip;
+    [SerializeField]
+    private AudioClip dieAudioClip;
+    [SerializeField]
+    private AudioClip idleAudioClip;
+
+    private AudioSource audioSource;
     NavMeshAgent agent;
     public EnemyState state;
     private bool isFlipped;
@@ -39,6 +47,9 @@ public class EnemyManager : MonoBehaviour
     public Vector2 viewDirection;
     private Vector2 originDir;
     public bool isDead = false;
+
+    private float minInterval = 3f;
+    private float maxInterval = 12f;
 
     [SerializeField]
     private CellDirection viewingDir;
@@ -81,6 +92,22 @@ public class EnemyManager : MonoBehaviour
         animator = GetComponent<Animator>();
 
         viewDirection = originDir; //for test
+        audioSource = GetComponent<AudioSource>();
+
+        StartCoroutine(playIdleSound());
+    }
+
+    private IEnumerator playIdleSound()
+    {
+        while (!isDead)
+        {
+            float interval = Random.Range(minInterval, maxInterval);
+            yield return new WaitForSeconds(interval);
+
+            print("asdf");
+            audioSource.clip = idleAudioClip;
+            audioSource.Play();
+        }
     }
 
     public Transform fovLight;
@@ -379,11 +406,13 @@ public class EnemyManager : MonoBehaviour
         {
             Destroy(transform.GetChild(i).gameObject);
         }
+        audioSource.clip = dieAudioClip;
+        audioSource.Play();
         animator.Play("Die");
         if (agent.isOnNavMesh) agent.isStopped = true;
         isDead = true;
         gameObject.layer = LayerMask.NameToLayer("DeadEnemy");
-        //Destroy(gameObject);
+        Destroy(gameObject, 15f);
     }
 
     public void gainDamage(int amount)
@@ -395,6 +424,8 @@ public class EnemyManager : MonoBehaviour
             Kill();
         } else
         {
+            audioSource.clip = hitAudioClip;
+            audioSource.Play();
             animator.Play("Hit");
         }
     }
