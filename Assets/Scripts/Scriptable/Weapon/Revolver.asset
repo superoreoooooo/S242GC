@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3d67b980fe4758746b5718e001465cbe, type: 3}
-  m_Name: Pistol
-  m_EditorClassIdentifier: Assembly-CSharp::Weapon
-  weaponName: Pistol
-  damage: 6
-  maxAmmo: 10
+  m_Name: Revolver
+  m_EditorClassIdentifier: 
+  weaponName: Revolver
+  damage: 20
+  maxAmmo: 6
   fireRate: 3
-  weaponAnimator: {fileID: 9100000, guid: 5fa16c89fa4f8ce44869f86e83ac6e08, type: 2}
-  idleSprite: {fileID: -299128028, guid: 406e800df876db04ebc377f0fb6247ce, type: 3}
+  weaponAnimator: {fileID: 9100000, guid: 01ac99e375e167f43b6bbffcd7b558f1, type: 2}
+  idleSprite: {fileID: -922802845, guid: f268b52a0714b084e89000c4e882e99f, type: 3}
   muzzleOffset: {x: 0, y: 0}
-  gunSoundDistance: 12
-  weaponSound: {fileID: 8300000, guid: ac35934619b58964fb9b4f08437a2700, type: 3}
+  gunSoundDistance: 20
+  weaponSound: {fileID: 8300000, guid: 99ae2bfa39d03b14f948219fb2af462c, type: 3}

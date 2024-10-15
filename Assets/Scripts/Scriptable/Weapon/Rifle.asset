@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d67b980fe4758746b5718e001465cbe, type: 3}
+  m_Name: Rifle
+  m_EditorClassIdentifier: 
+  weaponName: Rifle
+  damage: 4
+  maxAmmo: 30
+  fireRate: 10
+  weaponAnimator: {fileID: 9100000, guid: 0730f01862978b54b81f75bb1629a0aa, type: 2}
+  idleSprite: {fileID: 1601461583, guid: b7a7385052ee21f46b0a287f4fce7ec6, type: 3}
+  muzzleOffset: {x: 0, y: 0}
+  gunSoundDistance: 20
+  weaponSound: {fileID: 8300000, guid: 0386af5a234e3a6499f38187e2204be3, type: 3}

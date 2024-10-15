@@ -22,16 +22,30 @@ public class WeaponManager : MonoBehaviour
     [SerializeField]
     private TMP_Text ammoTxt;
 
+    private Animator animator;
+
+    private AudioSource audioSource;
+
+    [SerializeField]
+    private AudioClip reloadClip;
+
     private void Start()
     {
         currentAmmo = currentWeapon.maxAmmo;
         muzzle.SetActive(false);    
         ResetSprite();
+
+        animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
+
+        audioSource.clip = currentWeapon.weaponSound;
     }
 
     public void swapWeapon()
     {
         currentAmmo = currentWeapon.maxAmmo;
+        animator.runtimeAnimatorController = currentWeapon.weaponAnimator;
+        audioSource.clip = currentWeapon.weaponSound;
         ResetSprite();
     }
 
@@ -49,6 +63,8 @@ public class WeaponManager : MonoBehaviour
 
         ammoTxt.text = $"Ammo : {currentAmmo} / {currentWeapon.maxAmmo}";
 
+
+
         /*
 
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -59,6 +75,7 @@ public class WeaponManager : MonoBehaviour
 
         */
     }
+
     void DetectEnemiesInSoundRange()
     {
         // 사운드 범위 내에 있는 모든 적 탐지
@@ -109,36 +126,78 @@ public class WeaponManager : MonoBehaviour
         mousePos.z = 0f;
         Vector2 direction = (mousePos - transform.position).normalized;
 
-        GameObject obj = Instantiate(bullet, muzzle.transform.position, Quaternion.identity);
-        Projectile pj = obj.GetComponent<Projectile>();
-        pj.direction = direction;
-
-        // Raycast for shooting
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, Mathf.Infinity, hitLayers);
-
-        // Debug Ray to visualize the shooting
-        Debug.DrawRay(transform.position, direction * 100, Color.red, 1f);
-
-        DetectEnemiesInSoundRange();
-
-        if (hit)
+        if (currentWeapon.name == "Shotgun")
         {
-            Debug.Log("Hit: " + hit.collider.name);
-            // Apply damage to the hit object if applicable
-            EnemyManager enemy = hit.collider.GetComponent<EnemyManager>();
-            if (enemy != null)
+            float baseAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+            for (int i = 0; i < 12; i++)
             {
-                enemy.gainDamage(currentWeapon.damage);
+                float randomSpread = Random.Range(-45f / 2f, 45f / 2f);
+
+                float finalAngle = baseAngle + randomSpread;
+                Vector2 shotDirection = new Vector2(Mathf.Cos(finalAngle * Mathf.Deg2Rad), Mathf.Sin(finalAngle * Mathf.Deg2Rad));
+
+                GameObject obj = Instantiate(bullet, muzzle.transform.position, Quaternion.identity);
+                Projectile pj = obj.GetComponent<Projectile>();
+                pj.direction = shotDirection;
+
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, shotDirection, Mathf.Infinity, hitLayers);
+
+                Debug.DrawRay(transform.position, shotDirection * 100, Color.red, 1f);
+
+                DetectEnemiesInSoundRange();
+
+                audioSource.Play();
+                animator.Play("Fire");
+
+                if (hit)
+                {
+                    Debug.Log("Hit: " + hit.collider.name);
+                    EnemyManager enemy = hit.collider.GetComponent<EnemyManager>();
+                    if (enemy != null)
+                    {
+                        enemy.gainDamage(currentWeapon.damage);
+                    }
+                }
+
+                //GetComponent<SpriteRenderer>().sprite = currentWeapon.shootSprite;
+
+                Invoke(nameof(ResetSprite), 0.1f);
+
+                //StartCoroutine(DisableMuzzleFlash());
             }
+        } 
+        else
+        {
+            GameObject obj = Instantiate(bullet, muzzle.transform.position, Quaternion.identity);
+            Projectile pj = obj.GetComponent<Projectile>();
+            pj.direction = direction;
+
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, Mathf.Infinity, hitLayers);
+
+            Debug.DrawRay(transform.position, direction * 100, Color.red, 1f);
+
+            DetectEnemiesInSoundRange();
+
+            audioSource.Play();
+            animator.Play("Fire");
+
+            if (hit)
+            {
+                Debug.Log("Hit: " + hit.collider.name);
+                EnemyManager enemy = hit.collider.GetComponent<EnemyManager>();
+                if (enemy != null)
+                {
+                    enemy.gainDamage(currentWeapon.damage);
+                }
+            }
+
+            //GetComponent<SpriteRenderer>().sprite = currentWeapon.shootSprite;
+
+            Invoke(nameof(ResetSprite), 0.1f);
+
+            //StartCoroutine(DisableMuzzleFlash());
         }
-
-        // Change sprite to shoot sprite for feedback (Optional)
-        GetComponent<SpriteRenderer>().sprite = currentWeapon.shootSprite;
-
-        // Reset to idle sprite after shooting
-        Invoke(nameof(ResetSprite), 0.1f);
-
-        //StartCoroutine(DisableMuzzleFlash());
     }
 
     private IEnumerator DisableMuzzleFlash()
@@ -158,6 +217,9 @@ public class WeaponManager : MonoBehaviour
 
         isReloading = true;
 
+        audioSource.clip = reloadClip;
+        audioSource.Play();
+
         StartCoroutine(addAmmo(currentWeapon.maxAmmo));
     }
 
@@ -170,6 +232,8 @@ public class WeaponManager : MonoBehaviour
         currentAmmo = ammo;
 
         Debug.Log("Reloaded!");
+
+        audioSource.clip = currentWeapon.weaponSound;
     }
 
     void ResetSprite()
