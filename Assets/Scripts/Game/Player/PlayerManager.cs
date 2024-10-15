@@ -293,6 +293,16 @@ public class PlayerManager : MonoBehaviour
         onPlayerDead.Invoke();
         //gameObject.SetActive(false);
         isDead = true;
+        /*
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            if (transform.GetChild(i).name != "backLight") Destroy(transform.GetChild(i).gameObject);
+        }*/
+
+        //StopAllCoroutines();
+        GetComponent<FootstepManager>().enabled = false;
+        GetComponent<AudioSource>().enabled = false;
+        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         //print("DIE!");
     }
 
@@ -490,27 +500,48 @@ public class PlayerManager : MonoBehaviour
         {
             health -= 10;
             hpBar.value = health;
-            animator.SetTrigger("isHit");
+            animator.Play("Hit");
             //StartCoroutine(updateSpriteBlur());
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.gameObject.tag == "Laser")
+        {
+            health -= (int) (health / 2);
+            hpBar.value = health;
+            animator.Play("Hit");
+        }
         if (!isInvincible)
         {
             if (collision.gameObject.tag == "Enemy")
-            {
-                if (collision.gameObject.GetComponent<EnemyManager>().isDead) return;
-                health -= 1;
-                isInvincible = true;
-                LayerMask lm = collision.gameObject.layer;
-                Physics2D.IgnoreLayerCollision(gameObject.layer, lm, ignore: true);
-                //Physics2D.IgnoreCollision(coll, GetComponent<Collider2D>(), true);
-                hpBar.value = health;
-                animator.SetTrigger("isHit");
-                StartCoroutine(updateInvincible(lm));
-                StartCoroutine(updateSpriteBlur());
+            {   
+                if (collision.gameObject.GetComponent<EnemyManager>() != null)
+                {
+                    if (collision.gameObject.GetComponent<EnemyManager>().isDead) return;
+                    health -= 1;
+                    isInvincible = true;
+                    LayerMask lm = collision.gameObject.layer;
+                    Physics2D.IgnoreLayerCollision(gameObject.layer, lm, ignore: true);
+                    //Physics2D.IgnoreCollision(coll, GetComponent<Collider2D>(), true);
+                    hpBar.value = health;
+                    animator.Play("Hit");
+                    StartCoroutine(updateInvincible(lm));
+                    StartCoroutine(updateSpriteBlur());
+                }
+                else if (collision.gameObject.GetComponent<EnemyBoss>() != null)
+                {
+                    if (collision.gameObject.GetComponent<EnemyBoss>().isDead) return;
+                    health -= 5;
+                    isInvincible = true;
+                    LayerMask lm = collision.gameObject.layer;
+                    Physics2D.IgnoreLayerCollision(gameObject.layer, lm, ignore: true);
+                    hpBar.value = health;
+                    animator.Play("Hit");
+                    StartCoroutine(updateInvincible(lm));
+                    StartCoroutine(updateSpriteBlur());
+                }
             }
         }
     }
@@ -521,16 +552,31 @@ public class PlayerManager : MonoBehaviour
         {
             if (collision.gameObject.tag == "Enemy")
             {
-                if (collision.gameObject.GetComponent<EnemyManager>().isDead) return;
-                health -= 1;
-                isInvincible = true;
-                LayerMask lm = collision.gameObject.layer;
-                Physics2D.IgnoreLayerCollision(gameObject.layer, lm, ignore: true);
-                //Physics2D.IgnoreCollision(coll, GetComponent<Collider2D>(), true);
-                hpBar.value = health;
-                animator.SetTrigger("isHit");
-                StartCoroutine(updateInvincible(lm));
-                StartCoroutine(updateSpriteBlur());
+                if (collision.gameObject.GetComponent<EnemyManager>() != null)
+                {
+                    if (collision.gameObject.GetComponent<EnemyManager>().isDead) return;
+                    health -= 1;
+                    isInvincible = true;
+                    LayerMask lm = collision.gameObject.layer;
+                    Physics2D.IgnoreLayerCollision(gameObject.layer, lm, ignore: true);
+                    //Physics2D.IgnoreCollision(coll, GetComponent<Collider2D>(), true);
+                    hpBar.value = health;
+                    animator.Play("Hit");
+                    StartCoroutine(updateInvincible(lm));
+                    StartCoroutine(updateSpriteBlur());
+                }
+                else if (collision.gameObject.GetComponent<EnemyBoss>() != null)
+                {
+                    if (collision.gameObject.GetComponent<EnemyBoss>().isDead) return;
+                    health -= 5;
+                    isInvincible = true;
+                    LayerMask lm = collision.gameObject.layer;
+                    Physics2D.IgnoreLayerCollision(gameObject.layer, lm, ignore: true);
+                    hpBar.value = health;
+                    animator.Play("Hit");
+                    StartCoroutine(updateInvincible(lm));
+                    StartCoroutine(updateSpriteBlur());
+                }
             }
         }
     }

@@ -99,24 +99,24 @@ public class EnemyBoss : MonoBehaviour
     private void SkillThrowRock()
     {
         Vector2 direction = (target.transform.position- transform.position).normalized;
-        print("asdff");
         GameObject rock = Instantiate(attackRock, transform.position, Quaternion.identity);
         Projectile pj = rock.GetComponent<Projectile>();
         pj.direction = direction;
     }
 
-    Vector2 dir;
     float totalRotationDeg = 0f;
 
     [SerializeField]
     private float rotationSpeed = 30f;
     [SerializeField]
     private float laserDelay;
+    [SerializeField]
+    private GameObject attackLaser;
 
     private void SkillLaser()
     {
-        dir = (target.transform.position - transform.position).normalized;
         isCastingSkill = true;
+        attackLaser.SetActive(true);
     }
 
     void Start()
@@ -133,8 +133,9 @@ public class EnemyBoss : MonoBehaviour
 
     private IEnumerator lightning()
     {
-        while (true)
+        while (!isDead)
         {
+            if (isDead) yield break;
             yield return new WaitForSeconds(lightningDelay);
             SkillLightning();
         }
@@ -142,8 +143,9 @@ public class EnemyBoss : MonoBehaviour
 
     private IEnumerator rock()
     {
-        while (true)
+        while (!isDead)
         {
+            if (isDead) yield break;
             yield return new WaitForSeconds(rockDelay);
             SkillThrowRock();
         }
@@ -151,8 +153,9 @@ public class EnemyBoss : MonoBehaviour
 
     private IEnumerator laser()
     {
-        while (true)
+        while (!isDead)
         {
+            if (isDead) yield break;
             yield return new WaitForSeconds(laserDelay);
             SkillLaser();
         }
@@ -160,12 +163,16 @@ public class EnemyBoss : MonoBehaviour
 
     void Update()
     {
+        if (isDead) return;
         if (isCastingSkill)
         {
             if (totalRotationDeg < 360f)
             {
+                attackLaser.transform.position = transform.position;
                 totalRotationDeg += (rotationSpeed * Time.deltaTime);
-                transform.Rotate(0f, 0f, -rotationSpeed * Time.deltaTime);
+                attackLaser.transform.Rotate(0f, 0f, -rotationSpeed * Time.deltaTime);
+
+                /*
                 RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, Mathf.Infinity, hitLayers);
 
                 Debug.DrawRay(transform.position, dir * 100, Color.yellow, 0.5f);
@@ -176,11 +183,52 @@ public class EnemyBoss : MonoBehaviour
                     {
                         target.gameObject.GetComponent<PlayerManager>().gainDamage(target.gameObject.GetComponent<PlayerManager>().Health / 50);
                     }
-                }
+                } */
             } else
             {
+                totalRotationDeg = 0f;
+                attackLaser.SetActive(false);
                 isCastingSkill = false;
             }
+        }
+
+        if (agent.isOnNavMesh)
+        {
+            agent.SetDestination(target.position);
+        }
+    }
+
+    public void Kill()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Destroy(transform.GetChild(i).gameObject);
+        }
+        audioSource.clip = dieAudioClip;
+        audioSource.Play();
+        animator.Play("Die");
+        if (agent.isOnNavMesh) agent.isStopped = true;
+        isDead = true;
+        gameObject.layer = LayerMask.NameToLayer("DeadEnemy");
+        StopAllCoroutines();
+        Destroy(attackLaser);
+        Destroy(attackRock);
+        Destroy(gameObject, 15f);
+    }
+
+    public void gainDamage(int amount)
+    {
+        health -= amount;
+        hpBar.value = health;
+        if (health <= 0)
+        {
+            Kill();
+        }
+        else
+        {
+            audioSource.clip = hitAudioClip;
+            audioSource.Play();
+            animator.Play("Hit");
         }
     }
 }

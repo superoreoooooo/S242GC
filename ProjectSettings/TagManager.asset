@@ -8,6 +8,7 @@ TagManager:
   - Door
   - Interactable
   - Rock
+  - Laser
   layers:
   - Default
   - TransparentFX
