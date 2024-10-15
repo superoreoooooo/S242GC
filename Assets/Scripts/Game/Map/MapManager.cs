@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class MapManager : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class MapManager : MonoBehaviour
     public int roomCnt = 0;
 
     public GameObject nav;
+
+    public UnityEvent onBossRoomGen;
 
     private void Awake()
     {
@@ -58,9 +61,11 @@ public class MapManager : MonoBehaviour
 
     public void updateMapSystem()
     {
-        if (roomCnt == 19)
+        if (roomCnt == 20)
         {
-            //todo 보스방?
+            GenBossRoom(new List<GameObject>() { data.BossRoomPrefab }, new Vector2Int(data.bossRoomX, data.bossRoomY));
+            onBossRoomGen.Invoke();
+            roomCnt += 1;
         }
     }
 
@@ -130,6 +135,23 @@ public class MapManager : MonoBehaviour
         return true;
     }
 
+    private GameObject GenBossRoom(List<GameObject> ableCells, Vector2Int pos)
+    {
+        GameObject pick = ableCells[Random.Range(0, ableCells.Count)];
+        print(pick.name);
+
+        print($"Picked : {pick.name} || X : {pos.x} / Y : {pos.y}");
+
+        GameObject c = Instantiate(pick, Vector2.zero, Quaternion.identity);
+        c.GetComponent<Cell>().PosX = pos.x;
+        c.GetComponent<Cell>().PosY = pos.y;
+        c.transform.position = new Vector2((CELL_SIZE_X + 0.0f) * pos.x, (CELL_SIZE_Y + 0.0f) * pos.y + 8);
+
+        nav.GetComponent<Nav>().buildNavMesh();
+
+        return c;
+    }
+
     private GameObject Gen(List<GameObject> ableCells, Vector2Int pos)
     {
         GameObject pick = ableCells[Random.Range(0, ableCells.Count)];
@@ -149,7 +171,7 @@ public class MapManager : MonoBehaviour
         nav.GetComponent<Nav>().buildNavMesh();
 
         return c;
-   }
+    }
 
     public GameObject genCell(int xNow, int yNow, CellDirection dir)
     {

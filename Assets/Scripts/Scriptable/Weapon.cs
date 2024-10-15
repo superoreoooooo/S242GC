@@ -13,4 +13,5 @@ public class Weapon : ScriptableObject
     public Vector2 muzzleOffset;
     public float gunSoundDistance;
     public AudioClip weaponSound;
+    public GameObject prefab;
 }

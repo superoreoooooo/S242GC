@@ -14,8 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpawnX: 50
   SpawnY: 50
+  bossRoomX: 200
+  bossRoomY: 200
   RoomSizeX: 128
   RoomSizeY: 128
   grid_size: 100
   SpawnRoomPrefab: {fileID: 2138400842226212489, guid: c8ed8db108daca44dadb5ec898ded88f, type: 3}
+  BossRoomPrefab: {fileID: 2851325976781968647, guid: faf2a35a3cce0f4499a5c63d729be07e, type: 3}
   playerHealth: 10
