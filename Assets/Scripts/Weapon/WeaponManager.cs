@@ -59,6 +59,8 @@ public class WeaponManager : MonoBehaviour
         currentAmmo = currentWeapon.maxAmmo;
         animator.runtimeAnimatorController = currentWeapon.weaponAnimator;
         audioSource.clip = currentWeapon.weaponSound;
+
+        isReloading = false;
     }
 
     private void Update()
