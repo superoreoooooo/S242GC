@@ -61,7 +61,7 @@ public class EnemyBoss : MonoBehaviour
             float interval = Random.Range(minInterval, maxInterval);
             yield return new WaitForSeconds(interval);
 
-            print($"{gameObject.name}");
+            //print($"{gameObject.name}");
             audioSource.clip = idleAudioClip;
             audioSource.Play();
         }
@@ -83,11 +83,12 @@ public class EnemyBoss : MonoBehaviour
             {
                 Vector2 dPos = new Vector2(dx + 0.5f, dy + 0.5f);
 
-                Instantiate(attackLightning, dPos, Quaternion.identity);
+                GameObject l = Instantiate(attackLightning, dPos, Quaternion.identity);
 
-                target.gameObject.GetComponent<PlayerManager>().gainDamage(target.gameObject.GetComponent<PlayerManager>().Health / 10);
+                Destroy(l, 1f);
             }
         }
+        target.gameObject.GetComponent<PlayerManager>().gainDamage((int) target.gameObject.GetComponent<PlayerManager>().Health / 10);
     }
 
     [SerializeField]
@@ -97,12 +98,10 @@ public class EnemyBoss : MonoBehaviour
 
     private void SkillThrowRock()
     {
-        if (isCastingSkill) return;
-        Vector2 direction = (target.transform.position - transform.position).normalized;
-
+        Vector2 direction = (target.transform.position- transform.position).normalized;
+        print("asdff");
         GameObject rock = Instantiate(attackRock, transform.position, Quaternion.identity);
         Projectile pj = rock.GetComponent<Projectile>();
-
         pj.direction = direction;
     }
 

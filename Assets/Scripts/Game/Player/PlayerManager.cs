@@ -293,12 +293,14 @@ public class PlayerManager : MonoBehaviour
         onPlayerDead.Invoke();
         //gameObject.SetActive(false);
         isDead = true;
-        print("DIE!");
+        //print("DIE!");
     }
 
     public void gainDamage(int amount)
     {
+        print("asdf");
         health -= amount;
+        hpBar.value = health;
     }
 
     private void updateInteraction()
@@ -455,9 +457,9 @@ public class PlayerManager : MonoBehaviour
         fovLight.rotation = Quaternion.Euler(0, 0, angle - 90);
     }
 
+    /*
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        /*
         if (!isInvincible)
         {
             if (collision.gameObject.tag == "Enemy")
@@ -478,7 +480,19 @@ public class PlayerManager : MonoBehaviour
                     //collision.gameObject.GetComponent<EnemyManager>().gainDamage(movement.DashDamage);
                 }
             }
-        } */
+        } 
+    }
+    */
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Rock"))
+        {
+            health -= 10;
+            hpBar.value = health;
+            animator.SetTrigger("isHit");
+            //StartCoroutine(updateSpriteBlur());
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
