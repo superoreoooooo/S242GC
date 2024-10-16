@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -20,6 +19,11 @@ public class UITextFade : MonoBehaviour
     {
         StopAllCoroutines();
         StartCoroutine(FadeOut());
+    }
+
+    public void startManualFadeOut()
+    {
+        StartCoroutine(ManualFadeOut());
     }
 
     public IEnumerator FadeIn()
@@ -61,5 +65,23 @@ public class UITextFade : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         startFadeIn();
+    }
+
+    public IEnumerator ManualFadeOut()
+    {
+        float elapsedTime = 0f;
+        Color color = fadeText.color;
+        color.a = 0f;
+
+        while (elapsedTime < fadeDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            color.a = Mathf.Lerp(0f, 1f, elapsedTime / fadeDuration);
+            fadeText.color = color;
+            yield return null;
+        }
+
+        color.a = 1f;
+        fadeText.color = color;
     }
 }

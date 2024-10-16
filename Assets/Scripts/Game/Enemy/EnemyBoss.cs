@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 public class EnemyBoss : MonoBehaviour
 {
@@ -33,6 +34,9 @@ public class EnemyBoss : MonoBehaviour
     private float maxInterval = 12f;
 
     private Animator animator;
+
+    public UnityEvent onBossClear;
+
     private void setMaxHealth(int health)
     {
         hpBar.maxValue = health;
@@ -50,6 +54,8 @@ public class EnemyBoss : MonoBehaviour
 
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
+
+        if (target == null) target = GameObject.FindGameObjectWithTag("Player").transform;
 
         StartCoroutine(playIdleSound());
     }
@@ -200,6 +206,9 @@ public class EnemyBoss : MonoBehaviour
 
     public void Kill()
     {
+        FindAnyObjectByType<GameManager>().bossClear();
+        FindAnyObjectByType<PlayerManager>().bossClear();
+
         for (int i = 0; i < transform.childCount; i++)
         {
             Destroy(transform.GetChild(i).gameObject);
@@ -212,7 +221,7 @@ public class EnemyBoss : MonoBehaviour
         gameObject.layer = LayerMask.NameToLayer("DeadEnemy");
         StopAllCoroutines();
         DestroyImmediate(attackLaser, true);
-        DestroyImmediate(attackRock, true);
+        //DestroyImmediate(attackRock, true);
         Destroy(gameObject, 15f);
     }
 

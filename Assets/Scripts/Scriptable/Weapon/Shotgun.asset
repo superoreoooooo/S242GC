@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Shotgun
   m_EditorClassIdentifier: 
   weaponName: Shotgun
-  damage: 5
+  damage: 6
   maxAmmo: 4
   fireRate: 1
   weaponAnimator: {fileID: 9100000, guid: 8689e12f0f9722743b964043a521982f, type: 2}

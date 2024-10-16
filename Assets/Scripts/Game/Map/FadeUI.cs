@@ -11,8 +11,6 @@ public class FadeUI : MonoBehaviour
     [SerializeField]
     private float fadeDuration;
 
-    private bool isDarkened = false;
-
     public void startFadeIn()
     {
         StartCoroutine(FadeIn());
@@ -23,13 +21,14 @@ public class FadeUI : MonoBehaviour
         StartCoroutine(FadeOut());
     }
 
-    private void Start()
-    {   
-        StartCoroutine(a());
+    public void startAutoFadeOut()
+    {
+        StartCoroutine(autoFadeOut());
     }
 
-    private void Update()
-    {
+    private void Start()
+    {   
+        if (gameObject.name != "SpeechBubble") StartCoroutine(a());
     }
 
     private IEnumerator a()
@@ -54,7 +53,6 @@ public class FadeUI : MonoBehaviour
 
         color.a = 0f;
         fadeImage.color = color;
-        isDarkened = false;
     }
 
     public IEnumerator FadeOut()
@@ -73,6 +71,25 @@ public class FadeUI : MonoBehaviour
 
         color.a = 1f;
         fadeImage.color = color;
-        isDarkened = true;
+    }
+
+    public IEnumerator autoFadeOut()
+    {
+        float elapsedTime = 0f;
+        Color color = fadeImage.color;
+        color.a = 0f;
+
+        while (elapsedTime < fadeDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            color.a = Mathf.Lerp(0f, 1f, elapsedTime / fadeDuration);
+            fadeImage.color = color;
+            yield return null;
+        }
+
+        color.a = 1f;
+        fadeImage.color = color;
+
+        startFadeIn();
     }
 }

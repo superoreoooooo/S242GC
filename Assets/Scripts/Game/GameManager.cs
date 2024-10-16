@@ -19,4 +19,15 @@ public class GameManager : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
     }
+
+    public void bossClear()
+    {
+        StartCoroutine(runScene());
+    }
+
+    private IEnumerator runScene()
+    {
+        yield return new WaitForSeconds(2f);
+        GetComponent<SceneLoader>().LoadScene("bossClear");
+    }
 }

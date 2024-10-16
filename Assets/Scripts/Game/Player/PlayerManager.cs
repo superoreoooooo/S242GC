@@ -138,9 +138,25 @@ public class PlayerManager : MonoBehaviour
 
     private bool isMsgShown = false;
 
+    public void bossClear()
+    {
+        UITextFadeDone.startFadeOut();
+        movement.isMoveable = false;
+        StartCoroutine(a());
+    }
+
+    private IEnumerator a()
+    {
+        yield return new WaitForSeconds(0.5f);
+        onPlayerMoveRoom.Invoke();
+    }
+
     private void updatePlayerMoveRoom()
     {
-        if (isInBoss) return;
+        if (isInBoss)
+        {
+            return;
+        }
         if (mapManager == null) return;
 
         cellNow = mapManager.getCell((Vector2) transform.position);

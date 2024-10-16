@@ -2811,6 +2811,9 @@ MonoBehaviour:
   idleAudioClip: {fileID: 8300000, guid: ddb9f607a4143a744875cd0a33a18c56, type: 3}
   hpBar: {fileID: 6432031776683039899}
   isDead: 0
+  onBossClear:
+    m_PersistentCalls:
+      m_Calls: []
   attackLightning: {fileID: 5745761283538539431, guid: f0aa24ce345184149a922fc0173d5ced, type: 3}
   lightningDelay: 20
   attackRock: {fileID: 3277537641993961512, guid: fbe0ae5f9b4f4c9429f5fe5b16ca6398, type: 3}
@@ -10212,7 +10215,7 @@ MonoBehaviour:
   - {x: 8.996576, y: -0.0033283234, z: 0}
   m_ShapePathHash: 1598728209
   m_Mesh: {fileID: 0}
-  m_InstanceId: -537874
+  m_InstanceId: 199968
   m_LocalBounds:
     m_Center: {x: 10.999224, y: 11.999407, z: 0}
     m_Extent: {x: 16.999401, y: 18.006489, z: 0}

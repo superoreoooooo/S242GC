@@ -9,6 +9,7 @@ TagManager:
   - Interactable
   - Rock
   - Laser
+  - GameManager
   layers:
   - Default
   - TransparentFX

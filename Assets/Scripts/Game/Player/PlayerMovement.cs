@@ -110,11 +110,10 @@ public class PlayerMovement : MonoBehaviour
                 movement.Set(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
                 DetectEnemiesInSoundRange();
             }
-            /**
-            if (Input.GetKey(KeyCode.LeftShift) && isDashAble)
+            if (Input.GetKey(KeyCode.LeftControl) && isDashAble)
             {
                 StartCoroutine(SkillDash());
-            } */
+            }
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 isRunning = true;
@@ -132,7 +131,7 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("isRunning", false);
         }
 
-        //UpdateSkill();
+        UpdateSkill();
 
         if (movement.x < 0 && !isFlipped)
         {
