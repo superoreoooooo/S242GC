@@ -19,6 +19,6 @@ MonoBehaviour:
   weaponAnimator: {fileID: 9100000, guid: 01ac99e375e167f43b6bbffcd7b558f1, type: 2}
   idleSprite: {fileID: -922802845, guid: f268b52a0714b084e89000c4e882e99f, type: 3}
   muzzleOffset: {x: 0, y: 0}
-  gunSoundDistance: 20
+  gunSoundDistance: 10
   weaponSound: {fileID: 8300000, guid: 99ae2bfa39d03b14f948219fb2af462c, type: 3}
   prefab: {fileID: 1587823883710579908, guid: c4dd4004529b62240a1187ceaf139ccd, type: 3}
