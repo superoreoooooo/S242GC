@@ -24,7 +24,18 @@ public class FadeUI : MonoBehaviour
     }
 
     private void Start()
+    {   
+        StartCoroutine(a());
+    }
+
+    private void Update()
     {
+    }
+
+    private IEnumerator a()
+    {
+        yield return new WaitForSeconds(2f);
+        StartCoroutine(FadeIn());
     }
 
     public IEnumerator FadeIn()

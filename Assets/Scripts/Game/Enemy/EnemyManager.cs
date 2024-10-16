@@ -428,6 +428,7 @@ public class EnemyManager : MonoBehaviour
             Kill();
         } else
         {
+            state = EnemyState.ATTACK;
             audioSource.clip = hitAudioClip;
             audioSource.Play();
             animator.Play("Hit");

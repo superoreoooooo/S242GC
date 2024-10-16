@@ -130,6 +130,14 @@ public class PlayerManager : MonoBehaviour
         StartCoroutine(teleport(new Vector2(mapManager.data.bossRoomX * mapManager.data.RoomSizeX + 2.78f, mapManager.data.bossRoomY * mapManager.data.RoomSizeY + 25.21f)));
     }
 
+    [SerializeField]
+    private UITextFade UITextFadeWarning;
+
+    [SerializeField]
+    private UITextFade UITextFadeDone;
+
+    private bool isMsgShown = false;
+
     private void updatePlayerMoveRoom()
     {
         if (isInBoss) return;
@@ -152,6 +160,12 @@ public class PlayerManager : MonoBehaviour
                     }
                 }
             }
+        }
+
+        if (isRoomCleared && !cellNow.name.Contains("Cell_13") && !isMsgShown)
+        {
+            isMsgShown = true;
+            UITextFadeDone.startFadeOut();
         }
 
         Vector2Int posNow = mapManager.getCellPos((Vector2) transform.position);
@@ -194,18 +208,20 @@ public class PlayerManager : MonoBehaviour
                     switch (CD)
                     {
                         case CellDirection.UP:
-                            transform.position = transform.position - new Vector3(0, 6);
+                            transform.position = transform.position - new Vector3(0, 3);
                             break;
                         case CellDirection.DOWN:
-                            transform.position = transform.position + new Vector3(0, 6);
+                            transform.position = transform.position + new Vector3(0, 3);
                             break;
                         case CellDirection.LEFT:
-                            transform.position = transform.position + new Vector3(6, 0);
+                            transform.position = transform.position + new Vector3(3, 0);
                             break;
                         case CellDirection.RIGHT:
-                            transform.position = transform.position - new Vector3(6, 0);
+                            transform.position = transform.position - new Vector3(3, 0);
                             break;
                     }
+
+                    UITextFadeWarning.startFadeOut();
 
                     print("room not cleared!");
 
@@ -244,6 +260,7 @@ public class PlayerManager : MonoBehaviour
                     }
                 }
 
+                isMsgShown = false;
                 movement.isMoveable = false;
                 movement.Movement = Vector2.zero;
                 StartCoroutine(teleport(position));

@@ -15,7 +15,7 @@ MonoBehaviour:
   weaponName: Pistol
   damage: 6
   maxAmmo: 10
-  fireRate: 3
+  fireRate: 4
   weaponAnimator: {fileID: 9100000, guid: 5fa16c89fa4f8ce44869f86e83ac6e08, type: 2}
   idleSprite: {fileID: -299128028, guid: 406e800df876db04ebc377f0fb6247ce, type: 3}
   muzzleOffset: {x: 0, y: 0}

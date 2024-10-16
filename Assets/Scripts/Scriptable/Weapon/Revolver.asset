@@ -15,7 +15,7 @@ MonoBehaviour:
   weaponName: Revolver
   damage: 20
   maxAmmo: 6
-  fireRate: 3
+  fireRate: 2
   weaponAnimator: {fileID: 9100000, guid: 01ac99e375e167f43b6bbffcd7b558f1, type: 2}
   idleSprite: {fileID: -922802845, guid: f268b52a0714b084e89000c4e882e99f, type: 3}
   muzzleOffset: {x: 0, y: 0}
