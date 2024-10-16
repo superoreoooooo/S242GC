@@ -36,21 +36,37 @@ public class WeaponManager : MonoBehaviour
         ResetSprite();
 
         animator = GetComponent<Animator>();
+        animator.runtimeAnimatorController = currentWeapon.weaponAnimator;
         audioSource = GetComponent<AudioSource>();
 
         audioSource.clip = currentWeapon.weaponSound;
     }
 
+    public bool stop = false;
+
+    public void setStop()
+    {
+        Destroy(this);
+        stop = true;
+    }
+
     public void swapWeapon()
     {
+        ResetSprite();
+
+        StopAllCoroutines();
+
         currentAmmo = currentWeapon.maxAmmo;
         animator.runtimeAnimatorController = currentWeapon.weaponAnimator;
         audioSource.clip = currentWeapon.weaponSound;
-        ResetSprite();
+
+        isReloading = false;
     }
 
     private void Update()
     {
+        if (stop) return;
+
         if (Input.GetButton("Fire1") && Time.time >= nextTimeToFire)
         {
             Shoot();
@@ -158,6 +174,14 @@ public class WeaponManager : MonoBehaviour
                     {
                         enemy.gainDamage(currentWeapon.damage);
                     }
+                    else
+                    {
+                        EnemyBoss boss = hit.collider.GetComponent<EnemyBoss>();
+                        if (boss != null)
+                        {
+                            boss.gainDamage(currentWeapon.damage);
+                        }
+                    }
                 }
 
                 //GetComponent<SpriteRenderer>().sprite = currentWeapon.shootSprite;
@@ -189,6 +213,13 @@ public class WeaponManager : MonoBehaviour
                 if (enemy != null)
                 {
                     enemy.gainDamage(currentWeapon.damage);
+                }
+                else
+                {
+                    EnemyBoss boss = hit.collider.GetComponent<EnemyBoss>();
+                    if (boss != null) {
+                        boss.gainDamage(currentWeapon.damage);
+                    }
                 }
             }
 

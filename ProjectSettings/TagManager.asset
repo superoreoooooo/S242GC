@@ -7,6 +7,8 @@ TagManager:
   - Enemy
   - Door
   - Interactable
+  - Rock
+  - Laser
   layers:
   - Default
   - TransparentFX
@@ -24,7 +26,7 @@ TagManager:
   - Bullet
   - DeadEnemy
   - 
-  - 
+  - Rock
   - 
   - 
   - 

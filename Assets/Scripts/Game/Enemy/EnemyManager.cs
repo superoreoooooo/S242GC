@@ -89,6 +89,10 @@ public class EnemyManager : MonoBehaviour
 
         //originDir = Vector2.right;
 
+        GameObject obj = GameObject.FindGameObjectWithTag("Player");
+
+        target = obj.transform;
+
         animator = GetComponent<Animator>();
 
         viewDirection = originDir; //for test
@@ -104,7 +108,7 @@ public class EnemyManager : MonoBehaviour
             float interval = Random.Range(minInterval, maxInterval);
             yield return new WaitForSeconds(interval);
 
-            print($"{gameObject.name}");
+            //print($"{gameObject.name}");
             audioSource.clip = idleAudioClip;
             audioSource.Play();
         }
