@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -15,6 +16,8 @@ public class ScriptManager : MonoBehaviour
     private TextMeshProUGUI tmpText;
 
     public UnityEvent onScriptEnd;
+
+    public string nextSceneName;
 
     int cnt = 0;
 
@@ -57,6 +60,6 @@ public class ScriptManager : MonoBehaviour
 
     public void onScriptEnds()
     {
-        FindAnyObjectByType<SceneLoader>().LoadScene("IntroScene");
+        FindAnyObjectByType<SceneLoader>().LoadScene(nextSceneName);
     }
 }

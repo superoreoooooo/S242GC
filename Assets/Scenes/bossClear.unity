@@ -175,6 +175,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  nextSceneName: IntroScene
 --- !u!4 &394091060
 Transform:
   m_ObjectHideFlags: 0
