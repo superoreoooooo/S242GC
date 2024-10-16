@@ -67,7 +67,7 @@ public class WeaponManager : MonoBehaviour
     {
         if (stop) return;
 
-        if (Input.GetMouseButtonDown(0) && Time.time >= nextTimeToFire)
+        if (Input.GetMouseButton(0) && Time.time >= nextTimeToFire)
         {
             Shoot();
         }
@@ -123,13 +123,13 @@ public class WeaponManager : MonoBehaviour
     void Shoot()
     {
         if (isReloading) {
-            print("reloading!");
+            //print("reloading!");
             return;
         }
         if (currentAmmo <= 0)
         {
             Reload();
-            Debug.Log("Out of ammo, reload!");
+            //Debug.Log("Out of ammo, reload!");
             return;
         }
 
@@ -168,7 +168,7 @@ public class WeaponManager : MonoBehaviour
 
                 if (hit)
                 {
-                    Debug.Log("Hit: " + hit.collider.name);
+                    //Debug.Log("Hit: " + hit.collider.name);
                     EnemyManager enemy = hit.collider.GetComponent<EnemyManager>();
                     if (enemy != null)
                     {
@@ -208,7 +208,7 @@ public class WeaponManager : MonoBehaviour
 
             if (hit)
             {
-                Debug.Log("Hit: " + hit.collider.name);
+                //Debug.Log("Hit: " + hit.collider.name);
                 EnemyManager enemy = hit.collider.GetComponent<EnemyManager>();
                 if (enemy != null)
                 {
@@ -244,7 +244,7 @@ public class WeaponManager : MonoBehaviour
     {
         if (isReloading) return;
 
-        Debug.Log("Reloading...");
+        //Debug.Log("Reloading...");
 
         isReloading = true;
 
@@ -262,7 +262,7 @@ public class WeaponManager : MonoBehaviour
 
         currentAmmo = ammo;
 
-        Debug.Log("Reloaded!");
+        //Debug.Log("Reloaded!");
 
         audioSource.clip = currentWeapon.weaponSound;
     }

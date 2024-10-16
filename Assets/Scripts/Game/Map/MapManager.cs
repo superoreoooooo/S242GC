@@ -63,7 +63,7 @@ public class MapManager : MonoBehaviour
     {
         if (roomCnt == 10)
         {
-            GenBossRoom(new List<GameObject>() { data.BossRoomPrefab }, new Vector2Int(data.bossRoomX, data.bossRoomY));
+            GenBossRoom(new List<GameObject>() { data.BossRoomPrefab }, new Vector2Int(0, 0));
             onBossRoomGen.Invoke();
             roomCnt += 1;
         }
@@ -146,6 +146,8 @@ public class MapManager : MonoBehaviour
         c.GetComponent<Cell>().PosX = pos.x;
         c.GetComponent<Cell>().PosY = pos.y;
         c.transform.position = new Vector2((CELL_SIZE_X + 0.0f) * pos.x, (CELL_SIZE_Y + 0.0f) * pos.y + 8);
+
+        grid[pos.x, pos.y] = c;
 
         nav.GetComponent<Nav>().buildNavMesh();
 

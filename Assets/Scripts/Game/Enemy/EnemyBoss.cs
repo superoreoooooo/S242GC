@@ -83,9 +83,9 @@ public class EnemyBoss : MonoBehaviour
 
     private void SkillLightning()
     {
-        for (int dx = 3; dx <= 22; dx++) //0.5씩 더하기
+        for (int dx = 7; dx <= 26; dx++) //0.5씩 더하기
         {
-            for (int dy = -10; dy <= 9; dy++)
+            for (int dy = 15; dy <= 33; dy++)
             {
                 Vector2 dPos = new Vector2(dx + 0.5f, dy + 0.5f);
 
@@ -118,11 +118,12 @@ public class EnemyBoss : MonoBehaviour
     private float laserDelay;
     [SerializeField]
     private GameObject attackLaser;
+    private GameObject las;
 
     private void SkillLaser()
     {
+        las = Instantiate(attackLaser, transform.position, Quaternion.identity);
         isCastingSkill = true;
-        attackLaser.SetActive(true);
     }
 
     void Start()
@@ -174,9 +175,9 @@ public class EnemyBoss : MonoBehaviour
         {
             if (totalRotationDeg < 360f)
             {
-                attackLaser.transform.position = transform.position;
+                las.transform.position = transform.position;
                 totalRotationDeg += (rotationSpeed * Time.deltaTime);
-                attackLaser.transform.Rotate(0f, 0f, -rotationSpeed * Time.deltaTime);
+                las.transform.Rotate(0f, 0f, -rotationSpeed * Time.deltaTime);
 
                 /*
                 RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, Mathf.Infinity, hitLayers);
@@ -193,8 +194,8 @@ public class EnemyBoss : MonoBehaviour
             } else
             {
                 totalRotationDeg = 0f;
-                attackLaser.SetActive(false);
                 isCastingSkill = false;
+                Destroy(las);
             }
         }
 

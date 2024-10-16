@@ -93,9 +93,13 @@ public class PlayerManager : MonoBehaviour
 
     private void initPlayerMoveRoom()
     {
-        isInvincible = false;
-        transform.position = new Vector2((gameData.SpawnX) * gameData.RoomSizeX + 18, (gameData.SpawnY) * gameData.RoomSizeY + 19);
         mapManager = FindObjectOfType<MapManager>();
+
+        if (mapManager != null )
+        {
+            isInvincible = false;
+            transform.position = new Vector2((gameData.SpawnX) * gameData.RoomSizeX + 18, (gameData.SpawnY) * gameData.RoomSizeY + 19);
+        }
     }
 
     private SpriteRenderer sr;
@@ -127,7 +131,7 @@ public class PlayerManager : MonoBehaviour
     public void moveToBossRoom()
     {
         isInBoss = true;
-        StartCoroutine(teleport(new Vector2(mapManager.data.bossRoomX * mapManager.data.RoomSizeX + 2.78f, mapManager.data.bossRoomY * mapManager.data.RoomSizeY + 25.21f)));
+        StartCoroutine(teleport(new Vector2(0 * mapManager.data.RoomSizeX + 2.78f, 0 * mapManager.data.RoomSizeY + 25.21f)));
     }
 
     [SerializeField]
