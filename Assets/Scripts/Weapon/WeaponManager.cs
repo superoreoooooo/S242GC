@@ -67,7 +67,7 @@ public class WeaponManager : MonoBehaviour
     {
         if (stop) return;
 
-        if (Input.GetButton("Fire1") && Time.time >= nextTimeToFire)
+        if (Input.GetMouseButtonDown(0) && Time.time >= nextTimeToFire)
         {
             Shoot();
         }

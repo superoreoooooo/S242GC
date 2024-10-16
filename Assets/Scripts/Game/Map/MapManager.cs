@@ -61,7 +61,7 @@ public class MapManager : MonoBehaviour
 
     public void updateMapSystem()
     {
-        if (roomCnt == 20)
+        if (roomCnt == 10)
         {
             GenBossRoom(new List<GameObject>() { data.BossRoomPrefab }, new Vector2Int(data.bossRoomX, data.bossRoomY));
             onBossRoomGen.Invoke();
