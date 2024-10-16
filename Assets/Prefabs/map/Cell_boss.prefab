@@ -2801,7 +2801,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  health: 2000
+  health: 1000
   damage: 5
   hitLayers:
     serializedVersion: 2
@@ -10215,7 +10215,7 @@ MonoBehaviour:
   - {x: 8.996576, y: -0.0033283234, z: 0}
   m_ShapePathHash: 1598728209
   m_Mesh: {fileID: 0}
-  m_InstanceId: 313144
+  m_InstanceId: 329766
   m_LocalBounds:
     m_Center: {x: 10.999224, y: 11.999407, z: 0}
     m_Extent: {x: 16.999401, y: 18.006489, z: 0}
