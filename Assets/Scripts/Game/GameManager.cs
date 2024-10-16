@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -37,5 +36,14 @@ public class GameManager : MonoBehaviour
         {
             Screen.SetResolution(1920, 1080, FullScreenMode.Windowed);
         }
+    }
+
+    public void quit()
+    {
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application.Quit();
+        #endif
     }
 }

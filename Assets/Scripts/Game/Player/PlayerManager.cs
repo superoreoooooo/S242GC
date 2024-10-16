@@ -342,6 +342,17 @@ public class PlayerManager : MonoBehaviour
         GetComponent<AudioSource>().enabled = false;
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         //print("DIE!");
+
+        StartCoroutine(re());
+    }
+
+    private IEnumerator re()
+    {
+        yield return new WaitForSeconds(3f);
+
+        FindAnyObjectByType<SceneLoader>().LoadScene("IntroScene");
+
+        Destroy(this);
     }
 
     public void gainDamage(int amount)
