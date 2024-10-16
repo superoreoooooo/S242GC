@@ -30,4 +30,12 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         GetComponent<SceneLoader>().LoadScene("bossClear");
     }
+
+    private void Update()
+    {
+        if (Screen.width != 1920 || Screen.height != 1080)
+        {
+            Screen.SetResolution(1920, 1080, FullScreenMode.Windowed);
+        }
+    }
 }

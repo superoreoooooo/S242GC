@@ -1,9 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Experimental.AI;
 
 public class EnemyManager : MonoBehaviour
 {
