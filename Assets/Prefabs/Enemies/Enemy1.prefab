@@ -436,7 +436,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  health: 30
+  health: 10
   damage: 2
   sign: {fileID: 7556034772067409486}
   idleSprite: {fileID: 21300000, guid: 82981b7248c4876468780d10940e7e52, type: 3}
