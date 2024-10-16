@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Shotgun
   damage: 5
-  maxAmmo: 3
-  fireRate: 1
+  maxAmmo: 300
+  fireRate: 10
   weaponAnimator: {fileID: 9100000, guid: 8689e12f0f9722743b964043a521982f, type: 2}
   idleSprite: {fileID: -1184394650, guid: 7aee005fb7cf68c46a5c3dae42b0a94c, type: 3}
   muzzleOffset: {x: 0, y: 0}

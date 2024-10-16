@@ -211,8 +211,8 @@ public class EnemyBoss : MonoBehaviour
         isDead = true;
         gameObject.layer = LayerMask.NameToLayer("DeadEnemy");
         StopAllCoroutines();
-        Destroy(attackLaser);
-        Destroy(attackRock);
+        DestroyImmediate(attackLaser, true);
+        DestroyImmediate(attackRock, true);
         Destroy(gameObject, 15f);
     }
 

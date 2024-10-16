@@ -362,7 +362,7 @@ public class PlayerManager : MonoBehaviour
 
     void Start()  
     {
-        //initPlayerMoveRoom();
+        initPlayerMoveRoom();
 
         movement = GetComponent<PlayerMovement>();
         sr = GetComponent<SpriteRenderer>();
