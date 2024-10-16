@@ -327,6 +327,7 @@ public class PlayerManager : MonoBehaviour
 
     private void dead()
     {
+        if (mz) return;
         onPlayerDead.Invoke();
         //gameObject.SetActive(false);
         isDead = true;
@@ -357,7 +358,7 @@ public class PlayerManager : MonoBehaviour
 
     public void gainDamage(int amount)
     {
-        print("asdf");
+        if (mz) return;
         health -= amount;
         hpBar.value = health;
     }
@@ -545,6 +546,7 @@ public class PlayerManager : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (mz) return;
         if (collision.gameObject.CompareTag("Rock"))
         {
             health -= 10;
@@ -556,6 +558,7 @@ public class PlayerManager : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (mz) return;
         if (collision.gameObject.tag == "Laser")
         {
             health -= (int) (health / 2);
@@ -597,6 +600,7 @@ public class PlayerManager : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
+        if (mz) return;
         if (!isInvincible)
         {
             if (collision.gameObject.tag == "Enemy")
@@ -667,6 +671,8 @@ public class PlayerManager : MonoBehaviour
 
     public GameObject nav;
 
+    public bool mz = false;
+
     void FixedUpdate()
     {
         if (Input.GetKey(KeyCode.F))
@@ -675,7 +681,7 @@ public class PlayerManager : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.J))
         {
-            //MAPMGR.GetComponent<MapManager>().genCell(get, 0, CellDirection.LEFT);
+            mz = !mz;
         }
     }
 }
