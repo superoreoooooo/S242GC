@@ -18,6 +18,7 @@ public class ScriptManager : MonoBehaviour
 
     int cnt = 0;
 
+    //대사 로딩
     void Start()
     {
         tmpText = text.GetComponent<TextMeshProUGUI>();
@@ -34,6 +35,7 @@ public class ScriptManager : MonoBehaviour
 
     private float lastKeyDown;
 
+    //키보드 입력 시 대사 넘기고 페이드 효과
     void Update()
     {
         if (Input.anyKeyDown && Time.time - lastKeyDown >= 1f)
@@ -55,6 +57,7 @@ public class ScriptManager : MonoBehaviour
         }
     }
 
+    //씬 전환
     public void onScriptEnds()
     {
         FindAnyObjectByType<SceneLoader>().LoadScene(nextSceneName);

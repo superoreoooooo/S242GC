@@ -61,12 +61,14 @@ public class EnemyManager : MonoBehaviour
     [SerializeField]
     private UnityEngine.UI.Slider hpBar;
 
+    //체력바 설정
     private void setMaxHealth(int health)
     {
         hpBar.maxValue = health;
         hpBar.value = health;
     }
 
+    //인스턴스화 직후 호출. 변수 초기화 및 설정
     void Awake()
     {
         isFlipped = false;
@@ -98,6 +100,7 @@ public class EnemyManager : MonoBehaviour
         StartCoroutine(playIdleSound());
     }
 
+    //일정 주기마다 좀비 소리 계속 나게 하는 코루틴 구현부
     private IEnumerator playIdleSound()
     {
         while (!isDead)
@@ -114,6 +117,12 @@ public class EnemyManager : MonoBehaviour
     public Transform fovLight;
     private Vector2 lastViewPos;
 
+    /**
+    * 매 프레임 호출. 
+    * 1. NavMesh상에 있을 때 좀비 (적)의 상태 관리
+    * 2. 상태에 따른 애니메이션 설정 및 목표 설정, 싸인 (인디케이터) 스프라이트 설정
+    * 3. 가상의 보는 방향에 따른 fovLight (시야 라이트) 방향 설정
+    */
     void Update()
     {
         if (isDead)
@@ -196,6 +205,7 @@ public class EnemyManager : MonoBehaviour
         fovLight.rotation = Quaternion.Euler(0, 0, angle - 90);
     }
 
+    //소리 반응
     public void reactToSound(Vector2 soundPos, float soundLevel)
     {
         if (!agent.isOnNavMesh) return;
@@ -211,11 +221,13 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
+    //가상의 보는 방향 설정
     void LookAt(Vector2 targetPosition)
     {
         viewDirection = (targetPosition - (Vector2)transform.position).normalized;
     }
 
+    //좀비 (적) 상태 관리. 레이캐스팅으로 플레이어가 시야에 있는지 등에 따른 상태 변경
     private EnemyState checkEnemy()
     {
         //Legacy code v1
@@ -369,12 +381,14 @@ public class EnemyManager : MonoBehaviour
         else return EnemyState.VOID;
     }
 
+    //시야 길이 (8) Gizmo로 Draw
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
     }
 
+    //상태 전환 시간 관련 처리
     private void stateManager()
     {
         if (stateBefore != state)
@@ -385,6 +399,7 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
+    //Deprecated
     private IEnumerator swapState(float duration)
     {
         yield return new WaitForSeconds(duration);
@@ -392,7 +407,8 @@ public class EnemyManager : MonoBehaviour
         if (isStressed) state = EnemyState.SEARCH;
         else state = EnemyState.IDLE;
     }
-
+    
+    //Deprecated. 적 회전 사용 안하기로 함
     private void flip()
     {
         isFlipped = !isFlipped;
@@ -401,6 +417,7 @@ public class EnemyManager : MonoBehaviour
         transform.localScale = localScale;
     }
 
+    //적 사망 함수. 자녀 오브젝트 제거 및 사망 애니메이션, 15초후 객체 제거.
     public void Kill()
     {
         for (int i = 0; i < transform.childCount; i++)
@@ -416,6 +433,7 @@ public class EnemyManager : MonoBehaviour
         Destroy(gameObject, 15f);
     }
 
+    //데미지 처리 및 체력바 동기화 (피해 입는거)
     public void gainDamage(int amount)
     {
         health -= amount;

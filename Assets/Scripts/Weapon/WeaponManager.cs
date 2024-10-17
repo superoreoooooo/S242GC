@@ -29,6 +29,7 @@ public class WeaponManager : MonoBehaviour
     [SerializeField]
     private AudioClip reloadClip;
 
+    //시작 시 기본 설정
     private void Start()
     {
         currentAmmo = currentWeapon.maxAmmo;
@@ -44,12 +45,14 @@ public class WeaponManager : MonoBehaviour
 
     public bool stop = false;
 
+    //플레이어 사망 시 비활성화 대신 사용 불가능하게 만듦
     public void setStop()
     {
         Destroy(this);
         stop = true;
     }
 
+    //무기 변경후 호출시 데이터를 알맞게 설정하게 함
     public void swapWeapon()
     {
         ResetSprite();
@@ -62,7 +65,8 @@ public class WeaponManager : MonoBehaviour
 
         isReloading = false;
     }
-
+    
+    //매 프레임 출력 전 호출됨. 입력에 따른 무기 발사 및 장전 등의 상호작용 업데이트, ui 업데이트
     private void Update()
     {
         if (stop) return;
@@ -91,10 +95,11 @@ public class WeaponManager : MonoBehaviour
 
         */
     }
-
+    
+    //가상의 콜라이더를 이용하여 범위 내 적들에게 소리 크기에 따른 신호 전달.
     void DetectEnemiesInSoundRange()
     {
-        // ���� ���� ���� �ִ� ��� �� Ž��
+        // ���� ���� ���� �ִ� ��� �� Ž��
         Collider2D[] enemiesInRange = Physics2D.OverlapCircleAll(transform.position, currentWeapon.gunSoundDistance, LayerMask.GetMask("Enemy"));
 
         foreach (Collider2D enemyCollider in enemiesInRange)
@@ -107,6 +112,7 @@ public class WeaponManager : MonoBehaviour
         }
     }
 
+    //deprecated 특정 방향벡터 바라보게 함
     void LookAtDirection2D(Vector2 direction)
     {
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
@@ -120,6 +126,7 @@ public class WeaponManager : MonoBehaviour
         //Debug.DrawLine(transform.position, transform.position + (Vector3)lookingDirection * 5f, Color.red);
     }
 
+    //발사. 마우스 방향에 따라 복제 오브젝트 발사 및 레이캐스팅을 통한 데미지 처리
     void Shoot()
     {
         if (isReloading) {
@@ -231,6 +238,7 @@ public class WeaponManager : MonoBehaviour
         }
     }
 
+    //deprecated
     private IEnumerator DisableMuzzleFlash()
     {
         yield return new WaitForSeconds(0.2f);
@@ -239,7 +247,7 @@ public class WeaponManager : MonoBehaviour
 
     private bool isReloading = false;
 
-
+    //장전, 코루틴으로 호출
     void Reload()
     {
         if (isReloading) return;
@@ -254,6 +262,7 @@ public class WeaponManager : MonoBehaviour
         StartCoroutine(addAmmo(currentWeapon.maxAmmo));
     }
 
+    //장전 코루틴. 2초 후 총알 넣어줌
     private IEnumerator addAmmo(int ammo)
     {
         yield return new WaitForSeconds(2f);
@@ -267,13 +276,15 @@ public class WeaponManager : MonoBehaviour
         audioSource.clip = currentWeapon.weaponSound;
     }
 
+    //스프라이트 초기화
     void ResetSprite()
     {
         GetComponent<SpriteRenderer>().sprite = currentWeapon.idleSprite;
     }
-
+    
     public List<Transform> particles;
 
+    //deprecated
     public void flipFirePointPosition()
     {
         foreach (Transform p in particles)

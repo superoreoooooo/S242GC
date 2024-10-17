@@ -3,6 +3,13 @@ using UnityEngine;
 [CreateAssetMenu]
 public class Weapon : ScriptableObject
 {
+
+    /*
+    *
+    *  무기 데이터 담는 Scriptable
+    *
+    */
+
     public string weaponName;
     public int damage;
     public int maxAmmo;  // Ammo per magazine

@@ -8,17 +8,20 @@ public class IntroFade : MonoBehaviour
 
     private Image fadeImage;
     private float fadeDuration = 1f;
-
+    
+    //이미지 설정
     void Start()
     {
         fadeImage = GetComponent<Image>();
     }
 
+    //인트로 페이드 아웃
     public void startgame()
     {
         StartCoroutine(FadeOut());
     }
 
+    //페이드 아웃 코루틴 구현부
     public IEnumerator FadeOut()
     {
         float elapsedTime = 0f;

@@ -2,6 +2,13 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
+    /*
+    *
+    *  !!!this script is fully deprecated.
+    *  원래 사용 목적 : 근접 공격 구현
+    *
+    */
+    
     [SerializeField]
     private float hitboxWidth;
     [SerializeField]

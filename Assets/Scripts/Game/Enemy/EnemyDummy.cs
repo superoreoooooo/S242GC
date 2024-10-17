@@ -6,6 +6,12 @@ using UnityEngine.AI;
 
 public class EnemyDummy : MonoBehaviour
 {
+    /*
+    *
+    *  IntroScene 등에 사용되는 더미 적에 적용되는 스크립트
+    *
+    */
+
     NavMeshAgent agent;
 
     private float minInterval = 0f;
@@ -19,7 +25,7 @@ public class EnemyDummy : MonoBehaviour
 
     private Vector2 targetPos;
 
-
+    //랜덤 위치로 이동 코루틴 구현부. 무한 반복
     private IEnumerator moveToRandomPos()
     {
         while (true)
@@ -41,7 +47,8 @@ public class EnemyDummy : MonoBehaviour
             }
         }
     }
-
+    
+    //변수 초기화 및 설정.
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();

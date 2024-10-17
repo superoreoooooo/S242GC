@@ -2,6 +2,13 @@ using UnityEngine;
 
 [CreateAssetMenu]
 public class GameData : ScriptableObject {
+
+    /*
+    *
+    *  게임 데이터 담는 Scriptable
+    *
+    */
+
     public int SpawnX;
     public int SpawnY;
 

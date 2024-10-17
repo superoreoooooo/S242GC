@@ -80,17 +80,20 @@ public class PlayerManager : MonoBehaviour
 
     public bool isDead = false;
 
+    //체력바 관련 초기화 함수 호출
     private void Awake()
     {
         setMaxHealth(health);
     }
 
+    //체력바 설정
     private void setMaxHealth(int health)
     {
         hpBar.maxValue = health;
         hpBar.value = health;
     }
 
+    //초기 위치 계산 및 이동
     private void initPlayerMoveRoom()
     {
         mapManager = FindObjectOfType<MapManager>();
@@ -105,7 +108,8 @@ public class PlayerManager : MonoBehaviour
     private SpriteRenderer sr;
 
     private bool isInteractable;
-
+    
+    //페이드 인이라 써있지만 플레이어 텔레포트 이벤트 호출 관련 코루틴 구현부 
     private IEnumerator fadeIn()
     {
         yield return new WaitForSeconds(0.5f);
@@ -113,6 +117,7 @@ public class PlayerManager : MonoBehaviour
         onPlayerTeleportComplete.Invoke();
     }
 
+    //플레이어 텔레포트 코루틴 구현부
     private IEnumerator teleport(Vector3 pos)
     {
         yield return new WaitForSeconds(1f);
@@ -128,6 +133,7 @@ public class PlayerManager : MonoBehaviour
 
     private bool isInBoss = false;
 
+    //보스방으로 이동. 여건 상 하드코딩되어있음
     public void moveToBossRoom()
     {
         isInBoss = true;
@@ -141,20 +147,23 @@ public class PlayerManager : MonoBehaviour
     private UITextFade UITextFadeDone;
 
     private bool isMsgShown = false;
-
+    
+    //보스 클리어시 호출 (이벤트). 텍스트 페이드 아웃
     public void bossClear()
     {
         UITextFadeDone.startFadeOut();
         movement.isMoveable = false;
         StartCoroutine(a());
     }
-
+    
+    //방 이동 시 화면 흐려지는것 관련 함수 호출하는 코루틴 구현부
     private IEnumerator a()
     {
         yield return new WaitForSeconds(0.5f);
         onPlayerMoveRoom.Invoke();
     }
 
+    //플레이어가 다른 방 이동하려는지 검사 및 방 생성. 이후 텔레포트
     private void updatePlayerMoveRoom()
     {
         if (isInBoss)
@@ -324,7 +333,8 @@ public class PlayerManager : MonoBehaviour
                 break;
         }
     } */
-
+    
+    //플레이어 사망 함수. onPlayerDead 이벤트 호출
     private void dead()
     {
         if (mz) return;
@@ -346,7 +356,8 @@ public class PlayerManager : MonoBehaviour
 
         StartCoroutine(re());
     }
-
+    
+    //인트로 씬 (맨 첫번째)로 씬 전환하는 코루틴 구현부.
     private IEnumerator re()
     {
         yield return new WaitForSeconds(3f);
@@ -356,13 +367,15 @@ public class PlayerManager : MonoBehaviour
         Destroy(this);
     }
 
+    //데미지 처리 및 체력바 동기화 (피해 입는거)
     public void gainDamage(int amount)
     {
         if (mz) return;
         health -= amount;
         hpBar.value = health;
     }
-
+    
+    //상호작용 (무기 교체) 함수
     private void updateInteraction()
     {
         isInteractable = false;
@@ -409,6 +422,7 @@ public class PlayerManager : MonoBehaviour
         interacionUI.SetActive(isInteractable);
     }
 
+    //변수 설정 및 플레이어 위치 이동 (initPlayerMoveRoom)
     void Start()  
     {
         initPlayerMoveRoom();
@@ -426,6 +440,13 @@ public class PlayerManager : MonoBehaviour
         lr.positionCount = 2; 
         */
     }
+
+    /**
+    * 매 프레임 호출. 
+    * 1. 플레이어 사망 시 사망 애니메이션 실행
+    * 2. 상호작용 (updateInteraction)과 방 이동 관련 검사 (updatePlayerMoveRoom) 호출
+    * 3. fovLight (시야 라이트) 보는 방향 마우스쪽으로 설정
+    */
 
     void Update()
     {
@@ -544,6 +565,7 @@ public class PlayerManager : MonoBehaviour
     }
     */
 
+    //충돌 (물리) 처리. 보스가 던지는 돌덩이만 적용되어있음.
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (mz) return;
@@ -556,6 +578,7 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    //충돌 시작 시 (비-물리) 처리. 보스 스킬 (레이저), 적 충돌 (부딪힘)에 대한 처리. 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (mz) return;
@@ -598,6 +621,7 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    //충돌 유지 시 (비-물리) 처리. 보스 스킬 (레이저), 적 충돌 (부딪힘)에 대한 처리. 
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (mz) return;
@@ -634,6 +658,7 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    //무적 (충돌 시 3초) 설정 코루틴 구현부. 레이어 마스크를 이용하여 구현
     private IEnumerator updateInvincible(LayerMask lm)
     {
         yield return new WaitForSeconds(invincibleTime);
@@ -641,6 +666,7 @@ public class PlayerManager : MonoBehaviour
         Physics2D.IgnoreLayerCollision(gameObject.layer, lm, false);
     }
 
+    //어둡게 설정 (스프라이트)
     private void Fade()
     {
         Color fc = sr.color;
@@ -648,13 +674,15 @@ public class PlayerManager : MonoBehaviour
         sr.color = fc;
     }
 
+    //밝게 설정 (스프라이트)
     private void Sharp()
     {
         Color fc = sr.color;
         fc.a = 255f;
         sr.color = fc;
     }
-
+    
+    //피해 입을 시 0.2초마다 반짝이게 함
     private IEnumerator updateSpriteBlur()
     {
         for (int i = 0; i < 5; i++)
@@ -672,7 +700,11 @@ public class PlayerManager : MonoBehaviour
     public GameObject nav;
 
     public bool mz = false;
-
+    
+    /**
+    * 1. NavMesh 관련 오류 시 f키로 강제 계산하게 하여 해결
+    * 2. 강제 무적 설정 (J키)
+    */
     void FixedUpdate()
     {
         if (Input.GetKey(KeyCode.F))

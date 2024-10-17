@@ -8,12 +8,13 @@ public class UIHealth : MonoBehaviour
     public GameObject player;
     private TextMeshProUGUI tmpUGUI;
 
+    //시작 시 설정
     void Start()
     {
         tmpUGUI = GetComponent<TextMeshProUGUI>();
     }
 
-    // Update is called once per frame
+    //체력 UI 텍스트 업데이트 
     void Update()
     {
         int health = player.GetComponent<PlayerManager>().Health;

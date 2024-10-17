@@ -10,12 +10,7 @@ public class CameraMovement : MonoBehaviour
     [SerializeField]
     private float moveSpeed;
 
-
-    void Start()
-    {
-        
-    }
-
+    //매 프레임 업데이트. Vector3.Lerp로 부드러운 카메라 이동 구현
     void Update()
     {
         Vector3 tpos = new Vector3(target.transform.position.x, target.transform.position.y, -10);

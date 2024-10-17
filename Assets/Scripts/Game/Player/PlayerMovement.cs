@@ -64,7 +64,8 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField]
     private float runSoundLevel;
-
+    
+    //변수 초기화 및 설정
     void Start()
     {
         isFlipped = false;
@@ -85,6 +86,7 @@ public class PlayerMovement : MonoBehaviour
         playerManager = GetComponent<PlayerManager>();
     }
 
+    //사망 처리
     public void die()
     {
         if (playerManager.isDead)
@@ -96,6 +98,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Animator animator;
 
+    //매 프레임 업데이트. 입력 받아 이동 관련 요소 및 스킬 사용 업데이트
     void Update()
     {
         if (playerManager.isDead)
@@ -143,9 +146,10 @@ public class PlayerMovement : MonoBehaviour
         } 
     }
 
+    //가상의 콜라이더를 이용하여 범위 내 적들에게 소리 크기에 따른 신호 전달. (발소리)
     void DetectEnemiesInSoundRange()
     {
-        // ���� ���� ���� �ִ� ��� �� Ž��
+        // ���� ���� ���� �ִ� ��� �� Ž��
         Collider2D[] enemiesInRange = Physics2D.OverlapCircleAll(transform.position, isRunning ? runSoundLevel : walkSoundLevel, LayerMask.GetMask("Enemy"));
 
         foreach (Collider2D enemyCollider in enemiesInRange)
@@ -160,16 +164,19 @@ public class PlayerMovement : MonoBehaviour
 
     private PlayerManager playerManager;
 
+    //FixedUpdate. 속력 설정
     private void FixedUpdate() {
         if (playerManager.isDead) return;
         if (isRunning) rb.velocity = movement * runSpeed;
         else rb.velocity = movement * speed;
     }
 
+    //스킬 쿨타임 업데이트
     private void UpdateSkill() {
         updateDashCoolDown();
     }
 
+    //대쉬 (구르기) 쿨타임 업데이트
     private void updateDashCoolDown() {
         if (!isDashAble) {
             coolDownDash += Time.deltaTime;
@@ -180,6 +187,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    //대쉬 (구르기) 코루틴 구현부
     private IEnumerator SkillDash() {
         if (movement.magnitude != 0) {
             isDashing = true;
@@ -222,6 +230,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    //대쉬 (구르기)
     public void Dash(Vector2 dir) {
         movement = new Vector2(dir.x * speed, dir.y * speed);
     }
@@ -233,6 +242,7 @@ public class PlayerMovement : MonoBehaviour
         get => isFlipped;
     }
 
+    //플레이어 양옆 회전. Localscale 조절하여 구현함
     private void flip()
     {
         isFlipped = !isFlipped;

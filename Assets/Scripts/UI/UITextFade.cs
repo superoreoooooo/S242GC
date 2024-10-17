@@ -10,22 +10,26 @@ public class UITextFade : MonoBehaviour
     [SerializeField]
     private float fadeDuration;
 
+    //페이드 인. 코루틴 사용
     public void startFadeIn()
     {
         StartCoroutine(FadeIn());
     }
 
+    //페이드 아웃 (자동 페이드 인). 코루틴 사용
     public void startFadeOut()
     {
         StopAllCoroutines();
         StartCoroutine(FadeOut());
     }
 
+    //페이드 아웃 (수동 페이드 인). 코루틴 사용
     public void startManualFadeOut()
     {
         StartCoroutine(ManualFadeOut());
     }
 
+    //페이드 인 코루틴 구현부.
     public IEnumerator FadeIn()
     {
         float elapsedTime = 0f;
@@ -44,6 +48,7 @@ public class UITextFade : MonoBehaviour
         fadeText.color = color;
     }
 
+    //페이드 아웃 코루틴 구현부. 이후 자동 페이드 인
     public IEnumerator FadeOut()
     {
         float elapsedTime = 0f;
@@ -67,6 +72,7 @@ public class UITextFade : MonoBehaviour
         startFadeIn();
     }
 
+    //페이드 아웃 코루틴 구현부.
     public IEnumerator ManualFadeOut()
     {
         float elapsedTime = 0f;

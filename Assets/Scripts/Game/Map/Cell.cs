@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Cell : MonoBehaviour
 {
+    /*
+    *
+    *  Cell 데이터 담은 클래스
+    *
+    */
+
     [Header("PATH")]
     public bool UP;
     public bool DOWN;

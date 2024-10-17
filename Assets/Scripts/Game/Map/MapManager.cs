@@ -22,12 +22,14 @@ public class MapManager : MonoBehaviour
 
     public UnityEvent onBossRoomGen;
 
+    //그리드 초기화 및 데이터에서 size 받아옴
     private void Awake()
     {
         size = data.grid_size;
         grid = new GameObject[size, size];
     }
 
+    //변수 초기화 및 설정, 첫 번째 방 생성 (Gen)
     void Start()
     {
         CELL_SIZE_X = data.RoomSizeX;
@@ -43,22 +45,26 @@ public class MapManager : MonoBehaviour
         //grid[0, 0] = Instantiate(cellPrefabs[0]);
     }
 
+    //Vector2 위치의 Cell 리턴
     public GameObject getCell(Vector2 pos)
     {
         //print(grid[(int)pos.x / CELL_SIZE_X, (int)pos.y / CELL_SIZE_Y].transform.position);
         return grid[(int) pos.x / CELL_SIZE_X, (int) pos.y / CELL_SIZE_Y];
     }
 
+    //Vector2Int 위치의 Cell 리턴. (그리드 내 (x, y)칸의 Cell을 리턴)
     public GameObject getCell(Vector2Int cellPos)
     {
         return grid[cellPos.x, cellPos.y];
     }
 
+    //CellPos (Vector2Int) 리턴. (그리드 내 (x, y)값)
     public Vector2Int getCellPos(Vector2 pos)
     {
         return new Vector2Int((int)pos.x / CELL_SIZE_X, (int)pos.y / CELL_SIZE_Y);
     }
 
+    //생성된 방 개수 세어 10개일 시 보스방 강제 생성
     public void updateMapSystem()
     {
         if (roomCnt == 10)
@@ -69,12 +75,14 @@ public class MapManager : MonoBehaviour
         }
     }
 
+    //매 프레임 업데이트. 
     void Update()
     {
         updateMapSystem();
         drawRoomConnection();
     }
 
+    //CellDirection 기준 역방향의 CellDirection 리턴
     public CellDirection getOppositeDir(CellDirection dir)
     {
         switch (dir)
@@ -86,7 +94,8 @@ public class MapManager : MonoBehaviour
             default: return CellDirection.VOID;
         }
     }
-
+    
+    //선택한 Cell이 tryGenCellPos에 생성 가능한지 검사. 입구를 이어주기 위해 사용
     public bool checkIsAvailableCell(Vector2Int tryGenCellPos, Cell tryGenCell)
     {
         Vector2Int tPos;
@@ -135,6 +144,7 @@ public class MapManager : MonoBehaviour
         return true;
     }
 
+    //보스 방 생성. 강제 생성함
     private GameObject GenBossRoom(List<GameObject> ableCells, Vector2Int pos)
     {
         GameObject pick = ableCells[Random.Range(0, ableCells.Count)];
@@ -154,6 +164,7 @@ public class MapManager : MonoBehaviour
         return c;
     }
 
+    //방 생성 (실제). Instantiate로 프리팹 불러와 좌표에 고정하고 NavMesh를 구움
     private GameObject Gen(List<GameObject> ableCells, Vector2Int pos)
     {
         GameObject pick = ableCells[Random.Range(0, ableCells.Count)];
@@ -175,6 +186,7 @@ public class MapManager : MonoBehaviour
         return c;
     }
 
+    //보는 방향으로 방 생성. 현재 좌표 (xNow, yNow) 기준 보는 방향으로 검사하여 생성
     public GameObject genCell(int xNow, int yNow, CellDirection dir)
     {
         float t = Time.deltaTime;
@@ -308,6 +320,7 @@ public class MapManager : MonoBehaviour
         return null;
     }
 
+    //Deprecated. 
     public void checkRoomDone() { //0 : done | 1 : left 1 room | 2+ : not done
         for (int x = 0; x < size; x++) {
             for (int y = 0; y < size; y++) {
@@ -319,6 +332,7 @@ public class MapManager : MonoBehaviour
         }
     }
 
+    //디버그용. Debug.DrawLine으로 방과 방 사이 선 이어서 이어졌는지 확인
     public void drawRoomConnection()
     {
         //추후에 고치기

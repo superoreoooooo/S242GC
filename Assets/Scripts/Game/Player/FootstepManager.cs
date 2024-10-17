@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FootstepManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+    //변수 초기화 및 설정
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -12,7 +12,7 @@ public class FootstepManager : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
+    //매 프레임 호출됨. 걷는지 검사하여 handleFootsteps 호출
     void Update()
     {
         isMoving = (movement.Movement.magnitude != 0);
@@ -38,6 +38,7 @@ public class FootstepManager : MonoBehaviour
 
     private PlayerMovement movement;
 
+    //걷는지 뛰는지 확인하여 발소리 간 간격 조정
     private void handleFootsteps()
     {
         float currentStepInterval = movement.isRunning ? runStepInterval : walkStepInterval;
@@ -48,6 +49,7 @@ public class FootstepManager : MonoBehaviour
         }
     }
 
+    //발소리 플레이. 1~4 중 랜덤하게 소리를 골라 무작위 소리 플레이
     private void playFootstepSounds()
     {
         int randomIndex;

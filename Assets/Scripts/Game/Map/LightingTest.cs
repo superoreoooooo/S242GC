@@ -4,8 +4,15 @@ using UnityEngine.Tilemaps;
 
 public class TilemapShadowCaster : MonoBehaviour
 {
+    /*
+    *
+    *  !!!this script is fully deprecated.
+    *  원래 사용 목적 : 반복 작업 (노가다) 최소화
+    *
+    */
+
     public Tilemap tilemap;
-    public TileBase[] shadowTiles; // �׸��ڸ� ������ Ÿ�ϵ�
+    public TileBase[] shadowTiles; // �׸��ڸ� ������ Ÿ�ϵ�
 
     void Start()
     {

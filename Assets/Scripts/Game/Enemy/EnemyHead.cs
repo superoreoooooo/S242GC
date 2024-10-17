@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class EnemyHead : MonoBehaviour
 {
+    /*
+    *
+    *  !!!this script is fully deprecated.
+    *  원래 사용 목적 : 적 머리 회전
+    *
+    */
+
     void Start()
     {
 
